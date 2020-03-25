@@ -58,7 +58,7 @@ CREATE TABLE race
 (
     id integer PRIMARY KEY NOT NULL,
     name character varying(256) NOT NULL,
-    fk_id_type integer REFERENCES animal_type(id)
+    fk_id_type integer REFERENCES animal_type(id) NOT NULL
 );
 
 CREATE TABLE animal
@@ -66,9 +66,9 @@ CREATE TABLE animal
     id integer PRIMARY KEY NOT NULL,
     name character varying(256) NOT NULL,
     birthday timestamp,
-    fk_id_owner integer REFERENCES users(id),
-    fk_id_gender integer REFERENCES animal_gender(id),
-    fk_id_type integer REFERENCES animal_type(id),
+    fk_id_owner integer REFERENCES users(id) NOT NULL,
+    fk_id_gender integer REFERENCES animal_gender(id) NOT NULL,
+    fk_id_type integer REFERENCES animal_type(id) NOT NULL,
     fk_id_race integer REFERENCES race(id)
 );
 
@@ -84,8 +84,8 @@ CREATE TABLE event
     name character varying(256) NOT NULL,
     description character varying(256) NOT NULL,
     localisation character varying(256) NOT NULL,
-    date timestamp,
-    fk_id_type integer REFERENCES event_type (id)
+    date timestamp NOT NULL,
+    fk_id_type integer REFERENCES event_type (id) NOT NULL
 );
 
 CREATE TABLE event_member
@@ -107,3 +107,39 @@ CREATE TABLE event_tags
     fk_id_event integer REFERENCES event(id) NOT NULL,
     PRIMARY KEY(fk_id_tag, fk_id_event)
 );
+
+CREATE SEQUENCE user_gender_sequence START 1;
+CREATE SEQUENCE users_sequence START 1;
+CREATE SEQUENCE animal_gender_sequence START 1;
+CREATE SEQUENCE animal_type_sequence START 1;
+CREATE SEQUENCE race_sequence START 1;
+CREATE SEQUENCE animal_sequence START 1;
+CREATE SEQUENCE event_type_sequence START 1;
+CREATE SEQUENCE event_sequence START 1;
+CREATE SEQUENCE tag_sequence START 1;
+
+-- INSERT INTO table(row)
+-- VALUES
+-- (),
+-- (),
+-- ()
+-- ;
+
+INSERT INTO user_gender(id, name)
+VALUES
+(1, 'Femme'),
+(2, 'Homme'),
+(3, 'Autre')
+;
+
+INSERT INTO animal_gender(id, name)
+VALUES
+(1, 'Femelle'),
+(2, 'Mâle')
+;
+
+INSERT INTO animal_type(id, name)
+VALUES
+(1, 'Chien'),
+(2, 'Chat')
+;
