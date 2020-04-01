@@ -15,7 +15,7 @@ public class UserGenderEntity {
     @SequenceGenerator(name = "user_gender_generator", sequenceName = "user_gender_sequence", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_gender_generator")
     @Column(name = "id")
-    private Number id;
+    private Integer id;
 
     @Column(name = "name")
     private String name;

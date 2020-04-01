@@ -16,7 +16,7 @@ public class FollowRelationEntity {
 //    @SequenceGenerator(name = "race_generator", sequenceName = "race_sequence", allocationSize = 1)
 //    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "race_generator")
 //    @Column(name = "id")
-//    private Number id;
+//    private Integer id;
 //
 //    @ManyToMany(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "fk_id_follower")
