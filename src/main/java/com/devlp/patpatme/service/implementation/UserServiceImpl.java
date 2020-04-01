@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService {
             Timestamp birthday = Timestamp.from(birthdayZonedDateTime.toInstant());
             newUser.setBirthday(birthday);
         }
-        
+
         if (!createAccountDto.getFk_id_gender().isEmpty()) {
             UserGenderEntity gender = userGenderRepository.findOneByName(createAccountDto.getFk_id_gender());
             if (gender != null)
@@ -54,13 +54,16 @@ public class UserServiceImpl implements UserService {
         }
 
         userRepository.save(newUser);
-
-        System.out.println(userRepository.existsPersonEntityByEmailIgnoreCase(newUser.getEmail()));
     }
 
     @Override
-    public boolean personExistsWithMail(String mail) {
-        return userRepository.existsPersonEntityByEmailIgnoreCase(mail);
+    public boolean userExistsWithMail(String mail) {
+        return userRepository.existsUserEntityByEmailIgnoreCase(mail);
+    }
+
+    @Override
+    public boolean userExistsWithPseudo(String pseudo) {
+        return userRepository.existsUserEntityByPseudoIgnoreCase(pseudo);
     }
 
 }
