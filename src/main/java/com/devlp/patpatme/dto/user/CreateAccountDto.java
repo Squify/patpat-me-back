@@ -21,6 +21,7 @@ public class CreateAccountDto {
     private boolean push_notification;
     private boolean active_localisation;
     private boolean display_real_name;
+    private String fk_id_gender;
 
     public String getMail() {
         return mail;
@@ -100,5 +101,13 @@ public class CreateAccountDto {
 
     public void setDisplay_real_name(boolean display_real_name) {
         this.display_real_name = display_real_name;
+    }
+
+    public String getFk_id_gender() {
+        return fk_id_gender;
+    }
+
+    public void setFk_id_gender(String fk_id_gender) {
+        this.fk_id_gender = fk_id_gender;
     }
 }
