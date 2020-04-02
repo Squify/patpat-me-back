@@ -6,6 +6,7 @@ import com.devlp.patpatme.entity.UserGenderEntity;
 import com.devlp.patpatme.repository.UserGenderRepository;
 import com.devlp.patpatme.repository.UserRepository;
 import com.devlp.patpatme.service.UserService;
+import com.devlp.patpatme.util.BCryptManagerUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserGenderRepository userGenderRepository;
 
+    @Autowired
+    private BCryptManagerUtil bCryptManagerUtil;
+
     @Override
     @Transactional
     public void createUser(CreateAccountDto createAccountDto) {
@@ -31,7 +35,6 @@ public class UserServiceImpl implements UserService {
         Timestamp signup = new Timestamp(System.currentTimeMillis());
 
         newUser.setEmail(createAccountDto.getMail());
-        newUser.setPassword(createAccountDto.getPassword());
         newUser.setPseudo(createAccountDto.getPseudo());
         newUser.setFirstname(createAccountDto.getFirstname());
         newUser.setLastname(createAccountDto.getLastname());
@@ -40,6 +43,9 @@ public class UserServiceImpl implements UserService {
         newUser.setActive_localisation(createAccountDto.isActive_localisation());
         newUser.setDisplay_real_name(createAccountDto.isDisplay_real_name());
         newUser.setSign_up(signup);
+
+        String password = bCryptManagerUtil.getPasswordEncoder().encode(createAccountDto.getPassword());
+        newUser.setPassword(password);
 
         if (!createAccountDto.getBirthday().isEmpty()) {
             ZonedDateTime birthdayZonedDateTime = ZonedDateTime.parse(createAccountDto.getBirthday());
