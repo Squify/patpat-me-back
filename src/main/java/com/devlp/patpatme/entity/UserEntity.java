@@ -16,7 +16,7 @@ public class UserEntity {
     @SequenceGenerator(name = "users_generator", sequenceName = "users_sequence", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_generator")
     @Column(name = "id")
-    private Number id;
+    private Integer id;
 
     @Column(name = "email")
     private String email;
@@ -27,11 +27,11 @@ public class UserEntity {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "firstname")
+    private String firstname;
 
-    @Column(name = "surname")
-    private String surname;
+    @Column(name = "lastname")
+    private String lastname;
 
     @Column(name = "phone")
     private String phone;
@@ -51,7 +51,8 @@ public class UserEntity {
     @Column(name = "display_real_name")
     private boolean display_real_name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fk_id_gender")
-    private UserGenderEntity gender;
+    //    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "fk_id_gender")
+    @Column(name = "fk_id_gender")
+    private Integer gender;
 }
