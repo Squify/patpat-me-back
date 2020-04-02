@@ -16,7 +16,7 @@ public class AnimalEntity {
     @SequenceGenerator(name = "users_generator", sequenceName = "users_sequence", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_generator")
     @Column(name = "id")
-    private Number id;
+    private Integer id;
 
     @Column(name = "name")
     private String name;

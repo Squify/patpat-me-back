@@ -15,7 +15,7 @@ public class RaceEntity {
     @SequenceGenerator(name = "race_generator", sequenceName = "race_sequence", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "race_generator")
     @Column(name = "id")
-    private Number id;
+    private Integer id;
 
     @Column(name = "name")
     private String name;

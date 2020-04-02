@@ -15,7 +15,7 @@ public class TagEntity {
     @SequenceGenerator(name = "tag_generator", sequenceName = "tag_sequence", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tag_generator")
     @Column(name = "id")
-    private Number id;
+    private Integer id;
 
     @Column(name = "name")
     private String name;
