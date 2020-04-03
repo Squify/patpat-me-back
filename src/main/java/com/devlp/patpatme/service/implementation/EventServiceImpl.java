@@ -46,4 +46,9 @@ public class EventServiceImpl implements EventService {
         eventRepository.save(newEvent);
 
     }
+
+    @Override
+    public boolean eventExistsWithName(String name) {
+        return eventRepository.existsEventEntityByNameIgnoreCase(name);
+    }
 }

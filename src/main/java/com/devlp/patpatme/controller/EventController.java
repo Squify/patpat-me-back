@@ -4,6 +4,7 @@ import com.devlp.patpatme.dto.event.CreateEventDto;
 import com.devlp.patpatme.entity.EventTypeEntity;
 import com.devlp.patpatme.repository.EventTypeRepository;
 import com.devlp.patpatme.service.EventService;
+import com.devlp.patpatme.util.EventUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,17 +28,13 @@ public class EventController {
     @PostMapping(value = "/api/event/create")
     public ResponseEntity createEvent(@RequestBody CreateEventDto createEventDto) {
 
-//        // check the inputs
-//        if (!UserUtil.checkCreatePersonInputsAreValid(createAccountDto))
-//            return new ResponseEntity(HttpStatus.BAD_REQUEST);
-//
-//        // check if mail is already used
-//        if (userService.userExistsWithMail(createAccountDto.getMail()))
-//            return new ResponseEntity(HttpStatus.EXPECTATION_FAILED);
-//
-//        // check if pseudo is already used
-//        if (userService.userExistsWithPseudo(createAccountDto.getPseudo()))
-//            return new ResponseEntity(HttpStatus.CONFLICT);
+        // check the inputs
+        if (!EventUtil.checkCreateEventInputsAreValid(createEventDto))
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+
+        // check if name is already used
+        if (eventService.eventExistsWithName(createEventDto.getName()))
+            return new ResponseEntity(HttpStatus.EXPECTATION_FAILED);
 
         try {
 
