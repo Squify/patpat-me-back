@@ -1,17 +1,16 @@
 package com.devlp.patpatme.controller;
 
 import com.devlp.patpatme.dto.user.CreateAccountDto;
+import com.devlp.patpatme.entity.UserEntity;
 import com.devlp.patpatme.entity.UserGenderEntity;
 import com.devlp.patpatme.repository.UserGenderRepository;
+import com.devlp.patpatme.repository.UserRepository;
 import com.devlp.patpatme.service.UserService;
 import com.devlp.patpatme.util.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -33,12 +32,12 @@ public class UserController {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
 
         // check if mail is already used
-         if (userService.userExistsWithMail(createAccountDto.getMail()))
-             return new ResponseEntity(HttpStatus.EXPECTATION_FAILED);
+        if (userService.userExistsWithMail(createAccountDto.getMail()))
+            return new ResponseEntity(HttpStatus.EXPECTATION_FAILED);
 
         // check if pseudo is already used
-         if (userService.userExistsWithPseudo(createAccountDto.getPseudo()))
-             return new ResponseEntity(HttpStatus.CONFLICT);
+        if (userService.userExistsWithPseudo(createAccountDto.getPseudo()))
+            return new ResponseEntity(HttpStatus.CONFLICT);
 
         try {
 
@@ -55,4 +54,9 @@ public class UserController {
         return userGenderRepository.findAll();
     }
 
+    @GetMapping(value = "api/user/get")
+    public UserEntity getUser() {
+        UserEntity user = UserRepository.getUserById(1);
+        return (user);
+    }
 }

@@ -72,4 +72,9 @@ public class UserServiceImpl implements UserService {
         return userRepository.existsUserEntityByPseudoIgnoreCase(pseudo);
     }
 
+    @Override
+    public UserEntity getUserById(int id) {
+        return UserRepository.getUserById(id);
+    }
+
 }
