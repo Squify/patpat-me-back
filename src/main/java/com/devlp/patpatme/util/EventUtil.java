@@ -1,7 +1,6 @@
 package com.devlp.patpatme.util;
 
 import com.devlp.patpatme.dto.event.CreateEventDto;
-import com.devlp.patpatme.dto.user.CreateAccountDto;
 import org.apache.commons.lang3.StringUtils;
 
 public class EventUtil {
@@ -28,6 +27,6 @@ public class EventUtil {
             return false;
         }
 
-        return description.length() < MIN_DESCRIPTION_SIZE;
+        return !(description.length() < MIN_DESCRIPTION_SIZE);
     }
 }
