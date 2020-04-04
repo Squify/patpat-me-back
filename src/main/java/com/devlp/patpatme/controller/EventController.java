@@ -34,7 +34,7 @@ public class EventController {
 
         // check if name is already used
         if (eventService.eventExistsWithName(createEventDto.getName()))
-            return new ResponseEntity(HttpStatus.EXPECTATION_FAILED);
+            return new ResponseEntity(HttpStatus.EXPECTATION_FAILED); //417
 
         try {
 
