@@ -23,6 +23,9 @@ public class UserController {
     @Autowired
     private UserGenderRepository userGenderRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     //    @ApiOperation(value = "Créer un nouveau compte dans la base de données")
     @PostMapping(value = "/api/user/create")
     public ResponseEntity createAccount(@RequestBody CreateAccountDto createAccountDto) {
@@ -56,7 +59,7 @@ public class UserController {
 
     @GetMapping(value = "api/user/get")
     public UserEntity getUser() {
-        UserEntity user = UserRepository.getUserById(1);
-        return (user);
+
+        return (userRepository.getUserById(11));
     }
 }

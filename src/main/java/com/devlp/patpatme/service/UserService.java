@@ -7,7 +7,6 @@ import com.devlp.patpatme.entity.UserEntity;
 public interface UserService {
 
     void createUser(CreateAccountDto createAccountDto);
-    UserEntity getUserById(int id);
     boolean userExistsWithMail(String mail);
     boolean userExistsWithPseudo(String pseudo);
 }
