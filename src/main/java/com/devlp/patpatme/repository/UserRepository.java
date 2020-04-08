@@ -11,7 +11,5 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer> {
 
     boolean existsUserEntityByPseudoIgnoreCase(String pseudo);
 
-    static UserEntity getUserById(int id) {
-        return getUserById(1);
-    }
+    UserEntity getUserById(int id);
 }

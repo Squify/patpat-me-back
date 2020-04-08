@@ -71,10 +71,4 @@ public class UserServiceImpl implements UserService {
     public boolean userExistsWithPseudo(String pseudo) {
         return userRepository.existsUserEntityByPseudoIgnoreCase(pseudo);
     }
-
-    @Override
-    public UserEntity getUserById(int id) {
-        return UserRepository.getUserById(id);
-    }
-
 }
