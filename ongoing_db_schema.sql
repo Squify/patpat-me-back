@@ -85,6 +85,7 @@ CREATE TABLE event
     description character varying(256) NOT NULL,
     localisation character varying(256) NOT NULL,
     date timestamp NOT NULL,
+    fk_id_owner integer REFERENCES users (id) NOT NULL,
     fk_id_type integer REFERENCES event_type (id) NOT NULL
 );
 
@@ -142,4 +143,14 @@ INSERT INTO animal_type(id, name)
 VALUES
 (1, 'Chien'),
 (2, 'Chat')
+;
+
+INSERT INTO event_type(id, name)
+VALUES
+(1, 'Promenade'),
+(2, 'Randonnée'),
+(3, 'Rencontre pour jouer'),
+(4, 'Concours amical'),
+(5, 'Pique nique'),
+(6, 'Sortie en mer')
 ;
