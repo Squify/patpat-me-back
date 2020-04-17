@@ -1,25 +1,40 @@
 package com.devlp.patpatme.controller;
 
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
+import com.devlp.patpatme.dto.animal.CreateAnimalDto;
+import com.devlp.patpatme.entity.AnimalGenderEntity;
+import com.devlp.patpatme.entity.AnimalTypeEntity;
+import com.devlp.patpatme.repository.AnimalGenderRepository;
+import com.devlp.patpatme.repository.AnimalTypeRepository;
+import com.devlp.patpatme.service.AnimalService;
+
 
 @RestController
 public class AnimalController {
 
-    //TODO
-    /*
     @Autowired
     private AnimalService animalService;
 
     @Autowired
     private AnimalGenderRepository animalGenderRepository;
 
-    @ApiOperation(value = "Créer un nouvel animal dans la base de données")
+    @Autowired
+    private AnimalTypeRepository  animalTypeRepository;
+
+    // @ApiOperation(value = "Créer un nouvel animal dans la base de données")
     @PostMapping(value = "/api/animal/create")
     public ResponseEntity createAnimal(@RequestBody CreateAnimalDto createAnimalDto) {
-
-        // check the inputs
-        if (!UserUtil.checkCreatePersonInputsAreValid(createAnimalDto))
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
 
         try {
             animalService.createAnimal(createAnimalDto);
@@ -39,7 +54,5 @@ public class AnimalController {
     public List<AnimalTypeEntity> getType() {
         return animalTypeRepository.findAll();
     }
-    */
-
 
 }
