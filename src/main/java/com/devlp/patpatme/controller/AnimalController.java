@@ -2,6 +2,7 @@ package com.devlp.patpatme.controller;
 
 
 
+import com.devlp.patpatme.service.AnimalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,7 @@ import com.devlp.patpatme.entity.AnimalGenderEntity;
 import com.devlp.patpatme.entity.AnimalTypeEntity;
 import com.devlp.patpatme.repository.AnimalGenderRepository;
 import com.devlp.patpatme.repository.AnimalTypeRepository;
-import com.devlp.patpatme.service.AnimalService;
+
 
 
 @RestController
