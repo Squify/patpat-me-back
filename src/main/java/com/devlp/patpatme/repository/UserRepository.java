@@ -6,6 +6,10 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity, Integer> {
+
     boolean existsUserEntityByEmailIgnoreCase(String email);
+
     boolean existsUserEntityByPseudoIgnoreCase(String pseudo);
+
+    UserEntity getUserById(int id);
 }

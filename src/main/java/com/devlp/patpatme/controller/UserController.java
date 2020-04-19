@@ -3,6 +3,7 @@ package com.devlp.patpatme.controller;
 import com.devlp.patpatme.dto.user.CreateAccountDto;
 import com.devlp.patpatme.entity.UserGenderEntity;
 import com.devlp.patpatme.repository.UserGenderRepository;
+import com.devlp.patpatme.repository.UserRepository;
 import com.devlp.patpatme.service.UserService;
 import com.devlp.patpatme.util.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,9 @@ public class UserController {
     @Autowired
     private UserGenderRepository userGenderRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     //    @ApiOperation(value = "Créer un nouveau compte dans la base de données")
     @PostMapping(value = "/api/user/create")
     public ResponseEntity createAccount(@RequestBody CreateAccountDto createAccountDto) {
@@ -33,12 +37,12 @@ public class UserController {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
 
         // check if mail is already used
-         if (userService.userExistsWithMail(createAccountDto.getMail()))
-             return new ResponseEntity(HttpStatus.EXPECTATION_FAILED);
+        if (userService.userExistsWithMail(createAccountDto.getMail()))
+            return new ResponseEntity(HttpStatus.EXPECTATION_FAILED);
 
         // check if pseudo is already used
-         if (userService.userExistsWithPseudo(createAccountDto.getPseudo()))
-             return new ResponseEntity(HttpStatus.CONFLICT);
+        if (userService.userExistsWithPseudo(createAccountDto.getPseudo()))
+            return new ResponseEntity(HttpStatus.CONFLICT);
 
         try {
 
@@ -55,4 +59,15 @@ public class UserController {
         return userGenderRepository.findAll();
     }
 
+    @GetMapping(value = "api/user/get")
+    public Object getUser() {
+
+        int idAuthUser = 1;
+        try {
+            return userRepository.getUserById(idAuthUser);
+        } catch (Exception e) {
+            System.out.println(e);
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

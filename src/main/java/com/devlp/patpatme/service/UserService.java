@@ -7,5 +7,6 @@ public interface UserService {
     void createUser(CreateAccountDto createAccountDto);
 
     boolean userExistsWithMail(String mail);
+
     boolean userExistsWithPseudo(String pseudo);
 }
