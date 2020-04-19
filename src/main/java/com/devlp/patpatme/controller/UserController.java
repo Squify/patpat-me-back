@@ -1,7 +1,6 @@
 package com.devlp.patpatme.controller;
 
 import com.devlp.patpatme.dto.user.CreateAccountDto;
-import com.devlp.patpatme.entity.UserEntity;
 import com.devlp.patpatme.entity.UserGenderEntity;
 import com.devlp.patpatme.repository.UserGenderRepository;
 import com.devlp.patpatme.repository.UserRepository;
@@ -10,7 +9,10 @@ import com.devlp.patpatme.util.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -58,8 +60,14 @@ public class UserController {
     }
 
     @GetMapping(value = "api/user/get")
-    public UserEntity getUser() {
+    public Object getUser() {
 
-        return (userRepository.getUserById(11));
+        int idAuthUser = 1;
+        try {
+            return userRepository.getUserById(idAuthUser);
+        } catch (Exception e) {
+            System.out.println(e);
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }
