@@ -200,10 +200,10 @@ VALUES
 (34, 'OBSERVER'),
 (35, 'FEARFUL'),
 (36, 'SUSCEPTIBLE'),
-(37, 'SHY'),
+(37, 'SHY')
 ;
 
-INSERT INTO race(id, name)
+INSERT INTO race(id, name, fk_id_type)
 VALUES
 (1,'Aïdi Ou Chien De L’atlas',1),
 (2,'Akita Inu',1),
@@ -442,6 +442,6 @@ VALUES
 (235,'Tiffany',2),
 (236,'Tonkinois',2),
 (237,'Turc Van',2),
-(238,'York Chocolate',2)
+(238,'York Chocolate',2),
 (239,'Batard',1)
 ;
