@@ -71,5 +71,4 @@ public class UserServiceImpl implements UserService {
     public boolean userExistsWithPseudo(String pseudo) {
         return userRepository.existsUserEntityByPseudoIgnoreCase(pseudo);
     }
-
 }
