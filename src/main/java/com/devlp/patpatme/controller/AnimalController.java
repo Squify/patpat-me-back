@@ -2,6 +2,10 @@ package com.devlp.patpatme.controller;
 
 
 
+import com.devlp.patpatme.entity.AnimalTemperEntity;
+import com.devlp.patpatme.entity.RaceEntity;
+import com.devlp.patpatme.repository.AnimalTemperRepository;
+import com.devlp.patpatme.repository.RaceRepository;
 import com.devlp.patpatme.service.AnimalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,6 +37,12 @@ public class AnimalController {
     @Autowired
     private AnimalTypeRepository  animalTypeRepository;
 
+    @Autowired
+    private RaceRepository raceRepository;
+
+    @Autowired
+    private AnimalTemperRepository animalTemperRepository;
+
     // @ApiOperation(value = "Créer un nouvel animal dans la base de données")
     @PostMapping(value = "/api/animal/create")
     public ResponseEntity createAnimal(@RequestBody CreateAnimalDto createAnimalDto) {
@@ -56,4 +66,9 @@ public class AnimalController {
         return animalTypeRepository.findAll();
     }
 
+    @GetMapping(value = "/api/animal/races")
+    public List<RaceEntity> getRace() { return raceRepository.findAll(); }
+
+    @GetMapping(value = "/api/animal/tempers")
+    public List<AnimalTemperEntity> getTemper() { return animalTemperRepository.findAll(); }
 }
