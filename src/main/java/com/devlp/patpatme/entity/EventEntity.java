@@ -32,4 +32,9 @@ public class EventEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_id_type")
     private EventTypeEntity type;
+
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "fk_id_owner")
+    @Column(name = "fk_id_owner")
+    private Integer owner;
 }
