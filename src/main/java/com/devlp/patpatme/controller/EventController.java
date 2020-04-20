@@ -8,10 +8,7 @@ import com.devlp.patpatme.util.EventUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -49,5 +46,16 @@ public class EventController {
     @GetMapping(value = "/api/event/type")
     public List<EventTypeEntity> getEventType() {
         return eventTypeRepository.findAll();
+    }
+
+    @GetMapping(value = "/api/event")
+    public Object getEvent(@RequestParam Integer eventId) {
+
+        try {
+            return eventService.getEventById(eventId);
+        } catch (Exception e) {
+            System.out.println(e);
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

@@ -1,6 +1,7 @@
 package com.devlp.patpatme.service.implementation;
 
 import com.devlp.patpatme.dto.event.CreateEventDto;
+import com.devlp.patpatme.dto.event.EventDto;
 import com.devlp.patpatme.entity.EventEntity;
 import com.devlp.patpatme.entity.EventTypeEntity;
 import com.devlp.patpatme.repository.EventRepository;
@@ -29,6 +30,7 @@ public class EventServiceImpl implements EventService {
         newEvent.setName(createEventDto.getName());
         newEvent.setDescription(createEventDto.getDescription());
         newEvent.setLocalisation(createEventDto.getLocalisation());
+        newEvent.setOwner(11);
 
         if (!createEventDto.getDate().isEmpty()) {
             ZonedDateTime dateZonedDateTime = ZonedDateTime.parse(createEventDto.getDate());
@@ -45,6 +47,20 @@ public class EventServiceImpl implements EventService {
 
         eventRepository.save(newEvent);
 
+    }
+
+    @Override
+    public EventDto getEventById(Integer eventId) {
+
+        EventEntity eventEntity = eventRepository.findOneById(eventId);
+        EventDto eventDto = new EventDto();
+        return eventDto
+                .setId(eventEntity.getId())
+                .setName(eventEntity.getName())
+                .setDescription(eventEntity.getDescription())
+                .setDate(eventEntity.getDate().toString())
+                .setLocalisation(eventEntity.getLocalisation())
+                .setFk_id_type(eventEntity.getType().getId().toString());
     }
 
     @Override
