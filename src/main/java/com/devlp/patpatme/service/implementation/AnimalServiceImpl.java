@@ -7,11 +7,13 @@ import com.devlp.patpatme.repository.AnimalRepository;
 import com.devlp.patpatme.repository.AnimalTypeRepository;
 import com.devlp.patpatme.service.AnimalService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.sql.Timestamp;
 import java.time.ZonedDateTime;
 
+@Service
 public class AnimalServiceImpl implements AnimalService {
 
     @Autowired
