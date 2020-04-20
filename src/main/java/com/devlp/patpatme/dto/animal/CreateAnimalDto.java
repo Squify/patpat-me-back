@@ -13,6 +13,7 @@ public class CreateAnimalDto {
 
     private String name;
     private String birthday;
+    private String fk_id_temper;
     private String fk_id_gender;
     private String fk_id_type;
     private String fk_id_race;
