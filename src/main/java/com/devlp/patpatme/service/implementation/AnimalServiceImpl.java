@@ -66,7 +66,7 @@ public class AnimalServiceImpl implements AnimalService {
         if (!createAnimalDto.getFk_id_race().isEmpty()) {
             RaceEntity race = raceRepository.findOneByName(createAnimalDto.getFk_id_race());
             if (race != null)
-                newAnimal.setType(race.getId());
+                newAnimal.setRace(race.getId());
         }
 
         animalRepository.save(newAnimal);

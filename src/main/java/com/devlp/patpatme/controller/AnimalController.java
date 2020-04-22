@@ -7,6 +7,7 @@ import com.devlp.patpatme.entity.RaceEntity;
 import com.devlp.patpatme.repository.AnimalTemperRepository;
 import com.devlp.patpatme.repository.RaceRepository;
 import com.devlp.patpatme.service.AnimalService;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
