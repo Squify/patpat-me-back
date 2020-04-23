@@ -34,44 +34,52 @@ public class AnimalServiceImpl implements AnimalService {
     @Override
     @Transactional
     public void createAnimal(CreateAnimalDto createAnimalDto) {
-
+        System.out.println("test");
         AnimalEntity newAnimal = new AnimalEntity();
 
         Timestamp signup = new Timestamp(System.currentTimeMillis());
 
         newAnimal.setName(createAnimalDto.getName());
-
+        System.out.println("test2");
         if (!createAnimalDto.getBirthday().isEmpty()) {
             ZonedDateTime birthdayZonedDateTime = ZonedDateTime.parse(createAnimalDto.getBirthday());
             Timestamp birthday = Timestamp.from(birthdayZonedDateTime.toInstant());
             newAnimal.setBirthday(birthday);
         }
-
+        System.out.println("test3");
         if (!createAnimalDto.getFk_id_type().isEmpty()) {
-            AnimalTypeEntity type = animalTypeRepository.findOneByName(createAnimalDto.getFk_id_type());
-            if (type != null)
-                newAnimal.setType(type.getId());
+            AnimalTypeEntity fk_id_type = animalTypeRepository.findOneByName(createAnimalDto.getFk_id_type());
+            if (fk_id_type != null)
+                newAnimal.setType(fk_id_type);
         }
 
+        System.out.println("test4");
         if (!createAnimalDto.getFk_id_gender().isEmpty()) {
-            AnimalGenderEntity gender = animalGenderRepository.findOneByName(createAnimalDto.getFk_id_gender());
-            if (gender != null)
-                newAnimal.setGender(gender.getId());
+            AnimalGenderEntity fk_id_gender = animalGenderRepository.findOneByName(createAnimalDto.getFk_id_gender());
+            if (fk_id_gender != null)
+                newAnimal.setGender(fk_id_gender);
         }
-
+        System.out.println("test5");
         if (!createAnimalDto.getFk_id_race().isEmpty()) {
-            RaceEntity race = raceRepository.findOneByName(createAnimalDto.getFk_id_race());
-            if (race != null)
-                newAnimal.setRace(race.getId());
+            RaceEntity fk_id_race = raceRepository.findOneByName(createAnimalDto.getFk_id_race());
+            if (fk_id_race != null)
+                newAnimal.setRace(fk_id_race);
         }
-
+        System.out.println("test6");
+       /*
         if (!createAnimalDto.getFk_id_temper().isEmpty()) {
+            System.out.println("test61");
             AnimalTemperEntity temper = animalTemperRepository.findOneByName(createAnimalDto.getFk_id_temper());
             if (temper != null)
-                newAnimal.setTemper(temper.getId());
-        }
+                System.out.println("test63");
+             newAnimal.setTemper(temper);
+            System.out.println("test62");
+         }
 
+        */
+        System.out.println("test7");
         animalRepository.save(newAnimal);
+        System.out.println("test");
     }
 
     @Override
