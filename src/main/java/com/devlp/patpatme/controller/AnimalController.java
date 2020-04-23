@@ -2,6 +2,7 @@ package com.devlp.patpatme.controller;
 
 import com.devlp.patpatme.dto.animal.*;
 import com.devlp.patpatme.service.AnimalService;
+import com.devlp.patpatme.service.implementation.AnimalServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,9 +22,10 @@ public class AnimalController {
     // @ApiOperation(value = "Créer un nouvel animal dans la base de données")
     @PostMapping(value = "/api/animal/create")
     public ResponseEntity createAnimal(@RequestBody CreateAnimalDto createAnimalDto) {
-
+        System.out.println("coucou2");
         try {
             animalService.createAnimal(createAnimalDto);
+            System.out.println("apres");
             return new ResponseEntity(HttpStatus.CREATED);
         } catch (Exception e) {
             System.out.println(e);

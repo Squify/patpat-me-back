@@ -54,6 +54,12 @@ CREATE TABLE animal_type
     name character varying(256) NOT NULL
 );
 
+CREATE TABLE animal_temper
+(
+    id integer PRIMARY KEY NOT NULL,
+    name character varying(256) NOT NULL
+);
+
 CREATE TABLE race
 (
     id integer PRIMARY KEY NOT NULL,
@@ -69,7 +75,8 @@ CREATE TABLE animal
     fk_id_owner integer REFERENCES users(id) NOT NULL,
     fk_id_gender integer REFERENCES animal_gender(id) NOT NULL,
     fk_id_type integer REFERENCES animal_type(id) NOT NULL,
-    fk_id_race integer REFERENCES race(id)
+    fk_id_race integer REFERENCES race(id),
+    fk_id_temper integer REFERENCES animal_temper(id)
 );
 
 CREATE TABLE event_type
@@ -107,12 +114,6 @@ CREATE TABLE event_tags
     fk_id_tag integer REFERENCES tag(id) NOT NULL,
     fk_id_event integer REFERENCES event(id) NOT NULL,
     PRIMARY KEY(fk_id_tag, fk_id_event)
-);
-
-CREATE TABLE animal_temper
-(
-    id integer PRIMARY KEY NOT NULL,
-    name character varying(256) NOT NULL
 );
 
 CREATE SEQUENCE user_gender_sequence START 1;
