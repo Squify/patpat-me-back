@@ -7,9 +7,8 @@ import java.util.List;
 
 public interface AnimalService {
     void createAnimal(CreateAnimalDto createAnimalDto);
-    List<RaceDto> getAllRace();
-    List<AnimalGenderDto> getAllGender();
-    List<AnimalTemperDto> getAllTemper();
     List<AnimalTypeDto> getAllType();
-
+    List<AnimalGenderDto> getAllGender();
+    List<RaceDto> getAllRace();
+    List<AnimalTemperDto> getAllTemper();
 }

@@ -31,22 +31,23 @@ public class AnimalController {
         }
     }
 
+    @GetMapping(value = "/api/animal/types")
+    public List<AnimalTypeDto> getType() {
+        return animalService.getAllType();
+    }
+
     @GetMapping(value = "/api/animal/genders")
     public List<AnimalGenderDto> getGender() {
         return animalService.getAllGender();
     }
 
-    @GetMapping(value = "/api/animal/types")
-    public List<AnimalTypeDto> getType() {
-        return animalService.getAllType();
-    }
-    @GetMapping(value = "/api/animal/tempers")
-    public List<AnimalTemperDto> getTemper() {
-        return animalService.getAllTemper();
-    }
-
     @GetMapping(value = "/api/animal/races")
     public List<RaceDto> getRace() {
         return animalService.getAllRace();
+    }
+
+    @GetMapping(value = "/api/animal/tempers")
+    public List<AnimalTemperDto> getTemper() {
+        return animalService.getAllTemper();
     }
 }
