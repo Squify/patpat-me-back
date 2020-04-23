@@ -47,22 +47,16 @@ public class AnimalServiceImpl implements AnimalService {
             newAnimal.setBirthday(birthday);
         }
 
-        if (!createAnimalDto.getFk_id_gender().isEmpty()) {
-            AnimalGenderEntity gender = animalGenderRepository.findOneByName(createAnimalDto.getFk_id_gender());
-            if (gender != null)
-                newAnimal.setGender(gender.getId());
-        }
-
         if (!createAnimalDto.getFk_id_type().isEmpty()) {
             AnimalTypeEntity type = animalTypeRepository.findOneByName(createAnimalDto.getFk_id_type());
             if (type != null)
                 newAnimal.setType(type.getId());
         }
 
-        if (!createAnimalDto.getFk_id_temper().isEmpty()) {
-            AnimalTemperEntity temper = animalTemperRepository.findOneByName(createAnimalDto.getFk_id_temper());
-            if (temper != null)
-                newAnimal.setTemper(temper.getId());
+        if (!createAnimalDto.getFk_id_gender().isEmpty()) {
+            AnimalGenderEntity gender = animalGenderRepository.findOneByName(createAnimalDto.getFk_id_gender());
+            if (gender != null)
+                newAnimal.setGender(gender.getId());
         }
 
         if (!createAnimalDto.getFk_id_race().isEmpty()) {
@@ -71,7 +65,39 @@ public class AnimalServiceImpl implements AnimalService {
                 newAnimal.setRace(race.getId());
         }
 
+        if (!createAnimalDto.getFk_id_temper().isEmpty()) {
+            AnimalTemperEntity temper = animalTemperRepository.findOneByName(createAnimalDto.getFk_id_temper());
+            if (temper != null)
+                newAnimal.setTemper(temper.getId());
+        }
+
         animalRepository.save(newAnimal);
+    }
+
+    @Override
+    public List<AnimalTypeDto> getAllType(){
+
+        List<AnimalTypeDto> animalTypeDtos = new ArrayList<>();
+        List<AnimalTypeEntity> types = animalTypeRepository.findAll();
+        for ( AnimalTypeEntity type :types ) {
+            AnimalTypeDto animalGenderDto = new AnimalTypeDto();
+            animalGenderDto.setName(type.getName());
+            animalTypeDtos.add(animalGenderDto);
+        }
+        return animalTypeDtos;
+    }
+
+    @Override
+    public List<AnimalGenderDto> getAllGender() {
+
+        List<AnimalGenderDto> animalGenderDtos = new ArrayList<>();
+        List<AnimalGenderEntity> genders = animalGenderRepository.findAll();
+        for ( AnimalGenderEntity gender :genders ) {
+            AnimalGenderDto animalGenderDto = new AnimalGenderDto();
+            animalGenderDto.setName(gender.getName());
+            animalGenderDtos.add(animalGenderDto);
+        }
+        return animalGenderDtos;
     }
 
     @Override
@@ -89,19 +115,6 @@ public class AnimalServiceImpl implements AnimalService {
 
 
     @Override
-    public List<AnimalGenderDto> getAllGender() {
-
-        List<AnimalGenderDto> animalGenderDtos = new ArrayList<>();
-        List<AnimalGenderEntity> genders = animalGenderRepository.findAll();
-        for ( AnimalGenderEntity gender :genders ) {
-            AnimalGenderDto animalGenderDto = new AnimalGenderDto();
-            animalGenderDto.setName(gender.getName());
-            animalGenderDtos.add(animalGenderDto);
-        }
-        return animalGenderDtos;
-    }
-
-    @Override
     public List<AnimalTemperDto> getAllTemper(){
 
         List<AnimalTemperDto> animalTemperDtos = new ArrayList<>();
@@ -114,18 +127,7 @@ public class AnimalServiceImpl implements AnimalService {
         return animalTemperDtos;
     }
 
-    @Override
-    public List<AnimalTypeDto> getAllType(){
 
-        List<AnimalTypeDto> animalTypeDtos = new ArrayList<>();
-        List<AnimalTypeEntity> types = animalTypeRepository.findAll();
-        for ( AnimalTypeEntity type :types ) {
-            AnimalTypeDto animalGenderDto = new AnimalTypeDto();
-            animalGenderDto.setName(type.getName());
-            animalTypeDtos.add(animalGenderDto);
-        }
-        return animalTypeDtos;
-    }
 
 }
 
