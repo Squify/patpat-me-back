@@ -67,6 +67,7 @@ public class AnimalServiceImpl implements AnimalService {
         }
         System.out.println("test6");
        /*
+       NE FONCTIONNE PAS
         if (!createAnimalDto.getFk_id_temper().isEmpty()) {
             System.out.println("test61");
             AnimalTemperEntity temper = animalTemperRepository.findOneByName(createAnimalDto.getFk_id_temper());
@@ -75,8 +76,10 @@ public class AnimalServiceImpl implements AnimalService {
              newAnimal.setTemper(temper);
             System.out.println("test62");
          }
-
         */
+       //TODO faire le faire fk_id_owner
+        newAnimal.setOwner(1);
+
         System.out.println("test7");
         animalRepository.save(newAnimal);
         System.out.println("test");

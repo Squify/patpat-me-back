@@ -24,9 +24,11 @@ public class AnimalEntity {
     @Column(name = "birthday")
     private Timestamp birthday;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fk_id_owner")
-    private UserEntity owner;
+    //@ManyToOne(fetch = FetchType.LAZY)
+    //@JoinColumn(name = "fk_id_owner")
+    // private UserEntity owner;
+    @Column(name = "fk_id_owner")
+    private Integer owner;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_id_gender")
@@ -44,16 +46,3 @@ public class AnimalEntity {
     @JoinColumn(name = "fk_id_temper")
     private AnimalTemperEntity temper;
 }
-
-    /*
-    @JoinColumn(name = "fk_id_gender")
-    private Integer gender;
-
-    @JoinColumn(name = "fk_id_type")
-    private Integer type;
-
-    @JoinColumn(name = "fk_id_race")
-    private Integer race;
-
-
-     */
