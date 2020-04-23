@@ -1,13 +1,7 @@
 package com.devlp.patpatme.controller;
 
-
-
-import com.devlp.patpatme.entity.AnimalTemperEntity;
-import com.devlp.patpatme.entity.RaceEntity;
-import com.devlp.patpatme.repository.AnimalTemperRepository;
-import com.devlp.patpatme.repository.RaceRepository;
+import com.devlp.patpatme.dto.animal.*;
 import com.devlp.patpatme.service.AnimalService;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,31 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import com.devlp.patpatme.dto.animal.CreateAnimalDto;
-import com.devlp.patpatme.entity.AnimalGenderEntity;
-import com.devlp.patpatme.entity.AnimalTypeEntity;
-import com.devlp.patpatme.repository.AnimalGenderRepository;
-import com.devlp.patpatme.repository.AnimalTypeRepository;
-
-
-
 @RestController
 public class AnimalController {
 
     @Autowired
     private AnimalService animalService;
-
-    @Autowired
-    private AnimalGenderRepository animalGenderRepository;
-
-    @Autowired
-    private AnimalTypeRepository  animalTypeRepository;
-
-    @Autowired
-    private RaceRepository raceRepository;
-
-    @Autowired
-    private AnimalTemperRepository animalTemperRepository;
 
     // @ApiOperation(value = "Créer un nouvel animal dans la base de données")
     @PostMapping(value = "/api/animal/create")
@@ -58,18 +32,21 @@ public class AnimalController {
     }
 
     @GetMapping(value = "/api/animal/genders")
-    public List<AnimalGenderEntity> getGender() {
-        return animalGenderRepository.findAll();
+    public List<AnimalGenderDto> getGender() {
+        return animalService.getAllGender();
     }
 
     @GetMapping(value = "/api/animal/types")
-    public List<AnimalTypeEntity> getType() {
-        return animalTypeRepository.findAll();
+    public List<AnimalTypeDto> getType() {
+        return animalService.getAllType();
+    }
+    @GetMapping(value = "/api/animal/tempers")
+    public List<AnimalTemperDto> getTemper() {
+        return animalService.getAllTemper();
     }
 
     @GetMapping(value = "/api/animal/races")
-    public List<RaceEntity> getRace() { return raceRepository.findAll(); }
-
-    @GetMapping(value = "/api/animal/tempers")
-    public List<AnimalTemperEntity> getTemper() { return animalTemperRepository.findAll(); }
+    public List<RaceDto> getRace() {
+        return animalService.getAllRace();
+    }
 }

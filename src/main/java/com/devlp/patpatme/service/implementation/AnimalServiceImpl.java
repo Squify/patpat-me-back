@@ -1,6 +1,6 @@
 package com.devlp.patpatme.service.implementation;
 
-import com.devlp.patpatme.dto.animal.CreateAnimalDto;
+import com.devlp.patpatme.dto.animal.*;
 import com.devlp.patpatme.entity.*;
 import com.devlp.patpatme.repository.*;
 import com.devlp.patpatme.service.AnimalService;
@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.sql.Timestamp;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class AnimalServiceImpl implements AnimalService {
@@ -71,5 +73,59 @@ public class AnimalServiceImpl implements AnimalService {
 
         animalRepository.save(newAnimal);
     }
+
+    @Override
+    public List<RaceDto> getAllRace() {
+
+        List<RaceDto> raceDtos = new ArrayList<>();
+        List<RaceEntity> races = raceRepository.findAll();
+        for (RaceEntity race : races) {
+            RaceDto raceDto = new RaceDto();
+            raceDto.setName(race.getName());
+            raceDtos.add(raceDto);
+        }
+        return raceDtos;
+    }
+
+
+    @Override
+    public List<AnimalGenderDto> getAllGender() {
+
+        List<AnimalGenderDto> animalGenderDtos = new ArrayList<>();
+        List<AnimalGenderEntity> genders = animalGenderRepository.findAll();
+        for ( AnimalGenderEntity gender :genders ) {
+            AnimalGenderDto animalGenderDto = new AnimalGenderDto();
+            animalGenderDto.setName(gender.getName());
+            animalGenderDtos.add(animalGenderDto);
+        }
+        return animalGenderDtos;
+    }
+
+    @Override
+    public List<AnimalTemperDto> getAllTemper(){
+
+        List<AnimalTemperDto> animalTemperDtos = new ArrayList<>();
+        List<AnimalTemperEntity> tempers = animalTemperRepository.findAll();
+        for ( AnimalTemperEntity temper :tempers ) {
+            AnimalTemperDto animalTemperDto = new AnimalTemperDto();
+            animalTemperDto.setName(temper.getName());
+            animalTemperDtos.add(animalTemperDto);
+        }
+        return animalTemperDtos;
+    }
+
+    @Override
+    public List<AnimalTypeDto> getAllType(){
+
+        List<AnimalTypeDto> animalTypeDtos = new ArrayList<>();
+        List<AnimalTypeEntity> types = animalTypeRepository.findAll();
+        for ( AnimalTypeEntity type :types ) {
+            AnimalTypeDto animalGenderDto = new AnimalTypeDto();
+            animalGenderDto.setName(type.getName());
+            animalTypeDtos.add(animalGenderDto);
+        }
+        return animalTypeDtos;
+    }
+
 }
 
