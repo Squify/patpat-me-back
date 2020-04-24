@@ -3,19 +3,29 @@ package com.devlp.patpatme.service.implementation;
 import com.devlp.patpatme.dto.user.CreateAccountDto;
 import com.devlp.patpatme.entity.UserEntity;
 import com.devlp.patpatme.entity.UserGenderEntity;
+import com.devlp.patpatme.exception.UserNotFoundException;
 import com.devlp.patpatme.repository.UserGenderRepository;
 import com.devlp.patpatme.repository.UserRepository;
+import com.devlp.patpatme.security.CurrentUser;
 import com.devlp.patpatme.service.UserService;
 import com.devlp.patpatme.util.BCryptManagerUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.sql.Timestamp;
 import java.time.ZonedDateTime;
+import java.util.Collections;
+import java.util.List;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
@@ -71,4 +81,42 @@ public class UserServiceImpl implements UserService {
     public boolean userExistsWithPseudo(String pseudo) {
         return userRepository.existsUserEntityByPseudoIgnoreCase(pseudo);
     }
+
+    @Override
+    public UserDetails loadUserByUsername(String mail) throws UsernameNotFoundException {
+
+        try {
+            UserEntity userEntity = loadUserByMail(mail);
+            return buildCurrentUserFromPersonEntity(userEntity);
+
+        } catch (UserNotFoundException e) {
+            throw new UsernameNotFoundException("User with mail : " + mail + " not found");
+        }
+    }
+
+    @Override
+    public UserEntity loadUserById(Integer id) throws UserNotFoundException {
+
+        return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User with id " + id + " not found in the database"));
+    }
+
+    @Override
+    public UserEntity loadUserByMail(String mail) throws UserNotFoundException {
+
+        return userRepository.findByEmailIgnoreCase(mail).orElseThrow(() -> new UserNotFoundException("User with mail " + mail + " not found in the database"));
+    }
+
+    private User buildCurrentUserFromPersonEntity(UserEntity userEntity) {
+
+        List<GrantedAuthority> authorities = buildAuthoritiesFromRoleEnum();
+        return new CurrentUser(userEntity.getEmail(), userEntity.getPassword(), authorities, userEntity.getId());
+    }
+
+    private List<GrantedAuthority> buildAuthoritiesFromRoleEnum() {
+
+        GrantedAuthority grantedAuthority = new SimpleGrantedAuthority("USER");
+        return Collections.singletonList(grantedAuthority);
+    }
+
+
 }
