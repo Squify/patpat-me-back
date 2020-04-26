@@ -10,13 +10,13 @@ public interface UserService {
 
     void createUser(CreateAccountDto createAccountDto);
 
-    boolean userExistsWithMail(String mail);
+    boolean userExistsWithEmail(String email);
 
     boolean userExistsWithPseudo(String pseudo);
 
-    UserEntity loadUserByMail(String mail) throws UserNotFoundException;
+    UserEntity loadUserByEmail(String email) throws UserNotFoundException;
 
-    UserDetails loadUserByUsername(String mail) throws UsernameNotFoundException;
+    UserDetails loadUserByUsername(String email) throws UsernameNotFoundException;
 
     UserEntity loadUserById(Integer id) throws UserNotFoundException;
 }

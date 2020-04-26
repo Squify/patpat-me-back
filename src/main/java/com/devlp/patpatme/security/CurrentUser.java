@@ -15,9 +15,9 @@ public class CurrentUser extends User {
 
     private Integer id;
 
-    public CurrentUser(String mail, String password, List<GrantedAuthority> authorities, Integer id) {
+    public CurrentUser(String email, String password, List<GrantedAuthority> authorities, Integer id) {
 
-        super(mail, password, authorities);
+        super(email, password, authorities);
         this.id = id;
     }
 }

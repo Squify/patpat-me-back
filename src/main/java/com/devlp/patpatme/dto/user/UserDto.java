@@ -12,7 +12,7 @@ import lombok.experimental.Accessors;
 
 public class UserDto {
     private Integer id;
-    private String mail;
+    private String email;
     private String pseudo;
     private String firstname;
     private String lastname;

@@ -53,6 +53,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Bean
     AuthenticationFailureHandler authenticationFailureHandler() {
+
+        System.out.println("Alors là ... ?");
         return (request, response, exception) -> response.setStatus(HttpStatus.UNAUTHORIZED.value());
     }
 

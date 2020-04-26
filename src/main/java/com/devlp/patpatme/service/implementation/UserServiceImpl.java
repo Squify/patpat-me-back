@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
         Timestamp signup = new Timestamp(System.currentTimeMillis());
 
-        newUser.setEmail(createAccountDto.getMail());
+        newUser.setEmail(createAccountDto.getEmail());
         newUser.setPseudo(createAccountDto.getPseudo());
         newUser.setFirstname(createAccountDto.getFirstname());
         newUser.setLastname(createAccountDto.getLastname());
@@ -73,8 +73,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public boolean userExistsWithMail(String mail) {
-        return userRepository.existsUserEntityByEmailIgnoreCase(mail);
+    public boolean userExistsWithEmail(String email) {
+        return userRepository.existsUserEntityByEmailIgnoreCase(email);
     }
 
     @Override
@@ -83,14 +83,14 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String mail) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
         try {
-            UserEntity userEntity = loadUserByMail(mail);
+            UserEntity userEntity = loadUserByEmail(email);
             return buildCurrentUserFromPersonEntity(userEntity);
 
         } catch (UserNotFoundException e) {
-            throw new UsernameNotFoundException("User with mail : " + mail + " not found");
+            throw new UsernameNotFoundException("User with email : " + email + " not found");
         }
     }
 
@@ -101,9 +101,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public UserEntity loadUserByMail(String mail) throws UserNotFoundException {
+    public UserEntity loadUserByEmail(String email) throws UserNotFoundException {
 
-        return userRepository.findByEmailIgnoreCase(mail).orElseThrow(() -> new UserNotFoundException("User with mail " + mail + " not found in the database"));
+        return userRepository.findByEmailIgnoreCase(email).orElseThrow(() -> new UserNotFoundException("User with email " + email + " not found in the database"));
     }
 
     private User buildCurrentUserFromPersonEntity(UserEntity userEntity) {
