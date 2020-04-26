@@ -40,7 +40,7 @@ public class UserController {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
 
         // check if mail is already used
-        if (userService.userExistsWithMail(createAccountDto.getMail()))
+        if (userService.userExistsWithEmail(createAccountDto.getEmail()))
             return new ResponseEntity(HttpStatus.EXPECTATION_FAILED);
 
         // check if pseudo is already used
@@ -64,8 +64,15 @@ public class UserController {
 
     @PostMapping(value = "/api/auth/login/success")
     public UserDto loginSuccess() throws UserNotFoundException {
-
         CurrentUser user = (CurrentUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        System.out.println();
+        System.out.println();
+        System.out.println("loginSuccess");
+        System.out.println("             " + getUserDtoFromCurrentUser(user));
+        System.out.println();
+        System.out.println();
+
         return getUserDtoFromCurrentUser(user);
     }
 
@@ -75,8 +82,15 @@ public class UserController {
         // Controller used solely to send back an UNAUTHORIZED response
     }
 
-    @GetMapping(value = "/api/auth/user/get")
+    @GetMapping(value = "/api/auth/user")
     public Object getUser(CurrentUser user) throws UserNotFoundException {
+
+        System.out.println();
+        System.out.println();
+        System.out.println("getUser");
+        System.out.println("             " + getUserDtoFromCurrentUser(user));
+        System.out.println();
+        System.out.println();
 
         return getUserDtoFromCurrentUser(user);
     }
@@ -84,6 +98,15 @@ public class UserController {
     private UserDto getUserDtoFromCurrentUser(CurrentUser user) throws UserNotFoundException {
 
         UserEntity userEntity = userService.loadUserById(user.getId());
+
+        System.out.println();
+        System.out.println();
+        System.out.println("getUserDtoFromCurrentUser");
+        System.out.println("             " + userEntity);
+        System.out.println("             " + UserMapper.toDTO(userEntity));
+        System.out.println();
+        System.out.println();
+
         return UserMapper.toDTO(userEntity);
     }
 

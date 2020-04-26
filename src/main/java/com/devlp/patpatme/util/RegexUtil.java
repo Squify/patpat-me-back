@@ -10,7 +10,7 @@ public class RegexUtil {
     private RegexUtil(){}
 
     private static final Pattern specialCharacters = Pattern.compile("[!@#%^$&*()/\\\\_+\\-=\\[\\]{}'~\"|,.;:<>?éèàêôûç°£µ]+");
-    private static final Pattern mailCharacters = Pattern.compile("^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$");
+    private static final Pattern emailCharacters = Pattern.compile("^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$");
     private static final Pattern phoneCharacters = Pattern.compile("(?:(?:\\+|00)([1-9][0-9]{0,2})|0)\\s*[1-9](?:[\\s.-]*\\d{2}){4}$");
 
     static boolean passwordIsSecure(String password) {
@@ -32,8 +32,8 @@ public class RegexUtil {
         return m.find();
     }
 
-    public static boolean mailIsValid(String mail) {
-        Matcher m = mailCharacters.matcher(mail);
+    public static boolean emailIsValid(String email) {
+        Matcher m = emailCharacters.matcher(email);
         return m.find();
     }
 
