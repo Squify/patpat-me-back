@@ -3,14 +3,14 @@ CREATE SCHEMA public;
 
 create extension if not exists unaccent;
 
-create or replace function remove_accents(field varchar)
-	returns text
-as
-$BODY$
-	select unaccent(field);
-$BODY$
-language sql
-immutable;
+--create or replace function remove_accents(field varchar)
+--	returns text
+--as
+--$BODY$
+--	select unaccent(field);
+--$BODY$
+--language sql
+--immutable;
 
 CREATE TABLE user_gender
 (
