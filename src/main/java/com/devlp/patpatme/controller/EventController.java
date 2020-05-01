@@ -38,7 +38,6 @@ public class EventController {
             eventService.createEvent(createEventDto);
             return new ResponseEntity(HttpStatus.CREATED);
         } catch (Exception e) {
-            System.out.println(e);
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -54,7 +53,6 @@ public class EventController {
         try {
             return eventService.getEventById(eventId);
         } catch (Exception e) {
-            System.out.println(e);
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

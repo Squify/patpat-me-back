@@ -52,7 +52,6 @@ public class UserController {
             userService.createUser(createAccountDto);
             return new ResponseEntity(HttpStatus.CREATED);
         } catch (Exception e) {
-            System.out.println(e);
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -64,15 +63,8 @@ public class UserController {
 
     @PostMapping(value = "/api/auth/login/success")
     public UserDto loginSuccess() throws UserNotFoundException {
+
         CurrentUser user = (CurrentUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        System.out.println();
-        System.out.println();
-        System.out.println("loginSuccess");
-        System.out.println("             " + getUserDtoFromCurrentUser(user));
-        System.out.println();
-        System.out.println();
-
         return getUserDtoFromCurrentUser(user);
     }
 
@@ -85,28 +77,12 @@ public class UserController {
     @GetMapping(value = "/api/auth/user")
     public Object getUser(CurrentUser user) throws UserNotFoundException {
 
-        System.out.println();
-        System.out.println();
-        System.out.println("getUser");
-        System.out.println("             " + getUserDtoFromCurrentUser(user));
-        System.out.println();
-        System.out.println();
-
         return getUserDtoFromCurrentUser(user);
     }
 
     private UserDto getUserDtoFromCurrentUser(CurrentUser user) throws UserNotFoundException {
 
         UserEntity userEntity = userService.loadUserById(user.getId());
-
-        System.out.println();
-        System.out.println();
-        System.out.println("getUserDtoFromCurrentUser");
-        System.out.println("             " + userEntity);
-        System.out.println("             " + UserMapper.toDTO(userEntity));
-        System.out.println();
-        System.out.println();
-
         return UserMapper.toDTO(userEntity);
     }
 
