@@ -2,8 +2,8 @@ package com.devlp.patpatme.service.implementation;
 
 import com.devlp.patpatme.dto.user.CreateAccountDto;
 import com.devlp.patpatme.entity.UserEntity;
-import com.devlp.patpatme.entity.UserGenderEntity;
 import com.devlp.patpatme.exception.UserNotFoundException;
+import com.devlp.patpatme.mapper.UserMapper;
 import com.devlp.patpatme.repository.UserGenderRepository;
 import com.devlp.patpatme.repository.UserRepository;
 import com.devlp.patpatme.security.CurrentUser;
@@ -14,13 +14,11 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.sql.Timestamp;
-import java.time.ZonedDateTime;
 import java.util.Collections;
 import java.util.List;
 
@@ -40,36 +38,15 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void createUser(CreateAccountDto createAccountDto) {
 
-        UserEntity newUser = new UserEntity();
+        UserEntity user = UserMapper.toEntity(createAccountDto);
 
-        Timestamp signup = new Timestamp(System.currentTimeMillis());
-
-        newUser.setEmail(createAccountDto.getEmail());
-        newUser.setPseudo(createAccountDto.getPseudo());
-        newUser.setFirstname(createAccountDto.getFirstname());
-        newUser.setLastname(createAccountDto.getLastname());
-        newUser.setPhone(createAccountDto.getPhone());
-        newUser.setPush_notification(createAccountDto.isPush_notification());
-        newUser.setActive_localisation(createAccountDto.isActive_localisation());
-        newUser.setDisplay_real_name(createAccountDto.isDisplay_real_name());
-        newUser.setSign_up(signup);
-
-        String password = bCryptManagerUtil.getPasswordEncoder().encode(createAccountDto.getPassword());
-        newUser.setPassword(password);
-
-        if (!createAccountDto.getBirthday().isEmpty()) {
-            ZonedDateTime birthdayZonedDateTime = ZonedDateTime.parse(createAccountDto.getBirthday());
-            Timestamp birthday = Timestamp.from(birthdayZonedDateTime.toInstant());
-            newUser.setBirthday(birthday);
-        }
+        user.setPassword(bCryptManagerUtil.getPasswordEncoder().encode(createAccountDto.getPassword()));
 
         if (!createAccountDto.getFk_id_gender().isEmpty()) {
-            UserGenderEntity gender = userGenderRepository.findOneByName(createAccountDto.getFk_id_gender());
-            if (gender != null)
-                newUser.setGender(gender.getId());
+            user.setGender(userGenderRepository.findOneByName(createAccountDto.getFk_id_gender()));
         }
 
-        userRepository.save(newUser);
+        userRepository.save(user);
     }
 
     @Override
