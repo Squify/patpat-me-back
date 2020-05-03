@@ -5,6 +5,8 @@ import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -51,8 +53,16 @@ public class UserEntity {
     @Column(name = "display_real_name")
     private boolean display_real_name;
 
-    //    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "fk_id_gender")
-    @Column(name = "fk_id_gender")
-    private Integer gender;
+    @ManyToOne
+    @JoinColumn(name = "fk_id_gender")
+    private UserGenderEntity gender;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "follow_relation",
+            joinColumns = @JoinColumn(name = "fk_id_user", referencedColumnName = "id", nullable = false),
+            inverseJoinColumns = @JoinColumn(name = "fk_id_follower", referencedColumnName = "id", nullable = false)
+    )
+    private List<UserEntity> followers = new ArrayList<>();
+
 }

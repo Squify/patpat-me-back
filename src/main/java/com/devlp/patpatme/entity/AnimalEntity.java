@@ -24,21 +24,19 @@ public class AnimalEntity {
     @Column(name = "birthday")
     private Timestamp birthday;
 
-    //@ManyToOne(fetch = FetchType.LAZY)
-    //@JoinColumn(name = "fk_id_owner")
-    // private UserEntity owner;
-    @Column(name = "fk_id_owner")
-    private Integer owner;
+    @ManyToOne
+    @JoinColumn(name = "fk_id_owner")
+    private UserEntity owner;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "fk_id_gender")
     private AnimalGenderEntity gender;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "fk_id_type")
     private AnimalTypeEntity type;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "fk_id_race")
     private RaceEntity race;
 
