@@ -29,12 +29,11 @@ public class EventEntity {
     @Column(name = "date")
     private Timestamp date;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "fk_id_type")
     private EventTypeEntity type;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "fk_id_owner")
-    @Column(name = "fk_id_owner")
-    private Integer owner;
+    @ManyToOne
+    @JoinColumn(name = "fk_id_owner")
+    private UserEntity owner;
 }
