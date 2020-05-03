@@ -7,7 +7,6 @@ import com.devlp.patpatme.entity.UserGenderEntity;
 import com.devlp.patpatme.exception.UserNotFoundException;
 import com.devlp.patpatme.mapper.UserMapper;
 import com.devlp.patpatme.repository.UserGenderRepository;
-import com.devlp.patpatme.repository.UserRepository;
 import com.devlp.patpatme.security.CurrentUser;
 import com.devlp.patpatme.service.UserService;
 import com.devlp.patpatme.util.UserUtil;
@@ -27,9 +26,6 @@ public class UserController {
 
     @Autowired
     private UserGenderRepository userGenderRepository;
-
-    @Autowired
-    private UserRepository userRepository;
 
     //    @ApiOperation(value = "Créer un nouveau compte dans la base de données")
     @PostMapping(value = "/api/user/create")
@@ -51,7 +47,7 @@ public class UserController {
 
             userService.createUser(createAccountDto);
             return new ResponseEntity(HttpStatus.CREATED);
-        } catch (Exception e) {
+        } catch (Throwable e) {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

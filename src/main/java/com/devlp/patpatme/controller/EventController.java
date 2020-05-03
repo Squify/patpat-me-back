@@ -2,8 +2,11 @@ package com.devlp.patpatme.controller;
 
 import com.devlp.patpatme.dto.event.CreateEventDto;
 import com.devlp.patpatme.entity.EventTypeEntity;
+import com.devlp.patpatme.entity.UserEntity;
 import com.devlp.patpatme.repository.EventTypeRepository;
+import com.devlp.patpatme.security.CurrentUser;
 import com.devlp.patpatme.service.EventService;
+import com.devlp.patpatme.service.UserService;
 import com.devlp.patpatme.util.EventUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,9 +24,12 @@ public class EventController {
     @Autowired
     private EventService eventService;
 
+    @Autowired
+    private UserService userService;
+
     //    @ApiOperation(value = "Créer un nouvel évènement dans la base de données")
     @PostMapping(value = "/api/event/create")
-    public ResponseEntity createEvent(@RequestBody CreateEventDto createEventDto) {
+    public ResponseEntity createEvent(CurrentUser user, @RequestBody CreateEventDto createEventDto) {
 
         // check the inputs
         if (!EventUtil.checkCreateEventInputsAreValid(createEventDto))
@@ -35,7 +41,8 @@ public class EventController {
 
         try {
 
-            eventService.createEvent(createEventDto);
+            UserEntity userEntity = userService.loadUserById(user.getId());
+            eventService.createEvent(userEntity, createEventDto);
             return new ResponseEntity(HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
