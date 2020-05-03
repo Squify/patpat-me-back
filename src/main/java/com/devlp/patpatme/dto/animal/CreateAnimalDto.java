@@ -15,7 +15,7 @@ public class CreateAnimalDto {
     private String birthday;
     private String fk_id_type;
     private String fk_id_gender;
-    private String fk_id_race;
+    private String fk_id_breed;
     private String fk_id_temper;
 
 }
