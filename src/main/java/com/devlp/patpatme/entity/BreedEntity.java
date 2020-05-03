@@ -6,10 +6,10 @@ import lombok.experimental.Accessors;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "race")
+@Table(name = "breed")
 @Data
 @Accessors(chain = true)
-public class RaceEntity {
+public class BreedEntity {
 
     @Id
     @Column(name = "id")

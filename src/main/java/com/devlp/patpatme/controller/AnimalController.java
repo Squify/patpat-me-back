@@ -1,8 +1,14 @@
 package com.devlp.patpatme.controller;
 
-import com.devlp.patpatme.dto.animal.*;
+import com.devlp.patpatme.dto.animal.CreateAnimalDto;
+import com.devlp.patpatme.entity.*;
+import com.devlp.patpatme.repository.AnimalGenderRepository;
+import com.devlp.patpatme.repository.AnimalTemperRepository;
+import com.devlp.patpatme.repository.AnimalTypeRepository;
+import com.devlp.patpatme.repository.BreedRepository;
+import com.devlp.patpatme.security.CurrentUser;
 import com.devlp.patpatme.service.AnimalService;
-import com.devlp.patpatme.service.implementation.AnimalServiceImpl;
+import com.devlp.patpatme.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,37 +25,52 @@ public class AnimalController {
     @Autowired
     private AnimalService animalService;
 
+    @Autowired
+    private AnimalTypeRepository animalTypeRepository;
+
+    @Autowired
+    private AnimalGenderRepository animalGenderRepository;
+
+    @Autowired
+    private BreedRepository breedRepository;
+
+    @Autowired
+    private AnimalTemperRepository animalTemperRepository;
+
+    @Autowired
+    private UserService userService;
+
     // @ApiOperation(value = "Créer un nouvel animal dans la base de données")
     @PostMapping(value = "/api/animal/create")
-    public ResponseEntity createAnimal(@RequestBody CreateAnimalDto createAnimalDto) {
-        System.out.println("coucou2");
+    public ResponseEntity createAnimal(CurrentUser user, @RequestBody CreateAnimalDto createAnimalDto) {
+
         try {
-            animalService.createAnimal(createAnimalDto);
-            System.out.println("apres");
+
+            UserEntity userEntity = userService.loadUserById(user.getId());
+            animalService.createAnimal(userEntity, createAnimalDto);
             return new ResponseEntity(HttpStatus.CREATED);
         } catch (Exception e) {
-            System.out.println(e);
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @GetMapping(value = "/api/animal/types")
-    public List<AnimalTypeDto> getType() {
-        return animalService.getAllType();
+    public List<AnimalTypeEntity> getType() {
+        return animalTypeRepository.findAll();
     }
 
     @GetMapping(value = "/api/animal/genders")
-    public List<AnimalGenderDto> getGender() {
-        return animalService.getAllGender();
+    public List<AnimalGenderEntity> getGender() {
+        return animalGenderRepository.findAll();
     }
 
-    @GetMapping(value = "/api/animal/races")
-    public List<RaceDto> getRace() {
-        return animalService.getAllRace();
+    @GetMapping(value = "/api/animal/breeds")
+    public List<BreedEntity> getBreed() {
+        return breedRepository.findAll();
     }
 
     @GetMapping(value = "/api/animal/tempers")
-    public List<AnimalTemperDto> getTemper() {
-        return animalService.getAllTemper();
+    public List<AnimalTemperEntity> getTemper() {
+        return animalTemperRepository.findAll();
     }
 }

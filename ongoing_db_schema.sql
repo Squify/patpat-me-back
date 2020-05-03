@@ -60,7 +60,7 @@ CREATE TABLE animal_temper
     name character varying(256) NOT NULL
 );
 
-CREATE TABLE race
+CREATE TABLE breed
 (
     id integer PRIMARY KEY NOT NULL,
     name character varying(256) NOT NULL,
@@ -75,7 +75,7 @@ CREATE TABLE animal
     fk_id_owner integer REFERENCES users(id) NOT NULL,
     fk_id_gender integer REFERENCES animal_gender(id) NOT NULL,
     fk_id_type integer REFERENCES animal_type(id) NOT NULL,
-    fk_id_race integer REFERENCES race(id),
+    fk_id_breed integer REFERENCES breed(id),
     fk_id_temper integer REFERENCES animal_temper(id)
 );
 
@@ -120,7 +120,7 @@ CREATE SEQUENCE user_gender_sequence START 1;
 CREATE SEQUENCE users_sequence START 1;
 CREATE SEQUENCE animal_gender_sequence START 1;
 CREATE SEQUENCE animal_type_sequence START 1;
-CREATE SEQUENCE race_sequence START 1;
+CREATE SEQUENCE breed_sequence START 1;
 CREATE SEQUENCE animal_sequence START 1;
 CREATE SEQUENCE event_type_sequence START 1;
 CREATE SEQUENCE event_sequence START 1;
@@ -204,7 +204,7 @@ VALUES
 (37, 'SHY')
 ;
 
-INSERT INTO race(id, name, fk_id_type)
+INSERT INTO breed(id, name, fk_id_type)
 VALUES
 (1,'Aïdi Ou Chien De L’atlas',1),
 (2,'Akita Inu',1),

@@ -37,10 +37,10 @@ public class AnimalEntity {
     private AnimalTypeEntity type;
 
     @ManyToOne
-    @JoinColumn(name = "fk_id_race")
-    private RaceEntity race;
+    @JoinColumn(name = "fk_id_breed", nullable = true)
+    private BreedEntity breed;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "fk_id_temper")
+    @ManyToOne
+    @JoinColumn(name = "fk_id_temper", nullable = true)
     private AnimalTemperEntity temper;
 }
