@@ -40,7 +40,6 @@ public class EventServiceImpl implements EventService {
             newEvent.setDate(date);
         }
 
-
         if (!createEventDto.getFk_id_type().isEmpty()) {
             EventTypeEntity type = eventTypeRepository.findOneByName(createEventDto.getFk_id_type());
             if (type != null)
