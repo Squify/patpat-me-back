@@ -1,5 +1,7 @@
 package com.devlp.patpatme.security;
 
+import com.devlp.patpatme.util.BCryptManagerUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,8 +12,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
-import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -25,20 +28,72 @@ import java.util.List;
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-//    @Autowired
-//    private BCryptManagerUtil bCryptManagerUtil;
-
     @Value("${patpatme.configuration.security.cors.allowed.origins}")
     private List<String> allowedCorsOrigins;
 
-//    // Cannot be private, else the server doesn't start
-//    @Bean
-//    DaoAuthenticationProvider authenticationProvider(){
-//        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-////        authenticationProvider.setUserDetailsService(personService);
-////        authenticationProvider.setPasswordEncoder(bCryptManagerUtil.getPasswordEncoder());
-//        return authenticationProvider;
-//    }
+    @Autowired
+    private UserDetailsService userDetailsService;
+
+    @Autowired
+    private BCryptManagerUtil bCryptManagerUtil;
+
+    @Bean
+    DaoAuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+        authenticationProvider.setUserDetailsService(userDetailsService);
+        authenticationProvider.setPasswordEncoder(bCryptManagerUtil.getPasswordEncoder());
+        return authenticationProvider;
+    }
+
+    @Bean
+    AuthenticationFailureHandler authenticationFailureHandler() {
+
+        return (request, response, exception) -> response.setStatus(HttpStatus.UNAUTHORIZED.value());
+    }
+
+    /**
+     * Configure Spring Security's session management and filters
+     *
+     * @param http
+     * @throws Exception
+     */
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+                .cors()
+                .and()
+                    .formLogin()
+                    .loginProcessingUrl("/api/login")
+                    .successForwardUrl("/api/auth/login/success")
+                    .failureHandler(authenticationFailureHandler())
+                .and()
+                    .logout()
+                    .logoutUrl("/api/auth/logout")
+                    .deleteCookies("JSESSIONID")
+                    .logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler(HttpStatus.OK))
+                .and()
+                    .authorizeRequests()
+                    .antMatchers("/api/auth/**")
+                    .authenticated()
+                .and()
+                    .authorizeRequests()
+                    .anyRequest()
+                    .permitAll();
+
+        http.csrf().disable();
+
+        /* We create a session if needed, can only have 1 HTTP session at max, and if a session
+        existed before, we migrate all the attributes from the old to the new session
+        */
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS);
+        http.sessionManagement().sessionFixation().none();
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
+        authenticationManagerBuilder.authenticationProvider(authenticationProvider());
+    }
+
 
     @Bean
     public CorsFilter corsFilter() {
@@ -70,57 +125,4 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         return new CorsFilter(source);
     }
-
-    @Bean
-    public HttpSessionEventPublisher httpSessionEventPublisher(){
-        return new HttpSessionEventPublisher();
-    }
-
-
-    /**
-     * Configure Spring Security's session management and filters
-     *
-     * @param httpSecurity
-     * @throws Exception
-     */
-    @Override
-    protected void configure(HttpSecurity httpSecurity) throws Exception {
-
-        /* We always create a session on receival of the first HTTP request, can only have 1 HTTP session at max, and if a session
-        existed before, we migrate all the attributes from the old to the new session
-        */
-        httpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS);
-        httpSecurity.sessionManagement().sessionFixation().none();
-
-        httpSecurity
-                .cors()
-                .and()
-                .formLogin()
-                .loginProcessingUrl("/api/login")
-                // The login page is used for redirecting, since we are using routing on the frontend we will simply return a 200 OK response and let Angular handle redirections
-                .loginPage("/api/generic/ok")
-                .successForwardUrl("/api/auth/login/success")
-                .failureForwardUrl("/api/generic/login/failure")
-                .and()
-                .logout()
-                .logoutUrl("/api/auth/logout")
-                .logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler(HttpStatus.OK))
-                .and()
-                .authorizeRequests()
-                .antMatchers("/api/auth/**")
-                .authenticated()
-                .and()
-                .authorizeRequests()
-                .anyRequest()
-                .permitAll();
-
-        //httpSecurity.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
-        httpSecurity.csrf().disable();
-    }
-
-//    @Override
-//    protected void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-//        authenticationManagerBuilder.authenticationProvider(authenticationProvider());
-//    }
-
 }

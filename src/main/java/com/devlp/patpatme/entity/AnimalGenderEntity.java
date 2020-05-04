@@ -12,8 +12,6 @@ import javax.persistence.*;
 public class AnimalGenderEntity {
 
     @Id
-    @SequenceGenerator(name = "animal_gender_generator", sequenceName = "animal_gender_sequence", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "animal_gender_generator")
     @Column(name = "id")
     private Integer id;
 

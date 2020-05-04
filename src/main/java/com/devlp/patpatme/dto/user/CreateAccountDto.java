@@ -11,7 +11,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class CreateAccountDto {
 
-    private String mail;
+    private String email;
     private String password;
     private String pseudo;
     private String firstname;

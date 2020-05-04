@@ -13,7 +13,7 @@ public class UserUtil {
     }
 
     public static boolean checkCreatePersonInputsAreValid(CreateAccountDto createAccountDto) {
-        final String mail = createAccountDto.getMail();
+        final String email = createAccountDto.getEmail();
         final String password = createAccountDto.getPassword();
         final String lastname = createAccountDto.getLastname();
         final String firstname = createAccountDto.getFirstname();
@@ -22,7 +22,7 @@ public class UserUtil {
         final String pseudo = createAccountDto.getPseudo();
 
 
-        if (StringUtils.isBlank(mail) || StringUtils.isBlank(pseudo) || StringUtils.isBlank(password) || StringUtils.isBlank(lastname) || StringUtils.isBlank(firstname)) {
+        if (StringUtils.isBlank(email) || StringUtils.isBlank(pseudo) || StringUtils.isBlank(password) || StringUtils.isBlank(lastname) || StringUtils.isBlank(firstname)) {
             return false;
         }
 
@@ -38,7 +38,7 @@ public class UserUtil {
             return false;
         }
 
-        return RegexUtil.mailIsValid(mail);
+        return RegexUtil.emailIsValid(email);
     }
 
 
