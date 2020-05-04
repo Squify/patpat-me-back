@@ -3,7 +3,7 @@ package com.devlp.patpatme.controller;
 import com.devlp.patpatme.dto.animal.CreateAnimalDto;
 import com.devlp.patpatme.entity.*;
 import com.devlp.patpatme.repository.AnimalGenderRepository;
-import com.devlp.patpatme.repository.AnimalTemperRepository;
+import com.devlp.patpatme.repository.TemperRepository;
 import com.devlp.patpatme.repository.AnimalTypeRepository;
 import com.devlp.patpatme.repository.BreedRepository;
 import com.devlp.patpatme.security.CurrentUser;
@@ -35,7 +35,7 @@ public class AnimalController {
     private BreedRepository breedRepository;
 
     @Autowired
-    private AnimalTemperRepository animalTemperRepository;
+    private TemperRepository temperRepository;
 
     @Autowired
     private UserService userService;
@@ -49,7 +49,7 @@ public class AnimalController {
             UserEntity userEntity = userService.loadUserById(user.getId());
             animalService.createAnimal(userEntity, createAnimalDto);
             return new ResponseEntity(HttpStatus.CREATED);
-        } catch (Exception e) {
+        } catch (Throwable e) {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -70,7 +70,7 @@ public class AnimalController {
     }
 
     @GetMapping(value = "/api/animal/tempers")
-    public List<AnimalTemperEntity> getTemper() {
-        return animalTemperRepository.findAll();
+    public List<TemperEntity> getTemper() {
+        return temperRepository.findAll();
     }
 }

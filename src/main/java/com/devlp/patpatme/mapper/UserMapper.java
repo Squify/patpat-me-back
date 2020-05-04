@@ -32,8 +32,10 @@ public class UserMapper {
 
         UserEntity user = ModelMapperUtil.createModelMapper(CreateAccountDto.class, UserEntity.class, dto, UserEntity::setBirthday);
 
-        ZonedDateTime birthdayZonedDateTime = ZonedDateTime.parse(dto.getBirthday());
-        user.setBirthday(Timestamp.from(birthdayZonedDateTime.toInstant()));
+        if (!dto.getBirthday().isEmpty()) {
+            ZonedDateTime birthdayZonedDateTime = ZonedDateTime.parse(dto.getBirthday());
+            user.setBirthday(Timestamp.from(birthdayZonedDateTime.toInstant()));
+        }
 
         user.setSign_up(Timestamp.from(Instant.now()));
 
