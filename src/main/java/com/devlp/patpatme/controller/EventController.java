@@ -1,8 +1,10 @@
 package com.devlp.patpatme.controller;
 
 import com.devlp.patpatme.dto.event.CreateEventDto;
+import com.devlp.patpatme.entity.EventEntity;
 import com.devlp.patpatme.entity.EventTypeEntity;
 import com.devlp.patpatme.entity.UserEntity;
+import com.devlp.patpatme.repository.EventRepository;
 import com.devlp.patpatme.repository.EventTypeRepository;
 import com.devlp.patpatme.security.CurrentUser;
 import com.devlp.patpatme.service.EventService;
@@ -20,6 +22,9 @@ public class EventController {
 
     @Autowired
     private EventTypeRepository eventTypeRepository;
+
+    @Autowired
+    private EventRepository eventRepository;
 
     @Autowired
     private EventService eventService;
@@ -54,12 +59,18 @@ public class EventController {
         return eventTypeRepository.findAll();
     }
 
+    @GetMapping(value = "/api/events")
+    public List<EventEntity> getEvents() {
+        return eventRepository.findAll();
+    }
+
     @GetMapping(value = "/api/event")
     public Object getEvent(@RequestParam Integer eventId) {
 
         try {
             return eventService.getEventById(eventId);
-        } catch (Exception e) {
+        } catch (Throwable e) {
+            e.printStackTrace();
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
