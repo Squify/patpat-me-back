@@ -4,8 +4,10 @@ import com.devlp.patpatme.dto.event.CreateEventDto;
 import com.devlp.patpatme.dto.event.EventDto;
 import com.devlp.patpatme.entity.EventEntity;
 import com.devlp.patpatme.entity.EventTypeEntity;
+import com.devlp.patpatme.entity.UserEntity;
 import com.devlp.patpatme.repository.EventRepository;
 import com.devlp.patpatme.repository.EventTypeRepository;
+import com.devlp.patpatme.security.CurrentUser;
 import com.devlp.patpatme.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,14 +25,14 @@ public class EventServiceImpl implements EventService {
     private EventTypeRepository eventTypeRepository;
 
     @Override
-    public void createEvent(CreateEventDto createEventDto) {
+    public void createEvent(UserEntity user, CreateEventDto createEventDto) {
 
         EventEntity newEvent = new EventEntity();
 
         newEvent.setName(createEventDto.getName());
         newEvent.setDescription(createEventDto.getDescription());
         newEvent.setLocalisation(createEventDto.getLocalisation());
-        newEvent.setOwner(11);
+        newEvent.setOwner(user);
 
         if (!createEventDto.getDate().isEmpty()) {
             ZonedDateTime dateZonedDateTime = ZonedDateTime.parse(createEventDto.getDate());

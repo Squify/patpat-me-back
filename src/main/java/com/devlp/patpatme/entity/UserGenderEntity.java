@@ -12,8 +12,6 @@ import javax.persistence.*;
 public class UserGenderEntity {
 
     @Id
-    @SequenceGenerator(name = "user_gender_generator", sequenceName = "user_gender_sequence", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_gender_generator")
     @Column(name = "id")
     private Integer id;
 
