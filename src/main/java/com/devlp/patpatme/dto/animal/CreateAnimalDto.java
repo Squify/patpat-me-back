@@ -1,9 +1,15 @@
 package com.devlp.patpatme.dto.animal;
 
+import com.devlp.patpatme.entity.AnimalGenderEntity;
+import com.devlp.patpatme.entity.TemperEntity;
+import com.devlp.patpatme.entity.AnimalTypeEntity;
+import com.devlp.patpatme.entity.BreedEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -16,6 +22,6 @@ public class CreateAnimalDto {
     private String fk_id_type;
     private String fk_id_gender;
     private String fk_id_breed;
-    private String fk_id_temper;
+    private List<String> tempers;
 
 }

@@ -5,6 +5,8 @@ import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "animal")
@@ -40,7 +42,11 @@ public class AnimalEntity {
     @JoinColumn(name = "fk_id_breed", nullable = true)
     private BreedEntity breed;
 
-    @ManyToOne
-    @JoinColumn(name = "fk_id_temper", nullable = true)
-    private AnimalTemperEntity temper;
+    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @JoinTable(
+            name = "animal_temper",
+            joinColumns = @JoinColumn(name = "fk_id_animal", referencedColumnName = "id", nullable = true),
+            inverseJoinColumns = @JoinColumn(name = "fk_id_temper", referencedColumnName = "id", nullable = true)
+    )
+    private List<TemperEntity> tempers = new ArrayList<>();
 }

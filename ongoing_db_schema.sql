@@ -54,7 +54,7 @@ CREATE TABLE animal_type
     name character varying(256) NOT NULL
 );
 
-CREATE TABLE animal_temper
+CREATE TABLE temper
 (
     id integer PRIMARY KEY NOT NULL,
     name character varying(256) NOT NULL
@@ -75,8 +75,7 @@ CREATE TABLE animal
     fk_id_owner integer REFERENCES users(id) NOT NULL,
     fk_id_gender integer REFERENCES animal_gender(id) NOT NULL,
     fk_id_type integer REFERENCES animal_type(id) NOT NULL,
-    fk_id_breed integer REFERENCES breed(id),
-    fk_id_temper integer REFERENCES animal_temper(id)
+    fk_id_breed integer REFERENCES breed(id)
 );
 
 CREATE TABLE event_type
@@ -116,6 +115,14 @@ CREATE TABLE event_tags
     PRIMARY KEY(fk_id_tag, fk_id_event)
 );
 
+CREATE TABLE animal_temper
+(
+    fk_id_animal integer REFERENCES animal NOT NULL,
+    fk_id_temper integer REFERENCES temper NOT NULL,
+    PRIMARY KEY(fk_id_animal, fk_id_temper)
+);
+
+
 CREATE SEQUENCE user_gender_sequence START 1;
 CREATE SEQUENCE users_sequence START 1;
 CREATE SEQUENCE animal_gender_sequence START 1;
@@ -125,7 +132,7 @@ CREATE SEQUENCE animal_sequence START 1;
 CREATE SEQUENCE event_type_sequence START 1;
 CREATE SEQUENCE event_sequence START 1;
 CREATE SEQUENCE tag_sequence START 1;
-CREATE SEQUENCE animal_temper_sequence START 1;
+CREATE SEQUENCE temper_sequence START 1;
 
 -- INSERT INTO table(row)
 -- VALUES
@@ -163,7 +170,7 @@ VALUES
 (6, 'Sortie en mer')
 ;
 
-INSERT INTO animal_temper(id, name)
+INSERT INTO temper(id, name)
 VALUES
 (1, 'DISTRACTED'),
 (2, 'AGGRESSIVE'),
