@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface AnimalService {
     void createAnimal(UserEntity user, CreateAnimalDto createAnimalDto);
+    void updateAnimal(UpdateAnimalDto updateAnimalDto);
 }

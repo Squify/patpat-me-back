@@ -1,6 +1,7 @@
 package com.devlp.patpatme.controller;
 
 import com.devlp.patpatme.dto.animal.CreateAnimalDto;
+import com.devlp.patpatme.dto.animal.UpdateAnimalDto;
 import com.devlp.patpatme.entity.*;
 import com.devlp.patpatme.repository.AnimalGenderRepository;
 import com.devlp.patpatme.repository.TemperRepository;
@@ -12,10 +13,7 @@ import com.devlp.patpatme.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -48,6 +46,19 @@ public class AnimalController {
 
             UserEntity userEntity = userService.loadUserById(user.getId());
             animalService.createAnimal(userEntity, createAnimalDto);
+            return new ResponseEntity(HttpStatus.CREATED);
+        } catch (Throwable e) {
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    //TODO updateAnimal recup l'id de l'animal à modifier dans les param ?
+    @PutMapping(value = "/api/animal/update")
+    public ResponseEntity updateAnimal(@RequestBody UpdateAnimalDto updateAnimalDto) {
+
+        try {
+
+            animalService.updateAnimal(updateAnimalDto);
             return new ResponseEntity(HttpStatus.CREATED);
         } catch (Throwable e) {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
