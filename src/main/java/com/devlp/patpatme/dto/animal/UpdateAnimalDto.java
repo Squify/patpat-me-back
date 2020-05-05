@@ -6,12 +6,11 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.util.List;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
-public class CreateAnimalDto {
+public class UpdateAnimalDto {
 
     private String name;
     private String birthday;
@@ -19,5 +18,4 @@ public class CreateAnimalDto {
     private String fk_id_gender;
     private String fk_id_breed;
     private List<String> tempers;
-
 }

@@ -1,6 +1,7 @@
 package com.devlp.patpatme.service.implementation;
 
 import com.devlp.patpatme.dto.animal.CreateAnimalDto;
+import com.devlp.patpatme.dto.animal.UpdateAnimalDto;
 import com.devlp.patpatme.entity.AnimalEntity;
 import com.devlp.patpatme.entity.TemperEntity;
 import com.devlp.patpatme.entity.UserEntity;
@@ -53,6 +54,33 @@ public class AnimalServiceImpl implements AnimalService {
 
         List<TemperEntity> temperEntities = new ArrayList<>();
         createAnimalDto.getTempers().forEach(temper -> {
+            temperEntities.add(temperRepository.findOneByName(temper));
+        });
+        animal.setTempers(temperEntities);
+
+        animalRepository.save(animal);
+    }
+
+    @Override
+    @Transactional
+    public void updateAnimal(UpdateAnimalDto updateAnimalDto) {
+
+        AnimalEntity animal = AnimalMapper.toEntity(updateAnimalDto);
+
+        if (!updateAnimalDto.getFk_id_gender().isEmpty()) {
+            animal.setGender(animalGenderRepository.findOneByName(updateAnimalDto.getFk_id_gender()));
+        }
+
+        if (!updateAnimalDto.getFk_id_type().isEmpty()) {
+            animal.setType(animalTypeRepository.findOneByName(updateAnimalDto.getFk_id_type()));
+        }
+
+        if (!updateAnimalDto.getFk_id_breed().isEmpty()) {
+            animal.setBreed(breedRepository.findOneByName(updateAnimalDto.getFk_id_breed()));
+        }
+
+        List<TemperEntity> temperEntities = new ArrayList<>();
+        updateAnimalDto.getTempers().forEach(temper -> {
             temperEntities.add(temperRepository.findOneByName(temper));
         });
         animal.setTempers(temperEntities);
