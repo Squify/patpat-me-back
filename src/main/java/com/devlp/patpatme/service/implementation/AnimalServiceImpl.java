@@ -64,9 +64,10 @@ public class AnimalServiceImpl implements AnimalService {
 
     @Override
     @Transactional
-    public void updateAnimal(UpdateAnimalDto updateAnimalDto) {
+    public void updateAnimal(UserEntity user, UpdateAnimalDto updateAnimalDto) {
 
         AnimalEntity animal = AnimalMapper.toEntity(updateAnimalDto);
+        animal.setOwner(user);
 
         if (!updateAnimalDto.getFk_id_gender().isEmpty()) {
             animal.setGender(animalGenderRepository.findOneByName(updateAnimalDto.getFk_id_gender()));
