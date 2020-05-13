@@ -10,6 +10,7 @@ import java.util.List;
 @NoArgsConstructor
 @Accessors(chain = true)
 public class AnimalDto {
+
         private Integer id;
         private String name;
         private String birthday;
@@ -17,6 +18,5 @@ public class AnimalDto {
         private String fk_id_gender;
         private String fk_id_breed;
         private List<String> tempers;
-    }
 
 }

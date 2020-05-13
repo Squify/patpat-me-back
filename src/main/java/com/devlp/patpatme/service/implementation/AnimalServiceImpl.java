@@ -1,5 +1,6 @@
 package com.devlp.patpatme.service.implementation;
 
+import com.devlp.patpatme.dto.animal.AnimalDto;
 import com.devlp.patpatme.dto.animal.CreateAnimalDto;
 import com.devlp.patpatme.dto.animal.UpdateAnimalDto;
 import com.devlp.patpatme.entity.AnimalEntity;
@@ -87,5 +88,21 @@ public class AnimalServiceImpl implements AnimalService {
 
         animalRepository.save(animal);
     }
+
+    @Override
+    public AnimalDto getAnimalById(Integer animalId) {
+
+        AnimalEntity animalEntity = animalRepository.findOneById(animalId);
+        AnimalDto animalDto = new AnimalDto();
+        return animalDto
+                .setId(animalEntity.getId())
+                .setName(animalEntity.getName())
+                .setBirthday(animalEntity.getBirthday().toString())
+                .setFk_id_breed(animalEntity.getBreed().getId().toString())
+                .setFk_id_gender(animalEntity.getGender().getId().toString())
+                .setFk_id_type(animalEntity.getType().getId().toString());
+        //TODO liste des temp
+    }
+
 }
 

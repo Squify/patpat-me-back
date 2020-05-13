@@ -84,4 +84,16 @@ public class AnimalController {
     public List<TemperEntity> getTemper() {
         return temperRepository.findAll();
     }
+
+    @GetMapping(value = "/api/animal")
+    public Object getAnimal(@RequestParam Integer animalId) {
+
+        try {
+            return animalService.getAnimalById(animalId);
+        } catch (Throwable e) {
+            e.printStackTrace();
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }
