@@ -54,11 +54,11 @@ public class AnimalController {
 
     //TODO updateAnimal recup l'id de l'animal à modifier dans les param ?
     @PutMapping(value = "/api/animal/update")
-    public ResponseEntity updateAnimal(@RequestBody UpdateAnimalDto updateAnimalDto) {
+    public ResponseEntity updateAnimal(CurrentUser user,@RequestBody UpdateAnimalDto updateAnimalDto) {
 
         try {
-
-            animalService.updateAnimal(updateAnimalDto);
+            UserEntity userEntity = userService.loadUserById(user.getId());
+            animalService.updateAnimal(userEntity, updateAnimalDto);
             return new ResponseEntity(HttpStatus.CREATED);
         } catch (Throwable e) {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
