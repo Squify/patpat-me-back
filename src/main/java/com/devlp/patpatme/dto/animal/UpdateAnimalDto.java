@@ -12,6 +12,7 @@ import java.util.List;
 @Accessors(chain = true)
 public class UpdateAnimalDto {
 
+    private Integer id;
     private String name;
     private String birthday;
     private String fk_id_type;

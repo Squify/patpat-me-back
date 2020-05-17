@@ -58,6 +58,7 @@ public class AnimalController {
 
         try {
             UserEntity userEntity = userService.loadUserById(user.getId());
+            AnimalEntity updateAnimalEntity = animalService.loadAnimalById(updateAnimalDto.getId());
             animalService.updateAnimal(userEntity, updateAnimalDto);
             return new ResponseEntity(HttpStatus.CREATED);
         } catch (Throwable e) {

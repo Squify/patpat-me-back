@@ -1,5 +1,6 @@
 package com.devlp.patpatme.mapper;
 
+import com.devlp.patpatme.dto.animal.AnimalDto;
 import com.devlp.patpatme.dto.animal.CreateAnimalDto;
 import com.devlp.patpatme.dto.animal.UpdateAnimalDto;
 import com.devlp.patpatme.entity.AnimalEntity;
@@ -11,13 +12,13 @@ import java.time.ZonedDateTime;
 
 public class AnimalMapper {
 
-//    public static AnimalDto toDTO(AnimalEntity animal) {
-//        return ModelMapperUtil.createModelMapper(AnimalEntity.class, AnimalDto.class, animal);
-//    }
-//
-//    public static AnimalEntity toEntity(AnimalDto dto) {
-//        return ModelMapperUtil.createModelMapper(AnimalDto.class, AnimalEntity.class, dto);
-//    }
+    public static AnimalDto toDTO(AnimalEntity animal) {
+      return ModelMapperUtil.createModelMapper(AnimalEntity.class, AnimalDto.class, animal);
+   }
+
+   public static AnimalEntity toEntity(AnimalDto dto) {
+       return ModelMapperUtil.createModelMapper(AnimalDto.class, AnimalEntity.class, dto);
+    }
 
     public static AnimalEntity toEntity(CreateAnimalDto dto) {
 
