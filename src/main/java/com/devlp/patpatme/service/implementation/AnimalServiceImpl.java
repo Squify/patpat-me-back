@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.sql.Timestamp;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,29 +68,32 @@ public class AnimalServiceImpl implements AnimalService {
     @Override
     @Transactional
     public void updateAnimal(UserEntity user, UpdateAnimalDto updateAnimalDto) {
+        AnimalEntity updateAnimalEntity = loadAnimalById(updateAnimalDto.getId());
 
-        AnimalEntity animal = AnimalMapper.toEntity(updateAnimalDto);
-        animal.setOwner(user);
+        if (!updateAnimalDto.getBirthday().isEmpty()) {
+            ZonedDateTime date = ZonedDateTime.parse(updateAnimalDto.getBirthday());
+            updateAnimalEntity.setBirthday(Timestamp.from(date.toInstant()));
+        } else
+            updateAnimalEntity.setBirthday(null);
 
         if (!updateAnimalDto.getFk_id_gender().isEmpty()) {
-            animal.setGender(animalGenderRepository.findOneByName(updateAnimalDto.getFk_id_gender()));
+            updateAnimalEntity.setGender(animalGenderRepository.findOneByName(updateAnimalDto.getFk_id_gender()));
         }
 
         if (!updateAnimalDto.getFk_id_type().isEmpty()) {
-            animal.setType(animalTypeRepository.findOneByName(updateAnimalDto.getFk_id_type()));
+            updateAnimalEntity.setType(animalTypeRepository.findOneByName(updateAnimalDto.getFk_id_type()));
         }
-
         if (!updateAnimalDto.getFk_id_breed().isEmpty()) {
-            animal.setBreed(breedRepository.findOneByName(updateAnimalDto.getFk_id_breed()));
+            updateAnimalEntity.setBreed(breedRepository.findOneByName(updateAnimalDto.getFk_id_breed()));
         }
 
         List<TemperEntity> temperEntities = new ArrayList<>();
         updateAnimalDto.getTempers().forEach(temper -> {
             temperEntities.add(temperRepository.findOneByName(temper));
         });
-        animal.setTempers(temperEntities);
+        updateAnimalEntity.setTempers(temperEntities);
 
-        animalRepository.save(animal);
+        animalRepository.save(updateAnimalEntity);
     }
 
     @Override
