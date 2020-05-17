@@ -15,6 +15,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.List;
 
 @RestController
@@ -61,7 +63,7 @@ public class EventController {
 
     @GetMapping(value = "/api/events")
     public List<EventEntity> getEvents() {
-        return eventRepository.findAll();
+        return eventRepository.findAllByDateAfter(Timestamp.from(Instant.now()));
     }
 
     @GetMapping(value = "/api/event")
