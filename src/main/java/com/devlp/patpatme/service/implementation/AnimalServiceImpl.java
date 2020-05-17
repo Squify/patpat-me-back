@@ -6,6 +6,7 @@ import com.devlp.patpatme.dto.animal.UpdateAnimalDto;
 import com.devlp.patpatme.entity.AnimalEntity;
 import com.devlp.patpatme.entity.TemperEntity;
 import com.devlp.patpatme.entity.UserEntity;
+import com.devlp.patpatme.exception.UserNotFoundException;
 import com.devlp.patpatme.mapper.AnimalMapper;
 import com.devlp.patpatme.repository.*;
 import com.devlp.patpatme.service.AnimalService;
@@ -94,15 +95,21 @@ public class AnimalServiceImpl implements AnimalService {
     public AnimalDto getAnimalById(Integer animalId) {
 
         AnimalEntity animalEntity = animalRepository.findOneById(animalId);
-        AnimalDto animalDto = new AnimalDto();
-        return animalDto
-                .setId(animalEntity.getId())
-                .setName(animalEntity.getName())
-                .setBirthday(animalEntity.getBirthday().toString())
-                .setFk_id_breed(animalEntity.getBreed().getId().toString())
-                .setFk_id_gender(animalEntity.getGender().getId().toString())
-                .setFk_id_type(animalEntity.getType().getId().toString());
-        //TODO liste des temp
+        return AnimalMapper.toDTO(animalEntity);
+        //        AnimalDto animalDto = new AnimalDto();
+        //        return animalDto
+        //                .setId(animalEntity.getId())
+        //                .setName(animalEntity.getName())
+        //                .setBirthday(animalEntity.getBirthday().toString())
+        //                .setFk_id_breed(animalEntity.getBreed().getId().toString())
+        //                .setFk_id_gender(animalEntity.getGender().getId().toString())
+        //                .setFk_id_type(animalEntity.getType().getId().toString());
+        //        //TODO liste des temp
+    }
+
+    @Override
+    public AnimalEntity loadAnimalById(Integer id) {
+        return animalRepository.findOneById(id);
     }
 
 }
