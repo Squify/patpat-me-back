@@ -5,6 +5,8 @@ import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "event")
@@ -36,4 +38,12 @@ public class EventEntity {
     @ManyToOne
     @JoinColumn(name = "fk_id_owner")
     private UserEntity owner;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @JoinTable(
+            name = "event_member",
+            joinColumns = @JoinColumn(name = "fk_id_event", referencedColumnName = "id", nullable = true),
+            inverseJoinColumns = @JoinColumn(name = "fk_id_member", referencedColumnName = "id", nullable = true)
+    )
+    private List<UserEntity> members = new ArrayList<>();
 }
