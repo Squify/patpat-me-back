@@ -86,11 +86,11 @@ public class EventController {
 
         // check if event exist
         if (event == null)
-            return new ResponseEntity(HttpStatus.EXPECTATION_FAILED); //417
+            return new ResponseEntity(HttpStatus.BAD_REQUEST); //400
 
         // check if user is not event owner
         if (eventService.checkIfUserIsOwner(userEntity, event))
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(HttpStatus.EXPECTATION_FAILED); //417
 
         try {
             eventService.changeParticipation(userEntity, event);
