@@ -4,6 +4,7 @@ import com.devlp.patpatme.dto.event.CreateEventDto;
 import com.devlp.patpatme.entity.EventEntity;
 import com.devlp.patpatme.entity.EventTypeEntity;
 import com.devlp.patpatme.entity.UserEntity;
+import com.devlp.patpatme.exception.UserNotFoundException;
 import com.devlp.patpatme.repository.EventRepository;
 import com.devlp.patpatme.repository.EventTypeRepository;
 import com.devlp.patpatme.security.CurrentUser;
@@ -73,6 +74,28 @@ public class EventController {
             return eventService.getEventById(eventId);
         } catch (Throwable e) {
             e.printStackTrace();
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping(value = "/api/event/participation")
+    public ResponseEntity changeEventParticipation(CurrentUser user, @RequestBody Integer eventId) throws UserNotFoundException {
+
+        UserEntity userEntity = userService.loadUserById(user.getId());
+        EventEntity event = eventRepository.findOneById(eventId);
+
+        // check if event exist
+        if (event == null)
+            return new ResponseEntity(HttpStatus.BAD_REQUEST); //400
+
+        // check if user is not event owner
+        if (eventService.checkIfUserIsOwner(userEntity, event))
+            return new ResponseEntity(HttpStatus.EXPECTATION_FAILED); //417
+
+        try {
+            eventService.changeParticipation(userEntity, event);
+            return new ResponseEntity(HttpStatus.OK);
+        } catch (Exception e) {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
