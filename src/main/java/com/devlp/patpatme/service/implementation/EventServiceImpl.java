@@ -7,7 +7,6 @@ import com.devlp.patpatme.entity.EventTypeEntity;
 import com.devlp.patpatme.entity.UserEntity;
 import com.devlp.patpatme.repository.EventRepository;
 import com.devlp.patpatme.repository.EventTypeRepository;
-import com.devlp.patpatme.security.CurrentUser;
 import com.devlp.patpatme.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -51,21 +50,32 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public EventDto getEventById(Integer eventId) {
+    public EventEntity getEventById(Integer eventId) {
 
-        EventEntity eventEntity = eventRepository.findOneById(eventId);
-        EventDto eventDto = new EventDto();
-        return eventDto
-                .setId(eventEntity.getId())
-                .setName(eventEntity.getName())
-                .setDescription(eventEntity.getDescription())
-                .setDate(eventEntity.getDate().toString())
-                .setLocalisation(eventEntity.getLocalisation())
-                .setFk_id_type(eventEntity.getType().getId().toString());
+        return eventRepository.findOneById(eventId);
     }
 
     @Override
     public boolean eventExistsWithName(String name) {
         return eventRepository.existsEventEntityByNameIgnoreCase(name);
+    }
+
+    @Override
+    public boolean checkIfUserIsOwner(UserEntity user, EventEntity event) {
+
+        return eventRepository.existsEventEntityByOwnerAndId(user, event.getId());
+    }
+
+    @Override
+    public void changeParticipation(UserEntity user, EventEntity event) {
+
+        boolean participate = event.getMembers().stream().anyMatch(userEntity -> userEntity == user);
+
+        if (participate)
+            event.getMembers().remove(user);
+        else
+            event.getMembers().add(user);
+
+        eventRepository.save(event);
     }
 }
