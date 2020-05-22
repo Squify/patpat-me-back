@@ -1,7 +1,9 @@
 package com.devlp.patpatme.service.implementation;
 
-import com.devlp.patpatme.dto.user.CreateAccountDto;
+import com.devlp.patpatme.dto.user.AccountCreateDTO;
+import com.devlp.patpatme.dto.user.AccountEditDTO;
 import com.devlp.patpatme.entity.UserEntity;
+import com.devlp.patpatme.entity.UserGenderEntity;
 import com.devlp.patpatme.exception.UserNotFoundException;
 import com.devlp.patpatme.mapper.UserMapper;
 import com.devlp.patpatme.repository.UserGenderRepository;
@@ -35,14 +37,44 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void createUser(CreateAccountDto createAccountDto) {
+    public void createUser(AccountCreateDTO accountCreateDto) {
 
-        UserEntity user = UserMapper.toEntity(createAccountDto);
+        UserEntity user = UserMapper.toEntity(accountCreateDto);
 
-        user.setPassword(bCryptManagerUtil.getPasswordEncoder().encode(createAccountDto.getPassword()));
+        user.setPassword(bCryptManagerUtil.getPasswordEncoder().encode(accountCreateDto.getPassword()));
 
-        if (!createAccountDto.getGender().isEmpty()) {
-            user.setGender(userGenderRepository.findOneByName(createAccountDto.getGender()));
+        if (!accountCreateDto.getGender().isEmpty()) {
+            user.setGender(userGenderRepository.findOneByName(accountCreateDto.getGender()));
+        }
+
+        userRepository.save(user);
+    }
+
+    @Override
+    public void editUser(UserEntity user, AccountEditDTO accountEditDTO) {
+
+        if (!user.getEmail().equals(accountEditDTO.getEmail()))
+            user.setEmail(accountEditDTO.getEmail());
+
+        if (!user.getPhone().equals(accountEditDTO.getPhone()))
+            user.setPhone(accountEditDTO.getPhone());
+
+        if (user.isPush_notification() != accountEditDTO.isPush_notification())
+            user.setPush_notification(accountEditDTO.isPush_notification());
+
+        if (user.isActive_localisation() != accountEditDTO.isActive_localisation())
+            user.setActive_localisation(accountEditDTO.isActive_localisation());
+
+        if (user.isDisplay_real_name() != accountEditDTO.isDisplay_real_name())
+            user.setDisplay_real_name(accountEditDTO.isDisplay_real_name());
+
+        if (!accountEditDTO.getPassword().isEmpty())
+            user.setPassword(bCryptManagerUtil.getPasswordEncoder().encode(accountEditDTO.getPassword()));
+
+        if (!accountEditDTO.getGender().isEmpty()) {
+            UserGenderEntity userGender = userGenderRepository.findOneByName(accountEditDTO.getGender());
+            if (user.getGender() != userGender)
+                user.setGender(userGender);
         }
 
         userRepository.save(user);

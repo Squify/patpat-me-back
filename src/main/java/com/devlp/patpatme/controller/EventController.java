@@ -1,6 +1,6 @@
 package com.devlp.patpatme.controller;
 
-import com.devlp.patpatme.dto.event.CreateEventDto;
+import com.devlp.patpatme.dto.event.CreateEventDTO;
 import com.devlp.patpatme.entity.EventEntity;
 import com.devlp.patpatme.entity.EventTypeEntity;
 import com.devlp.patpatme.entity.UserEntity;
@@ -37,7 +37,7 @@ public class EventController {
 
     //    @ApiOperation(value = "Créer un nouvel évènement dans la base de données")
     @PostMapping(value = "/api/event/create")
-    public ResponseEntity createEvent(CurrentUser user, @RequestBody CreateEventDto createEventDto) {
+    public ResponseEntity createEvent(CurrentUser user, @RequestBody CreateEventDTO createEventDto) {
 
         // check the inputs
         if (!EventUtil.checkCreateEventInputsAreValid(createEventDto))

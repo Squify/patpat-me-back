@@ -1,7 +1,6 @@
 package com.devlp.patpatme.mapper;
 
-import com.devlp.patpatme.dto.animal.CreateAnimalDto;
-import com.devlp.patpatme.entity.AnimalEntity;
+import com.devlp.patpatme.dto.animal.CreateAnimalDTO;
 import com.devlp.patpatme.entity.AnimalEntity;
 import com.devlp.patpatme.mapper.util.ModelMapperUtil;
 
@@ -18,9 +17,9 @@ public class AnimalMapper {
 //        return ModelMapperUtil.createModelMapper(AnimalDto.class, AnimalEntity.class, dto);
 //    }
 
-    public static AnimalEntity toEntity(CreateAnimalDto dto) {
+    public static AnimalEntity toEntity(CreateAnimalDTO dto) {
 
-        AnimalEntity animal = ModelMapperUtil.createModelMapper(CreateAnimalDto.class, AnimalEntity.class, dto, AnimalEntity::setBirthday);
+        AnimalEntity animal = ModelMapperUtil.createModelMapper(CreateAnimalDTO.class, AnimalEntity.class, dto, AnimalEntity::setBirthday);
 
         if (!dto.getBirthday().isEmpty()) {
             ZonedDateTime date = ZonedDateTime.parse(dto.getBirthday());
