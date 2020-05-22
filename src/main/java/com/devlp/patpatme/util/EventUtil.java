@@ -1,6 +1,6 @@
 package com.devlp.patpatme.util;
 
-import com.devlp.patpatme.dto.event.CreateEventDto;
+import com.devlp.patpatme.dto.event.CreateEventDTO;
 import org.apache.commons.lang3.StringUtils;
 
 public class EventUtil {
@@ -11,7 +11,7 @@ public class EventUtil {
     private EventUtil() {
     }
 
-    public static boolean checkCreateEventInputsAreValid(CreateEventDto createEventDto) {
+    public static boolean checkCreateEventInputsAreValid(CreateEventDTO createEventDto) {
         final String name = createEventDto.getName();
         final String description = createEventDto.getDescription();
         final String localisation = createEventDto.getLocalisation();

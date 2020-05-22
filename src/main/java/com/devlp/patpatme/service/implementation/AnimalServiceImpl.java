@@ -1,6 +1,6 @@
 package com.devlp.patpatme.service.implementation;
 
-import com.devlp.patpatme.dto.animal.CreateAnimalDto;
+import com.devlp.patpatme.dto.animal.CreateAnimalDTO;
 import com.devlp.patpatme.entity.AnimalEntity;
 import com.devlp.patpatme.entity.TemperEntity;
 import com.devlp.patpatme.entity.UserEntity;
@@ -34,7 +34,7 @@ public class AnimalServiceImpl implements AnimalService {
 
     @Override
     @Transactional
-    public void createAnimal(UserEntity user, CreateAnimalDto createAnimalDto) {
+    public void createAnimal(UserEntity user, CreateAnimalDTO createAnimalDto) {
 
         AnimalEntity animal = AnimalMapper.toEntity(createAnimalDto);
         animal.setOwner(user);

@@ -1,6 +1,6 @@
 package com.devlp.patpatme.controller;
 
-import com.devlp.patpatme.dto.animal.CreateAnimalDto;
+import com.devlp.patpatme.dto.animal.CreateAnimalDTO;
 import com.devlp.patpatme.entity.*;
 import com.devlp.patpatme.repository.AnimalGenderRepository;
 import com.devlp.patpatme.repository.TemperRepository;
@@ -42,7 +42,7 @@ public class AnimalController {
 
     // @ApiOperation(value = "Créer un nouvel animal dans la base de données")
     @PostMapping(value = "/api/animal/create")
-    public ResponseEntity createAnimal(CurrentUser user, @RequestBody CreateAnimalDto createAnimalDto) {
+    public ResponseEntity createAnimal(CurrentUser user, @RequestBody CreateAnimalDTO createAnimalDto) {
 
         try {
 

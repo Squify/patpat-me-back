@@ -15,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
-public class CreateAnimalDto {
+public class CreateAnimalDTO {
 
     private String name;
     private String birthday;

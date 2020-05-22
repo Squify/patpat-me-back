@@ -1,6 +1,6 @@
 package com.devlp.patpatme.service.implementation;
 
-import com.devlp.patpatme.dto.event.CreateEventDto;
+import com.devlp.patpatme.dto.event.CreateEventDTO;
 import com.devlp.patpatme.entity.EventEntity;
 import com.devlp.patpatme.entity.EventTypeEntity;
 import com.devlp.patpatme.entity.UserEntity;
@@ -23,7 +23,7 @@ public class EventServiceImpl implements EventService {
     private EventTypeRepository eventTypeRepository;
 
     @Override
-    public void createEvent(UserEntity user, CreateEventDto createEventDto) {
+    public void createEvent(UserEntity user, CreateEventDTO createEventDto) {
 
         EventEntity newEvent = new EventEntity();
 
