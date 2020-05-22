@@ -1,6 +1,7 @@
 package com.devlp.patpatme.util;
 
-import com.devlp.patpatme.dto.user.CreateAccountDto;
+import com.devlp.patpatme.dto.user.AccountCreateDTO;
+import com.devlp.patpatme.dto.user.AccountEditDTO;
 import org.apache.commons.lang3.StringUtils;
 
 
@@ -12,14 +13,14 @@ public class UserUtil {
     private UserUtil() {
     }
 
-    public static boolean checkCreatePersonInputsAreValid(CreateAccountDto createAccountDto) {
-        final String email = createAccountDto.getEmail();
-        final String password = createAccountDto.getPassword();
-        final String lastname = createAccountDto.getLastname();
-        final String firstname = createAccountDto.getFirstname();
-        final String phone = createAccountDto.getPhone();
-        final String birthday = createAccountDto.getBirthday();
-        final String pseudo = createAccountDto.getPseudo();
+    public static boolean checkCreatePersonInputsAreValid(AccountCreateDTO accountCreateDto) {
+        final String email = accountCreateDto.getEmail();
+        final String password = accountCreateDto.getPassword();
+        final String lastname = accountCreateDto.getLastname();
+        final String firstname = accountCreateDto.getFirstname();
+        final String phone = accountCreateDto.getPhone();
+        final String birthday = accountCreateDto.getBirthday();
+        final String pseudo = accountCreateDto.getPseudo();
 
 
         if (StringUtils.isBlank(email) || StringUtils.isBlank(pseudo) || StringUtils.isBlank(password) || StringUtils.isBlank(lastname) || StringUtils.isBlank(firstname)) {
@@ -31,6 +32,26 @@ public class UserUtil {
         }
 
         if (password.length() < MIN_PASSWORD_SIZE) {
+            return false;
+        }
+
+        if (!StringUtils.isBlank(phone) && !RegexUtil.phoneIsValid(phone)) {
+            return false;
+        }
+
+        return RegexUtil.emailIsValid(email);
+    }
+
+    public static boolean checkEditPersonInputsAreValid(AccountEditDTO accountEditDto) {
+        final String email = accountEditDto.getEmail();
+        final String password = accountEditDto.getPassword();
+        final String phone = accountEditDto.getPhone();
+
+        if (!password.isEmpty() && password.length() > MAX_PASSWORD_SIZE) {
+            return false;
+        }
+
+        if (!password.isEmpty() && password.length() < MIN_PASSWORD_SIZE) {
             return false;
         }
 
