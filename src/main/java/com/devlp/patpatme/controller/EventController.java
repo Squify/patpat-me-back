@@ -1,6 +1,7 @@
 package com.devlp.patpatme.controller;
 
-import com.devlp.patpatme.dto.event.CreateEventDTO;
+import com.devlp.patpatme.dto.event.EventCreateDTO;
+import com.devlp.patpatme.dto.event.EventEditDTO;
 import com.devlp.patpatme.entity.EventEntity;
 import com.devlp.patpatme.entity.EventTypeEntity;
 import com.devlp.patpatme.entity.UserEntity;
@@ -37,21 +38,37 @@ public class EventController {
 
     //    @ApiOperation(value = "Créer un nouvel évènement dans la base de données")
     @PostMapping(value = "/api/event/create")
-    public ResponseEntity createEvent(CurrentUser user, @RequestBody CreateEventDTO createEventDto) {
+    public ResponseEntity createEvent(CurrentUser user, @RequestBody EventCreateDTO eventCreateDto) {
 
         // check the inputs
-        if (!EventUtil.checkCreateEventInputsAreValid(createEventDto))
+        if (!EventUtil.checkCreateEventInputsAreValid(eventCreateDto))
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
 
         // check if name is already used
-        if (eventService.eventExistsWithName(createEventDto.getName()))
+        if (eventService.eventExistsWithName(eventCreateDto.getName()))
             return new ResponseEntity(HttpStatus.EXPECTATION_FAILED); //417
 
         try {
 
             UserEntity userEntity = userService.loadUserById(user.getId());
-            eventService.createEvent(userEntity, createEventDto);
+            eventService.createEvent(userEntity, eventCreateDto);
             return new ResponseEntity(HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping(value = "/api/event/edit")
+    public ResponseEntity editEvent(@RequestBody EventEditDTO eventEditDTO) {
+
+        // check the inputs
+        if (!EventUtil.checkEditEventInputsAreValid(eventEditDTO))
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+
+        try {
+
+            eventService.editEvent(eventEditDTO);
+            return new ResponseEntity(HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }

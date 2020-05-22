@@ -1,6 +1,7 @@
 package com.devlp.patpatme.util;
 
-import com.devlp.patpatme.dto.event.CreateEventDTO;
+import com.devlp.patpatme.dto.event.EventCreateDTO;
+import com.devlp.patpatme.dto.event.EventEditDTO;
 import org.apache.commons.lang3.StringUtils;
 
 public class EventUtil {
@@ -11,15 +12,32 @@ public class EventUtil {
     private EventUtil() {
     }
 
-    public static boolean checkCreateEventInputsAreValid(CreateEventDTO createEventDto) {
-        final String name = createEventDto.getName();
-        final String description = createEventDto.getDescription();
-        final String localisation = createEventDto.getLocalisation();
-        final String date = createEventDto.getDate();
-        final String type = createEventDto.getType();
+    public static boolean checkCreateEventInputsAreValid(EventCreateDTO eventCreateDto) {
+        final String name = eventCreateDto.getName();
+        final String description = eventCreateDto.getDescription();
+        final String localisation = eventCreateDto.getLocalisation();
+        final String date = eventCreateDto.getDate();
+        final String type = eventCreateDto.getType();
 
 
         if (StringUtils.isBlank(name) || StringUtils.isBlank(description) || StringUtils.isBlank(localisation) || StringUtils.isBlank(date) || StringUtils.isBlank(type)) {
+            return false;
+        }
+
+        if (description.length() > MAX_DESCRIPTION) {
+            return false;
+        }
+
+        return !(description.length() < MIN_DESCRIPTION_SIZE);
+    }
+
+    public static boolean checkEditEventInputsAreValid(EventEditDTO eventEditDTO) {
+        final String description = eventEditDTO.getDescription();
+        final String localisation = eventEditDTO.getLocalisation();
+        final String date = eventEditDTO.getDate();
+
+
+        if (StringUtils.isBlank(description) || StringUtils.isBlank(localisation) || StringUtils.isBlank(date)) {
             return false;
         }
 
