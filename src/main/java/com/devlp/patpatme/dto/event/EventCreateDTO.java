@@ -9,7 +9,7 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
-public class CreateEventDTO {
+public class EventCreateDTO {
 
     private String name;
     private String description;

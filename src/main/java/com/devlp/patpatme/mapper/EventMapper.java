@@ -1,6 +1,6 @@
 package com.devlp.patpatme.mapper;
 
-import com.devlp.patpatme.dto.event.CreateEventDTO;
+import com.devlp.patpatme.dto.event.EventCreateDTO;
 import com.devlp.patpatme.dto.event.EventDTO;
 import com.devlp.patpatme.entity.EventEntity;
 import com.devlp.patpatme.mapper.util.ModelMapperUtil;
@@ -18,9 +18,9 @@ public class EventMapper {
         return ModelMapperUtil.createModelMapper(EventDTO.class, EventEntity.class, dto);
     }
 
-    public static EventEntity toEntity(CreateEventDTO dto) {
+    public static EventEntity toEntity(EventCreateDTO dto) {
 
-        EventEntity event = ModelMapperUtil.createModelMapper(CreateEventDTO.class, EventEntity.class, dto, EventEntity::setDate);
+        EventEntity event = ModelMapperUtil.createModelMapper(EventCreateDTO.class, EventEntity.class, dto, EventEntity::setDate);
 
         ZonedDateTime date = ZonedDateTime.parse(dto.getDate());
         event.setDate(Timestamp.from(date.toInstant()));

@@ -68,7 +68,7 @@ public class UserController {
 
         try {
             userService.editUser(userEntity, accountEditDto);
-            return new ResponseEntity(HttpStatus.CREATED);
+            return new ResponseEntity(HttpStatus.OK);
         } catch (Throwable e) {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }

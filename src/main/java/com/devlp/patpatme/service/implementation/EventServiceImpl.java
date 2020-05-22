@@ -1,6 +1,7 @@
 package com.devlp.patpatme.service.implementation;
 
-import com.devlp.patpatme.dto.event.CreateEventDTO;
+import com.devlp.patpatme.dto.event.EventCreateDTO;
+import com.devlp.patpatme.dto.event.EventEditDTO;
 import com.devlp.patpatme.entity.EventEntity;
 import com.devlp.patpatme.entity.EventTypeEntity;
 import com.devlp.patpatme.entity.UserEntity;
@@ -23,29 +24,46 @@ public class EventServiceImpl implements EventService {
     private EventTypeRepository eventTypeRepository;
 
     @Override
-    public void createEvent(UserEntity user, CreateEventDTO createEventDto) {
+    public void createEvent(UserEntity user, EventCreateDTO eventCreateDto) {
 
         EventEntity newEvent = new EventEntity();
 
-        newEvent.setName(createEventDto.getName());
-        newEvent.setDescription(createEventDto.getDescription());
-        newEvent.setLocalisation(createEventDto.getLocalisation());
+        newEvent.setName(eventCreateDto.getName());
+        newEvent.setDescription(eventCreateDto.getDescription());
+        newEvent.setLocalisation(eventCreateDto.getLocalisation());
         newEvent.setOwner(user);
 
-        if (!createEventDto.getDate().isEmpty()) {
-            ZonedDateTime dateZonedDateTime = ZonedDateTime.parse(createEventDto.getDate());
+        if (!eventCreateDto.getDate().isEmpty()) {
+            ZonedDateTime dateZonedDateTime = ZonedDateTime.parse(eventCreateDto.getDate());
             Timestamp date = Timestamp.from(dateZonedDateTime.toInstant());
             newEvent.setDate(date);
         }
 
-        if (!createEventDto.getType().isEmpty()) {
-            EventTypeEntity type = eventTypeRepository.findOneByName(createEventDto.getType());
+        if (!eventCreateDto.getType().isEmpty()) {
+            EventTypeEntity type = eventTypeRepository.findOneByName(eventCreateDto.getType());
             if (type != null)
                 newEvent.setType(type);
         }
 
         eventRepository.save(newEvent);
 
+    }
+
+    @Override
+    public void editEvent(EventEditDTO eventEditDTO) {
+
+        EventEntity event = eventRepository.findOneById(eventEditDTO.getId());
+
+        event.setDescription(eventEditDTO.getDescription());
+        event.setLocalisation(eventEditDTO.getLocalisation());
+
+        if (!eventEditDTO.getDate().equals(event.getDate().toString())) {
+            ZonedDateTime dateZonedDateTime = ZonedDateTime.parse(eventEditDTO.getDate());
+            Timestamp date = Timestamp.from(dateZonedDateTime.toInstant());
+            event.setDate(date);
+        }
+
+        eventRepository.save(event);
     }
 
     @Override
