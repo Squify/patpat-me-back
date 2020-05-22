@@ -39,16 +39,16 @@ public class AnimalServiceImpl implements AnimalService {
         AnimalEntity animal = AnimalMapper.toEntity(createAnimalDto);
         animal.setOwner(user);
 
-        if (!createAnimalDto.getFk_id_gender().isEmpty()) {
-            animal.setGender(animalGenderRepository.findOneByName(createAnimalDto.getFk_id_gender()));
+        if (createAnimalDto.getGender() != null) {
+            animal.setGender(animalGenderRepository.findOneByName(createAnimalDto.getGender()));
         }
 
-        if (!createAnimalDto.getFk_id_type().isEmpty()) {
-            animal.setType(animalTypeRepository.findOneByName(createAnimalDto.getFk_id_type()));
+        if (createAnimalDto.getType() != null) {
+            animal.setType(animalTypeRepository.findOneByName(createAnimalDto.getType()));
         }
 
-        if (!createAnimalDto.getFk_id_breed().isEmpty()) {
-            animal.setBreed(breedRepository.findOneByName(createAnimalDto.getFk_id_breed()));
+        if (createAnimalDto.getBreed() != null) {
+            animal.setBreed(breedRepository.findOneByName(createAnimalDto.getBreed()));
         }
 
         List<TemperEntity> temperEntities = new ArrayList<>();

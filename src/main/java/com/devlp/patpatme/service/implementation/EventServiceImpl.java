@@ -1,7 +1,6 @@
 package com.devlp.patpatme.service.implementation;
 
 import com.devlp.patpatme.dto.event.CreateEventDto;
-import com.devlp.patpatme.dto.event.EventDto;
 import com.devlp.patpatme.entity.EventEntity;
 import com.devlp.patpatme.entity.EventTypeEntity;
 import com.devlp.patpatme.entity.UserEntity;
@@ -39,8 +38,8 @@ public class EventServiceImpl implements EventService {
             newEvent.setDate(date);
         }
 
-        if (!createEventDto.getFk_id_type().isEmpty()) {
-            EventTypeEntity type = eventTypeRepository.findOneByName(createEventDto.getFk_id_type());
+        if (!createEventDto.getType().isEmpty()) {
+            EventTypeEntity type = eventTypeRepository.findOneByName(createEventDto.getType());
             if (type != null)
                 newEvent.setType(type);
         }

@@ -21,5 +21,5 @@ public class CreateAccountDto {
     private boolean push_notification;
     private boolean active_localisation;
     private boolean display_real_name;
-    private String fk_id_gender;
+    private String gender;
 }

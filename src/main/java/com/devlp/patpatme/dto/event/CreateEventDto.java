@@ -15,5 +15,5 @@ public class CreateEventDto {
     private String description;
     private String localisation;
     private String date;
-    private String fk_id_type;
+    private String type;
 }

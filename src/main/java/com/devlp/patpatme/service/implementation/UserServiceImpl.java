@@ -15,7 +15,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -42,8 +41,8 @@ public class UserServiceImpl implements UserService {
 
         user.setPassword(bCryptManagerUtil.getPasswordEncoder().encode(createAccountDto.getPassword()));
 
-        if (!createAccountDto.getFk_id_gender().isEmpty()) {
-            user.setGender(userGenderRepository.findOneByName(createAccountDto.getFk_id_gender()));
+        if (!createAccountDto.getGender().isEmpty()) {
+            user.setGender(userGenderRepository.findOneByName(createAccountDto.getGender()));
         }
 
         userRepository.save(user);
