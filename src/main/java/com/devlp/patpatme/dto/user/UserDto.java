@@ -1,5 +1,6 @@
 package com.devlp.patpatme.dto.user;
 
+import com.devlp.patpatme.entity.UserGenderEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,5 +22,5 @@ public class UserDto {
     private boolean push_notification;
     private boolean active_localisation;
     private boolean display_real_name;
-    private String fk_id_gender;
+    private UserGenderEntity gender;
 }

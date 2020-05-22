@@ -16,7 +16,7 @@ public class EventUtil {
         final String description = createEventDto.getDescription();
         final String localisation = createEventDto.getLocalisation();
         final String date = createEventDto.getDate();
-        final String type = createEventDto.getFk_id_type();
+        final String type = createEventDto.getType();
 
 
         if (StringUtils.isBlank(name) || StringUtils.isBlank(description) || StringUtils.isBlank(localisation) || StringUtils.isBlank(date) || StringUtils.isBlank(type)) {
