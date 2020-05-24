@@ -1,13 +1,11 @@
 package com.devlp.patpatme.service.implementation;
 
-import com.devlp.patpatme.dto.animal.CreateAnimalDTO;
 import com.devlp.patpatme.dto.animal.AnimalDto;
-import com.devlp.patpatme.dto.animal.CreateAnimalDto;
+import com.devlp.patpatme.dto.animal.CreateAnimalDTO;
 import com.devlp.patpatme.dto.animal.UpdateAnimalDto;
 import com.devlp.patpatme.entity.AnimalEntity;
 import com.devlp.patpatme.entity.TemperEntity;
 import com.devlp.patpatme.entity.UserEntity;
-import com.devlp.patpatme.exception.UserNotFoundException;
 import com.devlp.patpatme.mapper.AnimalMapper;
 import com.devlp.patpatme.repository.*;
 import com.devlp.patpatme.service.AnimalService;
@@ -68,8 +66,9 @@ public class AnimalServiceImpl implements AnimalService {
 
     @Override
     @Transactional
-    public void updateAnimal(UserEntity user, UpdateAnimalDto updateAnimalDto) {
-        AnimalEntity updateAnimalEntity = loadAnimalById(updateAnimalDto.getId());
+    public void updateAnimal(UpdateAnimalDto updateAnimalDto) {
+
+        AnimalEntity updateAnimalEntity = animalRepository.findOneById(updateAnimalDto.getId());
 
         if (!updateAnimalDto.getBirthday().isEmpty()) {
             ZonedDateTime date = ZonedDateTime.parse(updateAnimalDto.getBirthday());
@@ -77,15 +76,15 @@ public class AnimalServiceImpl implements AnimalService {
         } else
             updateAnimalEntity.setBirthday(null);
 
-        if (!updateAnimalDto.getFk_id_gender().isEmpty()) {
-            updateAnimalEntity.setGender(animalGenderRepository.findOneByName(updateAnimalDto.getFk_id_gender()));
+        if (!updateAnimalDto.getGender().isEmpty()) {
+            updateAnimalEntity.setGender(animalGenderRepository.findOneByName(updateAnimalDto.getGender()));
         }
 
-        if (!updateAnimalDto.getFk_id_type().isEmpty()) {
-            updateAnimalEntity.setType(animalTypeRepository.findOneByName(updateAnimalDto.getFk_id_type()));
+        if (!updateAnimalDto.getType().isEmpty()) {
+            updateAnimalEntity.setType(animalTypeRepository.findOneByName(updateAnimalDto.getType()));
         }
-        if (!updateAnimalDto.getFk_id_breed().isEmpty()) {
-            updateAnimalEntity.setBreed(breedRepository.findOneByName(updateAnimalDto.getFk_id_breed()));
+        if (!updateAnimalDto.getBreed().isEmpty()) {
+            updateAnimalEntity.setBreed(breedRepository.findOneByName(updateAnimalDto.getBreed()));
         }
 
         List<TemperEntity> temperEntities = new ArrayList<>();
