@@ -1,13 +1,14 @@
 package com.devlp.patpatme.controller;
 
-import com.devlp.patpatme.dto.animal.CreateAnimalDTO;
-import com.devlp.patpatme.dto.animal.UpdateAnimalDto;
+import com.devlp.patpatme.dto.animal.AnimalCreateDTO;
+import com.devlp.patpatme.dto.animal.AnimalEditDTO;
 import com.devlp.patpatme.entity.*;
 import com.devlp.patpatme.exception.UserNotFoundException;
 import com.devlp.patpatme.repository.*;
 import com.devlp.patpatme.security.CurrentUser;
 import com.devlp.patpatme.service.AnimalService;
 import com.devlp.patpatme.service.UserService;
+import com.devlp.patpatme.util.AnimalUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,13 +42,15 @@ public class AnimalController {
 
     // @ApiOperation(value = "Créer un nouvel animal dans la base de données")
     @PostMapping(value = "/api/animal/create")
-    public ResponseEntity createAnimal(CurrentUser user, @RequestBody CreateAnimalDTO createAnimalDto) {
+    public ResponseEntity createAnimal(CurrentUser user, @RequestBody AnimalCreateDTO animalCreateDto) {
 
-        //TODO: Faire les checks d'input
+        // check the inputs
+        if (!AnimalUtil.checkCreateAnimalInputsAreValid(animalCreateDto))
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
 
         try {
             UserEntity userEntity = userService.loadUserById(user.getId());
-            animalService.createAnimal(userEntity, createAnimalDto);
+            animalService.createAnimal(userEntity, animalCreateDto);
             return new ResponseEntity(HttpStatus.CREATED);
         } catch (Throwable e) {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -55,14 +58,18 @@ public class AnimalController {
     }
 
     @PostMapping(value = "/api/animal/update")
-    public ResponseEntity updateAnimal(CurrentUser user, @RequestBody UpdateAnimalDto updateAnimalDto) {
+    public ResponseEntity updateAnimal(CurrentUser user, @RequestBody AnimalEditDTO animalEditDTO) {
 
-        //TODO: Faire les checks d'input
-        //TODO: vérifier si l'user en cours est l'owner
-        System.out.println(updateAnimalDto);
+        // check the inputs
+        if (!AnimalUtil.checkEditAnimalInputsAreValid(animalEditDTO))
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+
+        // check if connected user is owner
+        if (!user.getId().equals(animalEditDTO.getOwner()))
+            return new ResponseEntity(HttpStatus.EXPECTATION_FAILED); //417
 
         try {
-            animalService.updateAnimal(updateAnimalDto);
+            animalService.updateAnimal(animalEditDTO);
             return new ResponseEntity(HttpStatus.CREATED);
         } catch (Throwable e) {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -102,7 +109,6 @@ public class AnimalController {
         try {
             return animalService.getAnimalById(animalId);
         } catch (Throwable e) {
-            e.printStackTrace();
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

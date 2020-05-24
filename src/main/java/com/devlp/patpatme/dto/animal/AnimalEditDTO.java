@@ -7,18 +7,17 @@ import lombok.experimental.Accessors;
 
 import java.util.ArrayList;
 import java.util.List;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
-public class CreateAnimalDTO {
+public class AnimalEditDTO {
 
-    private String name;
+    private Integer id;
+    private Integer owner;
     private String birthday;
     private String type;
     private String gender;
     private String breed;
     private List<String> tempers = new ArrayList<>();
-
 }
