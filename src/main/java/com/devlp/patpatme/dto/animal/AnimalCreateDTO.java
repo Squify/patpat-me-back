@@ -1,8 +1,5 @@
 package com.devlp.patpatme.dto.animal;
 
-import com.devlp.patpatme.entity.AnimalGenderEntity;
-import com.devlp.patpatme.entity.AnimalTypeEntity;
-import com.devlp.patpatme.entity.BreedEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,7 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
-public class CreateAnimalDTO {
+public class AnimalCreateDTO {
 
     private String name;
     private String birthday;
