@@ -1,7 +1,6 @@
 package com.devlp.patpatme.controller;
 
 import com.devlp.patpatme.dto.animal.CreateAnimalDTO;
-import com.devlp.patpatme.dto.animal.CreateAnimalDto;
 import com.devlp.patpatme.dto.animal.UpdateAnimalDto;
 import com.devlp.patpatme.entity.*;
 import com.devlp.patpatme.exception.UserNotFoundException;
@@ -44,8 +43,9 @@ public class AnimalController {
     @PostMapping(value = "/api/animal/create")
     public ResponseEntity createAnimal(CurrentUser user, @RequestBody CreateAnimalDTO createAnimalDto) {
 
-        try {
+        //TODO: Faire les checks d'input
 
+        try {
             UserEntity userEntity = userService.loadUserById(user.getId());
             animalService.createAnimal(userEntity, createAnimalDto);
             return new ResponseEntity(HttpStatus.CREATED);
@@ -54,14 +54,15 @@ public class AnimalController {
         }
     }
 
-    //TODO updateAnimal recup l'id de l'animal à modifier dans les param ?
-    @PutMapping(value = "/api/animal/update")
-    public ResponseEntity updateAnimal(CurrentUser user,@RequestBody UpdateAnimalDto updateAnimalDto) {
+    @PostMapping(value = "/api/animal/update")
+    public ResponseEntity updateAnimal(CurrentUser user, @RequestBody UpdateAnimalDto updateAnimalDto) {
+
+        //TODO: Faire les checks d'input
+        //TODO: vérifier si l'user en cours est l'owner
+        System.out.println(updateAnimalDto);
 
         try {
-            UserEntity userEntity = userService.loadUserById(user.getId());
-            AnimalEntity updateAnimalEntity = animalService.loadAnimalById(updateAnimalDto.getId());
-            animalService.updateAnimal(userEntity, updateAnimalDto);
+            animalService.updateAnimal(updateAnimalDto);
             return new ResponseEntity(HttpStatus.CREATED);
         } catch (Throwable e) {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
