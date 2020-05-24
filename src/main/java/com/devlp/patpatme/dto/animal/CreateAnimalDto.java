@@ -5,19 +5,20 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
-public class CreateAnimalDto {
+public class CreateAnimalDTO {
 
     private String name;
     private String birthday;
-    private String fk_id_type;
-    private String fk_id_gender;
-    private String fk_id_breed;
-    private List<String> tempers;
+    private String type;
+    private String gender;
+    private String breed;
+    private List<String> tempers = new ArrayList<>();
 
 }

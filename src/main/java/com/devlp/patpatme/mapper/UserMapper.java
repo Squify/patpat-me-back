@@ -1,7 +1,7 @@
 package com.devlp.patpatme.mapper;
 
-import com.devlp.patpatme.dto.user.CreateAccountDto;
-import com.devlp.patpatme.dto.user.UserDto;
+import com.devlp.patpatme.dto.user.AccountCreateDTO;
+import com.devlp.patpatme.dto.user.UserDTO;
 import com.devlp.patpatme.entity.UserEntity;
 import com.devlp.patpatme.mapper.util.ModelMapperUtil;
 
@@ -14,23 +14,23 @@ import java.util.stream.Collectors;
 
 public class UserMapper {
 
-    public static UserDto toDTO(UserEntity user) {
-        return ModelMapperUtil.createModelMapper(UserEntity.class, UserDto.class, user);
+    public static UserDTO toDTO(UserEntity user) {
+        return ModelMapperUtil.createModelMapper(UserEntity.class, UserDTO.class, user);
     }
 
-    public static List<UserDto> toDTO(Collection<UserEntity> assets) {
+    public static List<UserDTO> toDTO(Collection<UserEntity> assets) {
         return assets.stream()
                 .map(UserMapper::toDTO)
                 .collect(Collectors.toList());
     }
 
-    public static UserEntity toEntity(UserDto dto) {
-        return ModelMapperUtil.createModelMapper(UserDto.class, UserEntity.class, dto);
+    public static UserEntity toEntity(UserDTO dto) {
+        return ModelMapperUtil.createModelMapper(UserDTO.class, UserEntity.class, dto);
     }
 
-    public static UserEntity toEntity(CreateAccountDto dto) {
+    public static UserEntity toEntity(AccountCreateDTO dto) {
 
-        UserEntity user = ModelMapperUtil.createModelMapper(CreateAccountDto.class, UserEntity.class, dto, UserEntity::setBirthday);
+        UserEntity user = ModelMapperUtil.createModelMapper(AccountCreateDTO.class, UserEntity.class, dto, UserEntity::setBirthday);
 
         if (!dto.getBirthday().isEmpty()) {
             ZonedDateTime birthdayZonedDateTime = ZonedDateTime.parse(dto.getBirthday());

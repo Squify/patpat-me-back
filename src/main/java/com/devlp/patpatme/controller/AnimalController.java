@@ -1,12 +1,11 @@
 package com.devlp.patpatme.controller;
 
+import com.devlp.patpatme.dto.animal.CreateAnimalDTO;
 import com.devlp.patpatme.dto.animal.CreateAnimalDto;
 import com.devlp.patpatme.dto.animal.UpdateAnimalDto;
 import com.devlp.patpatme.entity.*;
-import com.devlp.patpatme.repository.AnimalGenderRepository;
-import com.devlp.patpatme.repository.TemperRepository;
-import com.devlp.patpatme.repository.AnimalTypeRepository;
-import com.devlp.patpatme.repository.BreedRepository;
+import com.devlp.patpatme.exception.UserNotFoundException;
+import com.devlp.patpatme.repository.*;
 import com.devlp.patpatme.security.CurrentUser;
 import com.devlp.patpatme.service.AnimalService;
 import com.devlp.patpatme.service.UserService;
@@ -36,11 +35,14 @@ public class AnimalController {
     private TemperRepository temperRepository;
 
     @Autowired
+    private AnimalRepository animalRepository;
+
+    @Autowired
     private UserService userService;
 
     // @ApiOperation(value = "Créer un nouvel animal dans la base de données")
     @PostMapping(value = "/api/animal/create")
-    public ResponseEntity createAnimal(CurrentUser user, @RequestBody CreateAnimalDto createAnimalDto) {
+    public ResponseEntity createAnimal(CurrentUser user, @RequestBody CreateAnimalDTO createAnimalDto) {
 
         try {
 
@@ -84,6 +86,13 @@ public class AnimalController {
     @GetMapping(value = "/api/animal/tempers")
     public List<TemperEntity> getTemper() {
         return temperRepository.findAll();
+    }
+
+    @GetMapping(value = "/api/animals")
+    public List<AnimalEntity> getUserAnimals(CurrentUser user) throws UserNotFoundException {
+
+        UserEntity userEntity = userService.loadUserById(user.getId());
+        return animalRepository.findAllByOwnerId(userEntity.getId());
     }
 
     @GetMapping(value = "/api/animal")

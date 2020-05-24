@@ -1,13 +1,12 @@
 package com.devlp.patpatme.service.implementation;
 
-import com.devlp.patpatme.dto.event.CreateEventDto;
-import com.devlp.patpatme.dto.event.EventDto;
+import com.devlp.patpatme.dto.event.EventCreateDTO;
+import com.devlp.patpatme.dto.event.EventEditDTO;
 import com.devlp.patpatme.entity.EventEntity;
 import com.devlp.patpatme.entity.EventTypeEntity;
 import com.devlp.patpatme.entity.UserEntity;
 import com.devlp.patpatme.repository.EventRepository;
 import com.devlp.patpatme.repository.EventTypeRepository;
-import com.devlp.patpatme.security.CurrentUser;
 import com.devlp.patpatme.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,23 +24,23 @@ public class EventServiceImpl implements EventService {
     private EventTypeRepository eventTypeRepository;
 
     @Override
-    public void createEvent(UserEntity user, CreateEventDto createEventDto) {
+    public void createEvent(UserEntity user, EventCreateDTO eventCreateDto) {
 
         EventEntity newEvent = new EventEntity();
 
-        newEvent.setName(createEventDto.getName());
-        newEvent.setDescription(createEventDto.getDescription());
-        newEvent.setLocalisation(createEventDto.getLocalisation());
+        newEvent.setName(eventCreateDto.getName());
+        newEvent.setDescription(eventCreateDto.getDescription());
+        newEvent.setLocalisation(eventCreateDto.getLocalisation());
         newEvent.setOwner(user);
 
-        if (!createEventDto.getDate().isEmpty()) {
-            ZonedDateTime dateZonedDateTime = ZonedDateTime.parse(createEventDto.getDate());
+        if (!eventCreateDto.getDate().isEmpty()) {
+            ZonedDateTime dateZonedDateTime = ZonedDateTime.parse(eventCreateDto.getDate());
             Timestamp date = Timestamp.from(dateZonedDateTime.toInstant());
             newEvent.setDate(date);
         }
 
-        if (!createEventDto.getFk_id_type().isEmpty()) {
-            EventTypeEntity type = eventTypeRepository.findOneByName(createEventDto.getFk_id_type());
+        if (!eventCreateDto.getType().isEmpty()) {
+            EventTypeEntity type = eventTypeRepository.findOneByName(eventCreateDto.getType());
             if (type != null)
                 newEvent.setType(type);
         }
@@ -51,21 +50,49 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public EventDto getEventById(Integer eventId) {
+    public void editEvent(EventEditDTO eventEditDTO) {
 
-        EventEntity eventEntity = eventRepository.findOneById(eventId);
-        EventDto eventDto = new EventDto();
-        return eventDto
-                .setId(eventEntity.getId())
-                .setName(eventEntity.getName())
-                .setDescription(eventEntity.getDescription())
-                .setDate(eventEntity.getDate().toString())
-                .setLocalisation(eventEntity.getLocalisation())
-                .setFk_id_type(eventEntity.getType().getId().toString());
+        EventEntity event = eventRepository.findOneById(eventEditDTO.getId());
+
+        event.setDescription(eventEditDTO.getDescription());
+        event.setLocalisation(eventEditDTO.getLocalisation());
+
+        if (!eventEditDTO.getDate().equals(event.getDate().toString())) {
+            ZonedDateTime dateZonedDateTime = ZonedDateTime.parse(eventEditDTO.getDate());
+            Timestamp date = Timestamp.from(dateZonedDateTime.toInstant());
+            event.setDate(date);
+        }
+
+        eventRepository.save(event);
+    }
+
+    @Override
+    public EventEntity getEventById(Integer eventId) {
+
+        return eventRepository.findOneById(eventId);
     }
 
     @Override
     public boolean eventExistsWithName(String name) {
         return eventRepository.existsEventEntityByNameIgnoreCase(name);
+    }
+
+    @Override
+    public boolean checkIfUserIsOwner(UserEntity user, EventEntity event) {
+
+        return eventRepository.existsEventEntityByOwnerAndId(user, event.getId());
+    }
+
+    @Override
+    public void changeParticipation(UserEntity user, EventEntity event) {
+
+        boolean participate = event.getMembers().stream().anyMatch(userEntity -> userEntity == user);
+
+        if (participate)
+            event.getMembers().remove(user);
+        else
+            event.getMembers().add(user);
+
+        eventRepository.save(event);
     }
 }
