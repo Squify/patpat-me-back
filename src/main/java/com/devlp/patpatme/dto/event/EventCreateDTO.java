@@ -9,12 +9,11 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
-public class EventDto {
+public class EventCreateDTO {
 
-    private Integer id;
     private String name;
     private String description;
     private String localisation;
     private String date;
-    private String fk_id_type;
+    private String type;
 }

@@ -1,6 +1,5 @@
 package com.devlp.patpatme.repository;
 
-import com.devlp.patpatme.dto.animal.CreateAnimalDto;
 import com.devlp.patpatme.entity.AnimalGenderEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 

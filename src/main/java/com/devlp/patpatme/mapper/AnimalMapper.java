@@ -4,7 +4,6 @@ import com.devlp.patpatme.dto.animal.AnimalDto;
 import com.devlp.patpatme.dto.animal.CreateAnimalDto;
 import com.devlp.patpatme.dto.animal.UpdateAnimalDto;
 import com.devlp.patpatme.entity.AnimalEntity;
-import com.devlp.patpatme.entity.AnimalEntity;
 import com.devlp.patpatme.mapper.util.ModelMapperUtil;
 
 import java.sql.Timestamp;
@@ -22,7 +21,7 @@ public class AnimalMapper {
 
     public static AnimalEntity toEntity(CreateAnimalDto dto) {
 
-        AnimalEntity animal = ModelMapperUtil.createModelMapper(CreateAnimalDto.class, AnimalEntity.class, dto, AnimalEntity::setBirthday);
+        AnimalEntity animal = ModelMapperUtil.createModelMapper(CreateAnimalDTO.class, AnimalEntity.class, dto, AnimalEntity::setBirthday);
 
         if (!dto.getBirthday().isEmpty()) {
             ZonedDateTime date = ZonedDateTime.parse(dto.getBirthday());

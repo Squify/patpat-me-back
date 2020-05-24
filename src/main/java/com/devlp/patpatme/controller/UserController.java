@@ -1,7 +1,8 @@
 package com.devlp.patpatme.controller;
 
-import com.devlp.patpatme.dto.user.CreateAccountDto;
-import com.devlp.patpatme.dto.user.UserDto;
+import com.devlp.patpatme.dto.user.AccountCreateDTO;
+import com.devlp.patpatme.dto.user.AccountEditDTO;
+import com.devlp.patpatme.dto.user.UserDTO;
 import com.devlp.patpatme.entity.UserEntity;
 import com.devlp.patpatme.entity.UserGenderEntity;
 import com.devlp.patpatme.exception.UserNotFoundException;
@@ -29,24 +30,45 @@ public class UserController {
 
     //    @ApiOperation(value = "Créer un nouveau compte dans la base de données")
     @PostMapping(value = "/api/user/create")
-    public ResponseEntity createAccount(@RequestBody CreateAccountDto createAccountDto) {
+    public ResponseEntity createAccount(@RequestBody AccountCreateDTO accountCreateDto) {
 
         // check the inputs
-        if (!UserUtil.checkCreatePersonInputsAreValid(createAccountDto))
+        if (!UserUtil.checkCreatePersonInputsAreValid(accountCreateDto))
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
 
         // check if mail is already used
-        if (userService.userExistsWithEmail(createAccountDto.getEmail()))
+        if (userService.userExistsWithEmail(accountCreateDto.getEmail()))
             return new ResponseEntity(HttpStatus.EXPECTATION_FAILED);
 
         // check if pseudo is already used
-        if (userService.userExistsWithPseudo(createAccountDto.getPseudo()))
+        if (userService.userExistsWithPseudo(accountCreateDto.getPseudo()))
             return new ResponseEntity(HttpStatus.CONFLICT);
 
         try {
 
-            userService.createUser(createAccountDto);
+            userService.createUser(accountCreateDto);
             return new ResponseEntity(HttpStatus.CREATED);
+        } catch (Throwable e) {
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping(value = "/api/user/update")
+    public ResponseEntity editAccount(CurrentUser user, @RequestBody AccountEditDTO accountEditDto) throws UserNotFoundException {
+
+        UserEntity userEntity = userService.loadUserById(user.getId());
+
+        // check the inputs
+        if (!UserUtil.checkEditPersonInputsAreValid(accountEditDto))
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+
+        // check if mail is already used
+        if (userService.userExistsWithEmail(accountEditDto.getEmail()) && !userEntity.getEmail().equals(accountEditDto.getEmail()))
+            return new ResponseEntity(HttpStatus.EXPECTATION_FAILED);
+
+        try {
+            userService.editUser(userEntity, accountEditDto);
+            return new ResponseEntity(HttpStatus.OK);
         } catch (Throwable e) {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -58,7 +80,7 @@ public class UserController {
     }
 
     @PostMapping(value = "/api/auth/login/success")
-    public UserDto loginSuccess() throws UserNotFoundException {
+    public UserDTO loginSuccess() throws UserNotFoundException {
 
         CurrentUser user = (CurrentUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return getUserDtoFromCurrentUser(user);
@@ -76,7 +98,7 @@ public class UserController {
         return getUserDtoFromCurrentUser(user);
     }
 
-    private UserDto getUserDtoFromCurrentUser(CurrentUser user) throws UserNotFoundException {
+    private UserDTO getUserDtoFromCurrentUser(CurrentUser user) throws UserNotFoundException {
 
         UserEntity userEntity = userService.loadUserById(user.getId());
         return UserMapper.toDTO(userEntity);

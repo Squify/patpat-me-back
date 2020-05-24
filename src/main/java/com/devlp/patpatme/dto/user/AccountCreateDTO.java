@@ -9,10 +9,10 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
+public class AccountCreateDTO {
 
-public class UserDto {
-    private Integer id;
     private String email;
+    private String password;
     private String pseudo;
     private String firstname;
     private String lastname;
@@ -21,5 +21,5 @@ public class UserDto {
     private boolean push_notification;
     private boolean active_localisation;
     private boolean display_real_name;
-    private String fk_id_gender;
+    private String gender;
 }
