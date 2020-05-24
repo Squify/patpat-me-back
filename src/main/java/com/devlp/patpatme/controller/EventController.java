@@ -61,12 +61,13 @@ public class EventController {
     @PostMapping(value = "/api/event/edit")
     public ResponseEntity editEvent(@RequestBody EventEditDTO eventEditDTO) {
 
+        //TODO: vérifier si l'user en cours est l'owner
+
         // check the inputs
         if (!EventUtil.checkEditEventInputsAreValid(eventEditDTO))
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
 
         try {
-
             eventService.editEvent(eventEditDTO);
             return new ResponseEntity(HttpStatus.OK);
         } catch (Exception e) {
