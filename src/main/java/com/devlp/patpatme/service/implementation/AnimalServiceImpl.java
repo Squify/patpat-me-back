@@ -97,10 +97,9 @@ public class AnimalServiceImpl implements AnimalService {
     }
 
     @Override
-    public AnimalDto getAnimalById(Integer animalId) {
+    public AnimalEntity getAnimalById(Integer animalId) {
 
-        AnimalEntity animalEntity = animalRepository.findOneById(animalId);
-        return AnimalMapper.toDTO(animalEntity);
+        return animalRepository.findOneById(animalId);
     }
 
     @Override
