@@ -14,4 +14,6 @@ public interface AnimalService {
     AnimalEntity getAnimalById(Integer animalId);
 
     AnimalEntity loadAnimalById(Integer id);
+
+    void deleteAnimal(Integer animalId);
 }

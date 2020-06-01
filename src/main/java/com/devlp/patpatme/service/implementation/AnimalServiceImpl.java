@@ -107,5 +107,9 @@ public class AnimalServiceImpl implements AnimalService {
         return animalRepository.findOneById(id);
     }
 
+    @Override
+    public void deleteAnimal(Integer animalId){
+        animalRepository.deleteById(animalId);
+    }
 }
 
