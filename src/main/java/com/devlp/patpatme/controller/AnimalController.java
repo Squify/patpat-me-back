@@ -113,4 +113,14 @@ public class AnimalController {
         }
     }
 
+    @DeleteMapping(value = "/api/animal/delete")
+    public ResponseEntity deleteAnimal(@RequestParam Integer animalId){
+        try {
+            animalService.deleteAnimal(animalId);
+            return new ResponseEntity(HttpStatus.OK);
+        }  catch (Throwable e) {
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }
