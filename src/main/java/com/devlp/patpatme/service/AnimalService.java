@@ -11,7 +11,9 @@ public interface AnimalService {
 
     void updateAnimal(AnimalEditDTO animalEditDTO);
 
-    AnimalDto getAnimalById(Integer animalId);
+    AnimalEntity getAnimalById(Integer animalId);
 
     AnimalEntity loadAnimalById(Integer id);
+
+    void deleteAnimal(Integer animalId);
 }
