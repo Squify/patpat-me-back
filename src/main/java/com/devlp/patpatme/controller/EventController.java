@@ -59,9 +59,12 @@ public class EventController {
     }
 
     @PostMapping(value = "/api/event/edit")
-    public ResponseEntity editEvent(@RequestBody EventEditDTO eventEditDTO) {
+    public ResponseEntity editEvent(CurrentUser user, @RequestBody EventEditDTO eventEditDTO) {
 
-        //TODO: vérifier si l'user en cours est l'owner
+        // check if connected user is owner
+        EventEntity event = eventService.getEventById(eventEditDTO.getId());
+        if (!user.getId().equals(event.getOwner().getId()))
+            return new ResponseEntity(HttpStatus.EXPECTATION_FAILED); //417
 
         // check the inputs
         if (!EventUtil.checkEditEventInputsAreValid(eventEditDTO))

@@ -57,7 +57,7 @@ public class EventServiceImpl implements EventService {
         event.setDescription(eventEditDTO.getDescription());
         event.setLocalisation(eventEditDTO.getLocalisation());
 
-        if (!eventEditDTO.getDate().equals(event.getDate().toString())) {
+        if (!eventEditDTO.getDate().isEmpty()) {
             ZonedDateTime dateZonedDateTime = ZonedDateTime.parse(eventEditDTO.getDate());
             Timestamp date = Timestamp.from(dateZonedDateTime.toInstant());
             event.setDate(date);
