@@ -13,6 +13,7 @@ public class AccountEditDTO {
 
     private String email;
     private String password;
+    private String profile_pic_path;
     private String phone;
     private boolean push_notification;
     private boolean active_localisation;

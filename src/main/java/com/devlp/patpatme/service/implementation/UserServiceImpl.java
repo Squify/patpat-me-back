@@ -56,6 +56,9 @@ public class UserServiceImpl implements UserService {
         if (!user.getEmail().equals(accountEditDTO.getEmail()))
             user.setEmail(accountEditDTO.getEmail());
 
+        if (!user.getProfile_pic_path().equals(accountEditDTO.getProfile_pic_path()))
+            user.setProfile_pic_path(accountEditDTO.getProfile_pic_path());
+
         if (!user.getPhone().equals(accountEditDTO.getPhone()))
             user.setPhone(accountEditDTO.getPhone());
 

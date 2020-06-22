@@ -453,3 +453,9 @@ VALUES
 (238,'York Chocolate',2),
 (239,'Batard',1)
 ;
+
+ALTER TABLE users
+ADD profile_pic_path character varying(1000) DEFAULT '/assets/images/profile_pic/profile_default.png';
+
+ALTER TABLE animal
+ADD image_path character varying(1000) DEFAULT '/assets/images/animal_default.png';

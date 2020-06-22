@@ -29,6 +29,9 @@ public class UserEntity {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "profile_pic_path")
+    private String profile_pic_path;
+
     @Column(name = "firstname")
     private String firstname;
 
