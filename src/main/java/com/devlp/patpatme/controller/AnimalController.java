@@ -114,7 +114,18 @@ public class AnimalController {
     }
 
     @DeleteMapping(value = "/api/animal/delete")
-    public ResponseEntity deleteAnimal(@RequestParam Integer animalId){
+    public ResponseEntity deleteAnimal(@RequestParam Integer animalId, CurrentUser user) {
+
+        AnimalEntity animal = animalRepository.findOneById(animalId);
+
+        // check if animal exist
+        if (animal == null)
+            return new ResponseEntity(HttpStatus.BAD_REQUEST); //400
+
+        // check if connected user is owner
+        if (!user.getId().equals(animal.getOwner().getId()))
+            return new ResponseEntity(HttpStatus.EXPECTATION_FAILED); //417
+
         try {
             animalService.deleteAnimal(animalId);
             return new ResponseEntity(HttpStatus.OK);
