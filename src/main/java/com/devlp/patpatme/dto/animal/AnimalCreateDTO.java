@@ -20,5 +20,6 @@ public class AnimalCreateDTO {
     private String gender;
     private String breed;
     private List<String> tempers = new ArrayList<>();
+    private String image_path;
 
 }

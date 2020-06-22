@@ -15,6 +15,7 @@ public class UserDTO {
     private Integer id;
     private String email;
     private String pseudo;
+    private String profile_pic_path;
     private String firstname;
     private String lastname;
     private String phone;

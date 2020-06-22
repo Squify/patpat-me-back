@@ -14,6 +14,7 @@ public class AccountCreateDTO {
     private String email;
     private String password;
     private String pseudo;
+    private String profile_pic_path;
     private String firstname;
     private String lastname;
     private String phone;
