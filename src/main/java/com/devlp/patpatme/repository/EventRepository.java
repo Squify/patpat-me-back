@@ -12,4 +12,5 @@ public interface EventRepository extends JpaRepository<EventEntity, Integer> {
     boolean existsEventEntityByOwnerAndId(UserEntity name, Integer eventId);
     EventEntity findOneById(Integer id);
     List<EventEntity> findAllByDateAfter(Timestamp now);
+    List<EventEntity> findAllByMembersAndDateAfter(UserEntity user, Timestamp minDate);
 }
