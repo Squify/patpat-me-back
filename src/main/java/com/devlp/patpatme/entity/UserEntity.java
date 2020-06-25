@@ -62,10 +62,10 @@ public class UserEntity {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-            name = "follow_relation",
+            name = "friend_relation",
             joinColumns = @JoinColumn(name = "fk_id_user", referencedColumnName = "id", nullable = false),
-            inverseJoinColumns = @JoinColumn(name = "fk_id_follower", referencedColumnName = "id", nullable = false)
+            inverseJoinColumns = @JoinColumn(name = "fk_id_friend", referencedColumnName = "id", nullable = false)
     )
-    private List<UserEntity> followers = new ArrayList<>();
+    private List<UserEntity> friends = new ArrayList<>();
 
 }

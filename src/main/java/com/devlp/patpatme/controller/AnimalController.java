@@ -72,7 +72,6 @@ public class AnimalController {
             animalService.updateAnimal(animalEditDTO);
             return new ResponseEntity(HttpStatus.CREATED);
         } catch (Throwable e) {
-            e.printStackTrace();
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
