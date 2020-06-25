@@ -467,3 +467,8 @@ ALTER TABLE users
 ALTER TABLE users
     ADD COLUMN display_email boolean DEFAULT false,
     ADD COLUMN display_phone boolean DEFAULT false;
+
+ALTER TABLE follow_relation
+    RENAME TO friend_relation;
+ALTER TABLE friend_relation
+    RENAME COLUMN fk_id_follower TO fk_id_friend;
