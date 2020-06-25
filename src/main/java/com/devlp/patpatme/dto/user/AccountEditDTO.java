@@ -15,6 +15,7 @@ public class AccountEditDTO {
     private String password;
     private String profile_pic_path;
     private String phone;
+    private String birthday;
     private boolean display_email;
     private boolean display_phone;
     private boolean display_real_name;
