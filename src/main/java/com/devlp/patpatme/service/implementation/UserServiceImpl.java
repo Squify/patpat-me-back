@@ -20,6 +20,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.sql.Timestamp;
+import java.time.ZonedDateTime;
 import java.util.Collections;
 import java.util.List;
 
@@ -61,6 +63,11 @@ public class UserServiceImpl implements UserService {
 
         if (!user.getPhone().equals(accountEditDTO.getPhone()))
             user.setPhone(accountEditDTO.getPhone());
+
+        if (!accountEditDTO.getBirthday().isEmpty()) {
+            ZonedDateTime birthdayZonedDateTime = ZonedDateTime.parse(accountEditDTO.getBirthday());
+            user.setBirthday(Timestamp.from(birthdayZonedDateTime.toInstant()));
+        }
 
         if (user.isDisplay_email() != accountEditDTO.isDisplay_email())
             user.setDisplay_email(accountEditDTO.isDisplay_email());
