@@ -20,8 +20,8 @@ public class UserDTO {
     private String lastname;
     private String phone;
     private String birthday;
-    private boolean push_notification;
-    private boolean active_localisation;
+    private boolean display_email;
+    private boolean display_phone;
     private boolean display_real_name;
     private UserGenderEntity gender;
 }

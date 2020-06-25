@@ -47,14 +47,14 @@ public class UserEntity {
     @Column(name = "sign_up")
     private Timestamp sign_up;
 
-    @Column(name = "push_notification")
-    private boolean push_notification;
-
-    @Column(name = "active_localisation")
-    private boolean active_localisation;
-
     @Column(name = "display_real_name")
     private boolean display_real_name;
+
+    @Column(name = "display_email")
+    private boolean display_email;
+
+    @Column(name = "display_phone")
+    private boolean display_phone;
 
     @ManyToOne
     @JoinColumn(name = "fk_id_gender")
