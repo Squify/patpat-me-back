@@ -104,4 +104,17 @@ public class UserController {
         return UserMapper.toDTO(userEntity);
     }
 
+    @GetMapping(value = "/api/user")
+    public Object getUser(Integer id) throws UserNotFoundException {
+
+        return getUserDtoFromUserId(id);
+    }
+
+    private UserDTO getUserDtoFromUserId(Integer id) throws UserNotFoundException {
+
+        UserEntity userEntity = userService.loadUserById(id);
+        return UserMapper.toDTO(userEntity);
+    }
+
+
 }
