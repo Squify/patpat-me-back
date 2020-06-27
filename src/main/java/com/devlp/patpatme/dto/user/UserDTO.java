@@ -1,10 +1,14 @@
 package com.devlp.patpatme.dto.user;
 
+import com.devlp.patpatme.entity.UserEntity;
 import com.devlp.patpatme.entity.UserGenderEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -20,8 +24,9 @@ public class UserDTO {
     private String lastname;
     private String phone;
     private String birthday;
-    private boolean push_notification;
-    private boolean active_localisation;
+    private boolean display_email;
+    private boolean display_phone;
     private boolean display_real_name;
     private UserGenderEntity gender;
+    private List<UserEntity> friends = new ArrayList<>();
 }

@@ -19,8 +19,8 @@ public class AccountCreateDTO {
     private String lastname;
     private String phone;
     private String birthday;
-    private boolean push_notification;
-    private boolean active_localisation;
     private boolean display_real_name;
+    private boolean display_email;
+    private boolean display_phone;
     private String gender;
 }
