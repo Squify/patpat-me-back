@@ -459,3 +459,16 @@ ADD profile_pic_path character varying(1000) DEFAULT '/assets/images/profile_pic
 
 ALTER TABLE animal
 ADD image_path character varying(1000) DEFAULT '/assets/images/animal_default.png';
+
+ALTER TABLE users
+    DROP COLUMN push_notification,
+    DROP COLUMN active_localisation;
+
+ALTER TABLE users
+    ADD COLUMN display_email boolean DEFAULT false,
+    ADD COLUMN display_phone boolean DEFAULT false;
+
+ALTER TABLE follow_relation
+    RENAME TO friend_relation;
+ALTER TABLE friend_relation
+    RENAME COLUMN fk_id_follower TO fk_id_friend;
