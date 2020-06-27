@@ -1,6 +1,5 @@
 package com.devlp.patpatme.controller;
 
-import com.devlp.patpatme.dto.user.MetUserDTO;
 import com.devlp.patpatme.entity.EventEntity;
 import com.devlp.patpatme.entity.UserEntity;
 import com.devlp.patpatme.exception.UserNotFoundException;
@@ -46,8 +45,7 @@ public class MeetController {
         List<EventEntity> events = eventRepository.findAllByMembersAndDateAfter(userEntity, minDate);
 
         try {
-            List<MetUserDTO> metUserDTOS = meetService.getMetUsers(events, userEntity);
-            return metUserDTOS;
+            return meetService.getMetUsers(events, userEntity);
         } catch (Throwable e) {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }

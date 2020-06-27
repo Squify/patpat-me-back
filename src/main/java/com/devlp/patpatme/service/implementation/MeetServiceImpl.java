@@ -8,8 +8,9 @@ import com.devlp.patpatme.service.MeetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class MeetServiceImpl implements MeetService {
@@ -18,19 +19,35 @@ public class MeetServiceImpl implements MeetService {
     private UserRepository userRepository;
 
     @Override
-    public List<MetUserDTO> getMetUsers(List<EventEntity> lastEvents, UserEntity currentUser) {
+    public Set<MetUserDTO> getMetUsers(List<EventEntity> lastEvents, UserEntity currentUser) {
 
-        List<MetUserDTO> metUserDTOS = new ArrayList<>();
+        Set<MetUserDTO> metUserDTOS = new HashSet<>();
+
         for (EventEntity event : lastEvents) {
+
             for (UserEntity member : event.getMembers()) {
+
                 if (!member.equals(currentUser)) {
-                    if (metUserDTOS.stream().noneMatch(o -> o.getUser().equals(member))) {
+                    if (metUserDTOS.stream().noneMatch(o -> o.getId().equals(member.getId()))) {
                         MetUserDTO metUserToAdd = new MetUserDTO();
-                        metUserToAdd.setUser(member);
+                        metUserToAdd
+                                .setId(member.getId())
+                                .setEmail(member.getEmail())
+                                .setPseudo(member.getPseudo())
+                                .setProfile_pic_path(member.getProfile_pic_path())
+                                .setFirstname(member.getFirstname())
+                                .setLastname(member.getLastname())
+                                .setPhone(member.getPhone() != null ? member.getPhone() : "")
+                                .setDisplay_email(member.isDisplay_email())
+                                .setDisplay_phone(member.isDisplay_phone())
+                                .setDisplay_real_name(member.isDisplay_real_name())
+                                .setGender(member.getGender())
+                        ;
                         metUserToAdd.getEvents().add(event.getName());
                         metUserDTOS.add(metUserToAdd);
+
                     } else {
-                        metUserDTOS.stream().filter(o -> o.getUser().equals(member)).forEach(
+                        metUserDTOS.stream().filter(o -> o.getId().equals(member.getId())).forEach(
                                 o -> o.getEvents().add(event.getName())
                         );
                     }

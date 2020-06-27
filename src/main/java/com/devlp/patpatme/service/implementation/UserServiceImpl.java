@@ -65,9 +65,10 @@ public class UserServiceImpl implements UserService {
             user.setPhone(accountEditDTO.getPhone());
 
         if (!accountEditDTO.getBirthday().isEmpty()) {
-            ZonedDateTime birthdayZonedDateTime = ZonedDateTime.parse(accountEditDTO.getBirthday());
-            user.setBirthday(Timestamp.from(birthdayZonedDateTime.toInstant()));
-        }
+            ZonedDateTime date = ZonedDateTime.parse(accountEditDTO.getBirthday());
+            user.setBirthday(Timestamp.from(date.toInstant()));
+        } else
+            user.setBirthday(null);
 
         if (user.isDisplay_email() != accountEditDTO.isDisplay_email())
             user.setDisplay_email(accountEditDTO.isDisplay_email());
