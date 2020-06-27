@@ -1,6 +1,7 @@
 package com.devlp.patpatme.mapper;
 
 import com.devlp.patpatme.dto.user.AccountCreateDTO;
+import com.devlp.patpatme.dto.user.MetUserDTO;
 import com.devlp.patpatme.dto.user.UserDTO;
 import com.devlp.patpatme.entity.UserEntity;
 import com.devlp.patpatme.mapper.util.ModelMapperUtil;
@@ -16,6 +17,11 @@ public class UserMapper {
 
     public static UserDTO toDTO(UserEntity user) {
         return ModelMapperUtil.createModelMapper(UserEntity.class, UserDTO.class, user);
+    }
+
+    public static MetUserDTO toMetUserDTO(UserEntity user) {
+
+        return ModelMapperUtil.createModelMapper(UserEntity.class, MetUserDTO.class, user, MetUserDTO::setEvents);
     }
 
     public static List<UserDTO> toDTO(Collection<UserEntity> assets) {
