@@ -2,11 +2,14 @@ package com.devlp.patpatme.controller;
 
 import com.devlp.patpatme.dto.user.AccountCreateDTO;
 import com.devlp.patpatme.dto.user.AccountEditDTO;
+import com.devlp.patpatme.dto.user.FriendDTO;
 import com.devlp.patpatme.dto.user.UserDTO;
+import com.devlp.patpatme.entity.AnimalEntity;
 import com.devlp.patpatme.entity.UserEntity;
 import com.devlp.patpatme.entity.UserGenderEntity;
 import com.devlp.patpatme.exception.UserNotFoundException;
 import com.devlp.patpatme.mapper.UserMapper;
+import com.devlp.patpatme.repository.AnimalRepository;
 import com.devlp.patpatme.repository.UserGenderRepository;
 import com.devlp.patpatme.security.CurrentUser;
 import com.devlp.patpatme.service.UserService;
@@ -27,6 +30,9 @@ public class UserController {
 
     @Autowired
     private UserGenderRepository userGenderRepository;
+
+    @Autowired
+    private AnimalRepository animalRepository;
 
     //    @ApiOperation(value = "Créer un nouveau compte dans la base de données")
     @PostMapping(value = "/api/user/create")
@@ -105,16 +111,19 @@ public class UserController {
     }
 
     @GetMapping(value = "/api/user")
-    public Object getUser(Integer id) throws UserNotFoundException {
+    public Object getUser(@RequestParam Integer userId) {
 
-        return getUserDtoFromUserId(id);
+        try {
+
+            UserEntity userEntity = userService.loadUserById(userId);
+            List<AnimalEntity> animalEntities = animalRepository.findAllByOwnerId(userId);
+
+            FriendDTO friendDTO = new FriendDTO();
+            friendDTO.setUser(userEntity).setAnimals(animalEntities);
+
+            return friendDTO;
+        } catch (Throwable e) {
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
-
-    private UserDTO getUserDtoFromUserId(Integer id) throws UserNotFoundException {
-
-        UserEntity userEntity = userService.loadUserById(id);
-        return UserMapper.toDTO(userEntity);
-    }
-
-
 }
