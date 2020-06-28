@@ -2,10 +2,12 @@ package com.devlp.patpatme.service.implementation;
 
 import com.devlp.patpatme.dto.user.AccountCreateDTO;
 import com.devlp.patpatme.dto.user.AccountEditDTO;
+import com.devlp.patpatme.entity.LanguageEntity;
 import com.devlp.patpatme.entity.UserEntity;
 import com.devlp.patpatme.entity.UserGenderEntity;
 import com.devlp.patpatme.exception.UserNotFoundException;
 import com.devlp.patpatme.mapper.UserMapper;
+import com.devlp.patpatme.repository.LanguageRepository;
 import com.devlp.patpatme.repository.UserGenderRepository;
 import com.devlp.patpatme.repository.UserRepository;
 import com.devlp.patpatme.security.CurrentUser;
@@ -35,6 +37,9 @@ public class UserServiceImpl implements UserService {
     private UserGenderRepository userGenderRepository;
 
     @Autowired
+    private LanguageRepository languageRepository;
+
+    @Autowired
     private BCryptManagerUtil bCryptManagerUtil;
 
     @Override
@@ -47,6 +52,10 @@ public class UserServiceImpl implements UserService {
 
         if (!accountCreateDto.getGender().isEmpty()) {
             user.setGender(userGenderRepository.findOneByName(accountCreateDto.getGender()));
+        }
+
+        if (!accountCreateDto.getLanguage().isEmpty()) {
+            user.setLanguage(languageRepository.findOneByName(accountCreateDto.getLanguage()));
         }
 
         userRepository.save(user);
@@ -86,6 +95,12 @@ public class UserServiceImpl implements UserService {
             UserGenderEntity userGender = userGenderRepository.findOneByName(accountEditDTO.getGender());
             if (user.getGender() != userGender)
                 user.setGender(userGender);
+        }
+
+        if (!accountEditDTO.getLanguage().isEmpty()) {
+            LanguageEntity languageEntity = languageRepository.findOneByName(accountEditDTO.getLanguage());
+            if (user.getLanguage() != languageEntity)
+                user.setLanguage(languageEntity);
         }
 
         userRepository.save(user);
