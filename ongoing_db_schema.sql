@@ -192,8 +192,8 @@ VALUES
 (18, 'EXPLORER'),
 (19, 'LAZY'),
 (20, 'FAITHFUL'),
-(21, 'FOUGUEUX'),
-(22, 'GAFFEUR'),
+(21, 'FIERY'),
+(22, 'GATHERER'),
 (23, 'GOURMAND'),
 (24, 'IMPATIENT'),
 (25, 'IMPUDENT'),
@@ -453,3 +453,38 @@ VALUES
 (238,'York Chocolate',2),
 (239,'Batard',1)
 ;
+
+ALTER TABLE users
+ADD profile_pic_path character varying(1000) DEFAULT '/assets/images/profile_pic/profile_default.png';
+
+ALTER TABLE animal
+ADD image_path character varying(1000) DEFAULT '/assets/images/animal_default.png';
+
+ALTER TABLE users
+    DROP COLUMN push_notification,
+    DROP COLUMN active_localisation;
+
+ALTER TABLE users
+    ADD COLUMN display_email boolean DEFAULT false,
+    ADD COLUMN display_phone boolean DEFAULT false;
+
+ALTER TABLE follow_relation
+    RENAME TO friend_relation;
+ALTER TABLE friend_relation
+    RENAME COLUMN fk_id_follower TO fk_id_friend;
+
+
+CREATE TABLE language
+(
+    id integer PRIMARY KEY NOT NULL,
+    name character varying(256) NOT NULL
+);
+
+INSERT INTO language(id, name)
+VALUES
+(1, 'FR'),
+(2, 'EN'),
+;
+
+ALTER TABLE users
+    ADD COLUMN fk_id_language integer REFERENCES language(id);

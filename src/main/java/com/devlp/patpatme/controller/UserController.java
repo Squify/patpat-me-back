@@ -2,11 +2,16 @@ package com.devlp.patpatme.controller;
 
 import com.devlp.patpatme.dto.user.AccountCreateDTO;
 import com.devlp.patpatme.dto.user.AccountEditDTO;
+import com.devlp.patpatme.dto.user.FriendDTO;
 import com.devlp.patpatme.dto.user.UserDTO;
+import com.devlp.patpatme.entity.AnimalEntity;
+import com.devlp.patpatme.entity.LanguageEntity;
 import com.devlp.patpatme.entity.UserEntity;
 import com.devlp.patpatme.entity.UserGenderEntity;
 import com.devlp.patpatme.exception.UserNotFoundException;
 import com.devlp.patpatme.mapper.UserMapper;
+import com.devlp.patpatme.repository.AnimalRepository;
+import com.devlp.patpatme.repository.LanguageRepository;
 import com.devlp.patpatme.repository.UserGenderRepository;
 import com.devlp.patpatme.security.CurrentUser;
 import com.devlp.patpatme.service.UserService;
@@ -27,6 +32,12 @@ public class UserController {
 
     @Autowired
     private UserGenderRepository userGenderRepository;
+
+    @Autowired
+    private LanguageRepository languageRepository;
+
+    @Autowired
+    private AnimalRepository animalRepository;
 
     //    @ApiOperation(value = "Créer un nouveau compte dans la base de données")
     @PostMapping(value = "/api/user/create")
@@ -70,6 +81,7 @@ public class UserController {
             userService.editUser(userEntity, accountEditDto);
             return new ResponseEntity(HttpStatus.OK);
         } catch (Throwable e) {
+            e.printStackTrace();
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -77,6 +89,11 @@ public class UserController {
     @GetMapping(value = "/api/genders")
     public List<UserGenderEntity> getGender() {
         return userGenderRepository.findAll();
+    }
+
+    @GetMapping(value = "/api/languages")
+    public List<LanguageEntity> getLanguage() {
+        return languageRepository.findAll();
     }
 
     @PostMapping(value = "/api/auth/login/success")
@@ -104,4 +121,20 @@ public class UserController {
         return UserMapper.toDTO(userEntity);
     }
 
+    @GetMapping(value = "/api/user")
+    public Object getUser(@RequestParam Integer userId) {
+
+        try {
+
+            UserEntity userEntity = userService.loadUserById(userId);
+            List<AnimalEntity> animalEntities = animalRepository.findAllByOwnerId(userId);
+
+            FriendDTO friendDTO = new FriendDTO();
+            friendDTO.setUser(userEntity).setAnimals(animalEntities);
+
+            return friendDTO;
+        } catch (Throwable e) {
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

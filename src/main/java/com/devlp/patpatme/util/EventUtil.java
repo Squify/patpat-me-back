@@ -7,7 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 public class EventUtil {
 
     static final int MIN_DESCRIPTION_SIZE = 8;
-    static final int MAX_DESCRIPTION = 32;
+    static final int MAX_DESCRIPTION = 400;
 
     private EventUtil() {
     }
