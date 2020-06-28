@@ -1,5 +1,6 @@
 package com.devlp.patpatme.dto.user;
 
+import com.devlp.patpatme.entity.LanguageEntity;
 import com.devlp.patpatme.entity.UserEntity;
 import com.devlp.patpatme.entity.UserGenderEntity;
 import lombok.AllArgsConstructor;
@@ -28,5 +29,6 @@ public class UserDTO {
     private boolean display_phone;
     private boolean display_real_name;
     private UserGenderEntity gender;
+    private LanguageEntity language;
     private List<UserEntity> friends = new ArrayList<>();
 }

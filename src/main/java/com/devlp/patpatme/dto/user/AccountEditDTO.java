@@ -20,4 +20,5 @@ public class AccountEditDTO {
     private boolean display_phone;
     private boolean display_real_name;
     private String gender;
+    private String language;
 }

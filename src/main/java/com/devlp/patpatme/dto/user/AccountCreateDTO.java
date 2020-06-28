@@ -23,4 +23,5 @@ public class AccountCreateDTO {
     private boolean display_email;
     private boolean display_phone;
     private String gender;
+    private String language;
 }

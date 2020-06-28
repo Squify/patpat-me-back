@@ -81,6 +81,11 @@ public class UserEntity {
     private UserGenderEntity gender;
 
     @ToString.Exclude
+    @ManyToOne
+    @JoinColumn(name = "fk_id_language")
+    private LanguageEntity language;
+
+    @ToString.Exclude
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "friend_relation",

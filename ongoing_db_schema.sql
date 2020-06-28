@@ -192,8 +192,8 @@ VALUES
 (18, 'EXPLORER'),
 (19, 'LAZY'),
 (20, 'FAITHFUL'),
-(21, 'FOUGUEUX'),
-(22, 'GAFFEUR'),
+(21, 'FIERY'),
+(22, 'GATHERER'),
 (23, 'GOURMAND'),
 (24, 'IMPATIENT'),
 (25, 'IMPUDENT'),
@@ -472,3 +472,19 @@ ALTER TABLE follow_relation
     RENAME TO friend_relation;
 ALTER TABLE friend_relation
     RENAME COLUMN fk_id_follower TO fk_id_friend;
+
+
+CREATE TABLE language
+(
+    id integer PRIMARY KEY NOT NULL,
+    name character varying(256) NOT NULL
+);
+
+INSERT INTO language(id, name)
+VALUES
+(1, 'FR'),
+(2, 'EN'),
+;
+
+ALTER TABLE users
+    ADD COLUMN fk_id_language integer REFERENCES language(id);
