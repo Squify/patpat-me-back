@@ -16,10 +16,8 @@ public class AnimalUtil {
         final String name = animalCreateDTO.getName();
         final String type = animalCreateDTO.getType();
         final String gender = animalCreateDTO.getGender();
-        final String birthday = animalCreateDTO.getBirthday();
 
-
-        if (StringUtils.isBlank(name) || StringUtils.isBlank(type) || StringUtils.isBlank(gender) || StringUtils.isBlank(birthday)) {
+        if (StringUtils.isBlank(name) || StringUtils.isBlank(type) || StringUtils.isBlank(gender)) {
             return false;
         }
 
@@ -33,13 +31,11 @@ public class AnimalUtil {
     public static boolean checkEditAnimalInputsAreValid(AnimalEditDTO animalEditDTO) {
         final String type = animalEditDTO.getType();
         final String gender = animalEditDTO.getGender();
-        final String birthday = animalEditDTO.getBirthday();
 
-
-        if (StringUtils.isBlank(type) || StringUtils.isBlank(gender)) {
+        if (StringUtils.isBlank(type)) {
             return false;
         }
 
-        return StringUtils.isBlank(birthday);
+        return !StringUtils.isBlank(gender);
     }
 }

@@ -22,5 +22,6 @@ public class AnimalDto {
         private AnimalGenderEntity gender;
         private BreedEntity breed;
         private List<TemperEntity> tempers;
+        private String image_path;
 
 }

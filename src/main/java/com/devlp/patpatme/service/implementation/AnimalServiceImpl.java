@@ -55,6 +55,10 @@ public class AnimalServiceImpl implements AnimalService {
             animal.setBreed(breedRepository.findOneByName(animalCreateDto.getBreed()));
         }
 
+        if (animalCreateDto.getImage_path() != null) {
+            animal.setImage_path(animalCreateDto.getImage_path());
+        }
+
         List<TemperEntity> temperEntities = new ArrayList<>();
         animalCreateDto.getTempers().forEach(temper -> {
             temperEntities.add(temperRepository.findOneByName(temper));
@@ -85,6 +89,9 @@ public class AnimalServiceImpl implements AnimalService {
         }
         if (!animalEditDTO.getBreed().isEmpty()) {
             updateAnimalEntity.setBreed(breedRepository.findOneByName(animalEditDTO.getBreed()));
+        }
+        if (!animalEditDTO.getImage_path().isEmpty()) {
+            updateAnimalEntity.setImage_path(animalEditDTO.getImage_path());
         }
 
         List<TemperEntity> temperEntities = new ArrayList<>();

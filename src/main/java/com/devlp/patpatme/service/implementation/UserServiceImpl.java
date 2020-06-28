@@ -2,10 +2,12 @@ package com.devlp.patpatme.service.implementation;
 
 import com.devlp.patpatme.dto.user.AccountCreateDTO;
 import com.devlp.patpatme.dto.user.AccountEditDTO;
+import com.devlp.patpatme.entity.LanguageEntity;
 import com.devlp.patpatme.entity.UserEntity;
 import com.devlp.patpatme.entity.UserGenderEntity;
 import com.devlp.patpatme.exception.UserNotFoundException;
 import com.devlp.patpatme.mapper.UserMapper;
+import com.devlp.patpatme.repository.LanguageRepository;
 import com.devlp.patpatme.repository.UserGenderRepository;
 import com.devlp.patpatme.repository.UserRepository;
 import com.devlp.patpatme.security.CurrentUser;
@@ -20,6 +22,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.sql.Timestamp;
+import java.time.ZonedDateTime;
 import java.util.Collections;
 import java.util.List;
 
@@ -31,6 +35,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserGenderRepository userGenderRepository;
+
+    @Autowired
+    private LanguageRepository languageRepository;
 
     @Autowired
     private BCryptManagerUtil bCryptManagerUtil;
@@ -47,6 +54,10 @@ public class UserServiceImpl implements UserService {
             user.setGender(userGenderRepository.findOneByName(accountCreateDto.getGender()));
         }
 
+        if (!accountCreateDto.getLanguage().isEmpty()) {
+            user.setLanguage(languageRepository.findOneByName(accountCreateDto.getLanguage()));
+        }
+
         userRepository.save(user);
     }
 
@@ -56,14 +67,23 @@ public class UserServiceImpl implements UserService {
         if (!user.getEmail().equals(accountEditDTO.getEmail()))
             user.setEmail(accountEditDTO.getEmail());
 
+        if (!user.getProfile_pic_path().equals(accountEditDTO.getProfile_pic_path()))
+            user.setProfile_pic_path(accountEditDTO.getProfile_pic_path());
+
         if (!user.getPhone().equals(accountEditDTO.getPhone()))
             user.setPhone(accountEditDTO.getPhone());
 
-        if (user.isPush_notification() != accountEditDTO.isPush_notification())
-            user.setPush_notification(accountEditDTO.isPush_notification());
+        if (!accountEditDTO.getBirthday().isEmpty()) {
+            ZonedDateTime date = ZonedDateTime.parse(accountEditDTO.getBirthday());
+            user.setBirthday(Timestamp.from(date.toInstant()));
+        } else
+            user.setBirthday(null);
 
-        if (user.isActive_localisation() != accountEditDTO.isActive_localisation())
-            user.setActive_localisation(accountEditDTO.isActive_localisation());
+        if (user.isDisplay_email() != accountEditDTO.isDisplay_email())
+            user.setDisplay_email(accountEditDTO.isDisplay_email());
+
+        if (user.isDisplay_phone() != accountEditDTO.isDisplay_phone())
+            user.setDisplay_phone(accountEditDTO.isDisplay_phone());
 
         if (user.isDisplay_real_name() != accountEditDTO.isDisplay_real_name())
             user.setDisplay_real_name(accountEditDTO.isDisplay_real_name());
@@ -75,6 +95,12 @@ public class UserServiceImpl implements UserService {
             UserGenderEntity userGender = userGenderRepository.findOneByName(accountEditDTO.getGender());
             if (user.getGender() != userGender)
                 user.setGender(userGender);
+        }
+
+        if (!accountEditDTO.getLanguage().isEmpty()) {
+            LanguageEntity languageEntity = languageRepository.findOneByName(accountEditDTO.getLanguage());
+            if (user.getLanguage() != languageEntity)
+                user.setLanguage(languageEntity);
         }
 
         userRepository.save(user);

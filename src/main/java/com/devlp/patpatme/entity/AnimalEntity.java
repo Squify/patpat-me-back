@@ -49,4 +49,7 @@ public class AnimalEntity {
             inverseJoinColumns = @JoinColumn(name = "fk_id_temper", referencedColumnName = "id", nullable = true)
     )
     private List<TemperEntity> tempers = new ArrayList<>();
+
+    @Column(name = "image_path")
+    private String image_path;
 }
