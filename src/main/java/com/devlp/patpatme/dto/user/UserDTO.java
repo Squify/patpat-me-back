@@ -17,6 +17,7 @@ import java.util.List;
 @Accessors(chain = true)
 
 public class UserDTO {
+
     private Integer id;
     private String email;
     private String pseudo;
