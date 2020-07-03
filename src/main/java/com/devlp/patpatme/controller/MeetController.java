@@ -8,6 +8,7 @@ import com.devlp.patpatme.repository.UserRepository;
 import com.devlp.patpatme.security.CurrentUser;
 import com.devlp.patpatme.service.MeetService;
 import com.devlp.patpatme.service.UserService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,6 +37,7 @@ public class MeetController {
     @Autowired
     private UserRepository userRepository;
 
+    @ApiOperation(value = "Récupère tous les utilisateurs rencontrés lors d'évenements")
     @GetMapping(value = "/api/meet/users")
     public Object getAllMetUsers(CurrentUser user) throws UserNotFoundException {
 
@@ -51,6 +53,7 @@ public class MeetController {
         }
     }
 
+    @ApiOperation(value = "Récupère tous les amis ajoutés")
     @PostMapping(value = "/api/meet/relation")
     public ResponseEntity changeFriendRelation(CurrentUser user, @RequestBody Integer userId) throws UserNotFoundException {
 

@@ -16,6 +16,7 @@ import com.devlp.patpatme.repository.UserGenderRepository;
 import com.devlp.patpatme.security.CurrentUser;
 import com.devlp.patpatme.service.UserService;
 import com.devlp.patpatme.util.UserUtil;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,7 +40,7 @@ public class UserController {
     @Autowired
     private AnimalRepository animalRepository;
 
-    //    @ApiOperation(value = "Créer un nouveau compte dans la base de données")
+    @ApiOperation(value = "Créer un nouveau compte dans la base de données")
     @PostMapping(value = "/api/user/create")
     public ResponseEntity createAccount(@RequestBody AccountCreateDTO accountCreateDto) {
 
@@ -64,6 +65,7 @@ public class UserController {
         }
     }
 
+    @ApiOperation(value = "Mets à jour le compte de l'utilisateur connecté dans la base de données")
     @PostMapping(value = "/api/user/update")
     public ResponseEntity editAccount(CurrentUser user, @RequestBody AccountEditDTO accountEditDto) throws UserNotFoundException {
 
@@ -86,16 +88,19 @@ public class UserController {
         }
     }
 
+    @ApiOperation(value = "Récupère tous les genre possible pour un utilisateur")
     @GetMapping(value = "/api/genders")
     public List<UserGenderEntity> getGender() {
         return userGenderRepository.findAll();
     }
 
+    @ApiOperation(value = "Récupère toutes les langues")
     @GetMapping(value = "/api/languages")
     public List<LanguageEntity> getLanguage() {
         return languageRepository.findAll();
     }
 
+    @ApiOperation(value = "Renvoie un succès si la connexion réussie")
     @PostMapping(value = "/api/auth/login/success")
     public UserDTO loginSuccess() throws UserNotFoundException {
 
@@ -103,12 +108,14 @@ public class UserController {
         return getUserDtoFromCurrentUser(user);
     }
 
+    @ApiOperation(value = "Renvoie une erreur si la connexion échoue")
     @RequestMapping("/api/generic/login/failure")
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public void failure() {
         // Controller used solely to send back an UNAUTHORIZED response
     }
 
+    @ApiOperation(value = "Renvoie l'utilisateur connecté")
     @GetMapping(value = "/api/auth/user")
     public Object getUser(CurrentUser user) throws UserNotFoundException {
 
@@ -121,6 +128,7 @@ public class UserController {
         return UserMapper.toDTO(userEntity);
     }
 
+    @ApiOperation(value = "Récupère un utilisateur en fonction de son id")
     @GetMapping(value = "/api/user")
     public Object getUser(@RequestParam Integer userId) {
 
