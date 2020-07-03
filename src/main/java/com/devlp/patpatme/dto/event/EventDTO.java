@@ -24,6 +24,6 @@ public class EventDTO {
     private String location;
     private Timestamp date;
     private EventTypeEntity type;
-    private UserEntity owner;
+    private EventMemberDTO owner;
     private List<EventMemberDTO> members = new ArrayList<>();
 }

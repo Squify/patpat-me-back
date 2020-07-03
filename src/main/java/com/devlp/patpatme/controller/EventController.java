@@ -13,6 +13,7 @@ import com.devlp.patpatme.security.CurrentUser;
 import com.devlp.patpatme.service.EventService;
 import com.devlp.patpatme.service.UserService;
 import com.devlp.patpatme.util.EventUtil;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,7 +38,7 @@ public class EventController {
     @Autowired
     private UserService userService;
 
-    //    @ApiOperation(value = "Créer un nouvel évènement dans la base de données")
+    @ApiOperation(value = "Créer un nouvel évènement dans la base de données")
     @PostMapping(value = "/api/event/create")
     public ResponseEntity createEvent(CurrentUser user, @RequestBody EventCreateDTO eventCreateDto) {
 
@@ -59,6 +60,7 @@ public class EventController {
         }
     }
 
+    @ApiOperation(value = "Mets à jour un évènement dans la base de données")
     @PostMapping(value = "/api/event/edit")
     public ResponseEntity editEvent(CurrentUser user, @RequestBody EventEditDTO eventEditDTO) {
 
@@ -79,16 +81,19 @@ public class EventController {
         }
     }
 
+    @ApiOperation(value = "Récupère tous les types d'événement")
     @GetMapping(value = "/api/event/type")
     public List<EventTypeEntity> getEventType() {
         return eventTypeRepository.findAll();
     }
 
+    @ApiOperation(value = "Récupère tous les événements créés")
     @GetMapping(value = "/api/events")
     public List<EventEntity> getEvents() {
         return eventRepository.findAllByDateAfter(Timestamp.from(Instant.now()));
     }
 
+    @ApiOperation(value = "Récupère un événement en fonction de son id")
     @GetMapping(value = "/api/event")
     public Object getEvent(@RequestParam Integer eventId) {
 
@@ -101,6 +106,7 @@ public class EventController {
         }
     }
 
+    @ApiOperation(value = "Change la participation à un événement")
     @PostMapping(value = "/api/event/participation")
     public ResponseEntity changeEventParticipation(CurrentUser user, @RequestBody Integer eventId) throws UserNotFoundException {
 
