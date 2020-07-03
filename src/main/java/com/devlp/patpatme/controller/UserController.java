@@ -1,9 +1,6 @@
 package com.devlp.patpatme.controller;
 
-import com.devlp.patpatme.dto.user.AccountCreateDTO;
-import com.devlp.patpatme.dto.user.AccountEditDTO;
-import com.devlp.patpatme.dto.user.FriendDTO;
-import com.devlp.patpatme.dto.user.UserDTO;
+import com.devlp.patpatme.dto.user.*;
 import com.devlp.patpatme.entity.AnimalEntity;
 import com.devlp.patpatme.entity.LanguageEntity;
 import com.devlp.patpatme.entity.UserEntity;
@@ -23,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -142,6 +140,24 @@ public class UserController {
             friendDTO.setUser(userEntity).setAnimals(animalEntities);
 
             return friendDTO;
+        } catch (Throwable e) {
+            e.printStackTrace();
+            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @ApiOperation(value = "Récupère tous les amis d'un utilisateur")
+    @GetMapping(value = "/api/user/friends")
+    public Object getFriends(CurrentUser user) {
+
+        try {
+
+            UserEntity userEntity = userService.loadUserById(user.getId());
+            List<MinimalistFriendDTO> friendList = new ArrayList<>();
+            for (UserEntity friend : userEntity.getFriends()) {
+                friendList.add(UserMapper.toMiniFriendDTO(userService.loadUserById(friend.getId())));
+            }
+            return friendList;
         } catch (Throwable e) {
             e.printStackTrace();
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
