@@ -54,6 +54,7 @@ public class AnimalController {
             animalService.createAnimal(userEntity, animalCreateDto);
             return new ResponseEntity(HttpStatus.CREATED);
         } catch (Throwable e) {
+            e.printStackTrace();
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -74,6 +75,7 @@ public class AnimalController {
             animalService.updateAnimal(animalEditDTO);
             return new ResponseEntity(HttpStatus.CREATED);
         } catch (Throwable e) {
+            e.printStackTrace();
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -117,6 +119,7 @@ public class AnimalController {
         try {
             return animalService.getAnimalById(animalId);
         } catch (Throwable e) {
+            e.printStackTrace();
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -139,6 +142,7 @@ public class AnimalController {
             animalService.deleteAnimal(animalId);
             return new ResponseEntity(HttpStatus.OK);
         } catch (Throwable e) {
+            e.printStackTrace();
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
