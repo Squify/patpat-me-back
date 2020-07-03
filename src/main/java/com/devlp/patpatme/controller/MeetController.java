@@ -54,7 +54,7 @@ public class MeetController {
         }
     }
 
-    @ApiOperation(value = "Récupère tous les amis ajoutés")
+    @ApiOperation(value = "Change la relation avec un autre utilisateur")
     @PostMapping(value = "/api/meet/relation")
     public ResponseEntity changeFriendRelation(CurrentUser user, @RequestBody Integer userId) throws UserNotFoundException {
 
