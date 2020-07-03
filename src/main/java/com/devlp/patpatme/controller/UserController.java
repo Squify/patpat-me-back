@@ -61,6 +61,7 @@ public class UserController {
             userService.createUser(accountCreateDto);
             return new ResponseEntity(HttpStatus.CREATED);
         } catch (Throwable e) {
+            e.printStackTrace();
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -142,6 +143,7 @@ public class UserController {
 
             return friendDTO;
         } catch (Throwable e) {
+            e.printStackTrace();
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

@@ -49,6 +49,7 @@ public class MeetController {
         try {
             return meetService.getMetUsers(events, userEntity);
         } catch (Throwable e) {
+            e.printStackTrace();
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
