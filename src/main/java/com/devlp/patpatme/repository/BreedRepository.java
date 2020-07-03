@@ -6,7 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface BreedRepository extends JpaRepository<BreedEntity, Integer> {
-    BreedEntity findOneByName(String name);
-    List<BreedEntity> findAll();
 
+    BreedEntity findOneByName(String name);
+
+    List<BreedEntity> findAll();
 }

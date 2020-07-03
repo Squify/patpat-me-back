@@ -6,6 +6,7 @@ import com.devlp.patpatme.entity.EventEntity;
 import com.devlp.patpatme.entity.EventTypeEntity;
 import com.devlp.patpatme.entity.UserEntity;
 import com.devlp.patpatme.exception.UserNotFoundException;
+import com.devlp.patpatme.mapper.EventMapper;
 import com.devlp.patpatme.repository.EventRepository;
 import com.devlp.patpatme.repository.EventTypeRepository;
 import com.devlp.patpatme.security.CurrentUser;
@@ -92,7 +93,8 @@ public class EventController {
     public Object getEvent(@RequestParam Integer eventId) {
 
         try {
-            return eventService.getEventById(eventId);
+            EventEntity eventToLoad = eventService.getEventById(eventId);
+            return EventMapper.toDTO(eventToLoad);
         } catch (Throwable e) {
             e.printStackTrace();
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);

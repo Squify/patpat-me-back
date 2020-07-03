@@ -1,6 +1,5 @@
 package com.devlp.patpatme.service.implementation;
 
-import com.devlp.patpatme.dto.animal.AnimalDto;
 import com.devlp.patpatme.dto.animal.AnimalCreateDTO;
 import com.devlp.patpatme.dto.animal.AnimalEditDTO;
 import com.devlp.patpatme.entity.AnimalEntity;
@@ -110,12 +109,7 @@ public class AnimalServiceImpl implements AnimalService {
     }
 
     @Override
-    public AnimalEntity loadAnimalById(Integer id) {
-        return animalRepository.findOneById(id);
-    }
-
-    @Override
-    public void deleteAnimal(Integer animalId){
+    public void deleteAnimal(Integer animalId) {
         animalRepository.deleteById(animalId);
     }
 }

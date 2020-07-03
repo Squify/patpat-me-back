@@ -1,4 +1,4 @@
-package com.devlp.patpatme.dto.event;
+package com.devlp.patpatme.dto.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,10 +9,9 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
-public class EventEditDTO {
+public class EventMemberDTO {
 
     private Integer id;
-    private String description;
-    private String location;
-    private String date;
+    private String pseudo;
+    private String profile_pic_path;
 }

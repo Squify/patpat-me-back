@@ -13,7 +13,7 @@ public class EventCreateDTO {
 
     private String name;
     private String description;
-    private String localisation;
+    private String location;
     private String date;
     private String type;
 }

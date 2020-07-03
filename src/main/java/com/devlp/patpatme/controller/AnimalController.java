@@ -46,7 +46,7 @@ public class AnimalController {
 
         // check the inputs
         if (!AnimalUtil.checkCreateAnimalInputsAreValid(animalCreateDto))
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(HttpStatus.BAD_REQUEST); //400
 
         try {
             UserEntity userEntity = userService.loadUserById(user.getId());
@@ -62,7 +62,7 @@ public class AnimalController {
 
         // check the inputs
         if (!AnimalUtil.checkEditAnimalInputsAreValid(animalEditDTO))
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(HttpStatus.BAD_REQUEST); //400
 
         // check if connected user is owner
         if (!user.getId().equals(animalEditDTO.getOwner()))
@@ -129,7 +129,7 @@ public class AnimalController {
         try {
             animalService.deleteAnimal(animalId);
             return new ResponseEntity(HttpStatus.OK);
-        }  catch (Throwable e) {
+        } catch (Throwable e) {
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
