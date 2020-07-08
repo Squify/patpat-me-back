@@ -30,7 +30,7 @@ public class EventServiceImpl implements EventService {
 
         newEvent.setName(eventCreateDto.getName());
         newEvent.setDescription(eventCreateDto.getDescription());
-        newEvent.setLocalisation(eventCreateDto.getLocalisation());
+        newEvent.setLocation(eventCreateDto.getLocation());
         newEvent.setOwner(user);
 
         if (!eventCreateDto.getDate().isEmpty()) {
@@ -55,7 +55,7 @@ public class EventServiceImpl implements EventService {
         EventEntity event = eventRepository.findOneById(eventEditDTO.getId());
 
         event.setDescription(eventEditDTO.getDescription());
-        event.setLocalisation(eventEditDTO.getLocalisation());
+        event.setLocation(eventEditDTO.getLocation());
 
         if (!eventEditDTO.getDate().isEmpty()) {
             ZonedDateTime dateZonedDateTime = ZonedDateTime.parse(eventEditDTO.getDate());

@@ -26,7 +26,7 @@ public class EventEntity {
     private String description;
 
     @Column(name = "localisation")
-    private String localisation;
+    private String location;
 
     @Column(name = "date")
     private Timestamp date;
@@ -39,7 +39,7 @@ public class EventEntity {
     @JoinColumn(name = "fk_id_owner")
     private UserEntity owner;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "event_member",
             joinColumns = @JoinColumn(name = "fk_id_event", referencedColumnName = "id", nullable = true),

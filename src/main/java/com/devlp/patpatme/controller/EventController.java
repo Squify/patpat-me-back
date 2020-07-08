@@ -6,12 +6,14 @@ import com.devlp.patpatme.entity.EventEntity;
 import com.devlp.patpatme.entity.EventTypeEntity;
 import com.devlp.patpatme.entity.UserEntity;
 import com.devlp.patpatme.exception.UserNotFoundException;
+import com.devlp.patpatme.mapper.EventMapper;
 import com.devlp.patpatme.repository.EventRepository;
 import com.devlp.patpatme.repository.EventTypeRepository;
 import com.devlp.patpatme.security.CurrentUser;
 import com.devlp.patpatme.service.EventService;
 import com.devlp.patpatme.service.UserService;
 import com.devlp.patpatme.util.EventUtil;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +38,7 @@ public class EventController {
     @Autowired
     private UserService userService;
 
-    //    @ApiOperation(value = "Créer un nouvel évènement dans la base de données")
+    @ApiOperation(value = "Créer un nouvel évènement dans la base de données")
     @PostMapping(value = "/api/event/create")
     public ResponseEntity createEvent(CurrentUser user, @RequestBody EventCreateDTO eventCreateDto) {
 
@@ -58,6 +60,7 @@ public class EventController {
         }
     }
 
+    @ApiOperation(value = "Mets à jour un évènement dans la base de données")
     @PostMapping(value = "/api/event/edit")
     public ResponseEntity editEvent(CurrentUser user, @RequestBody EventEditDTO eventEditDTO) {
 
@@ -78,27 +81,32 @@ public class EventController {
         }
     }
 
+    @ApiOperation(value = "Récupère tous les types d'événement")
     @GetMapping(value = "/api/event/type")
     public List<EventTypeEntity> getEventType() {
         return eventTypeRepository.findAll();
     }
 
+    @ApiOperation(value = "Récupère tous les événements créés")
     @GetMapping(value = "/api/events")
     public List<EventEntity> getEvents() {
         return eventRepository.findAllByDateAfter(Timestamp.from(Instant.now()));
     }
 
+    @ApiOperation(value = "Récupère un événement en fonction de son id")
     @GetMapping(value = "/api/event")
     public Object getEvent(@RequestParam Integer eventId) {
 
         try {
-            return eventService.getEventById(eventId);
+            EventEntity eventToLoad = eventService.getEventById(eventId);
+            return EventMapper.toDTO(eventToLoad);
         } catch (Throwable e) {
             e.printStackTrace();
             return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
+    @ApiOperation(value = "Change la participation à un événement")
     @PostMapping(value = "/api/event/participation")
     public ResponseEntity changeEventParticipation(CurrentUser user, @RequestBody Integer eventId) throws UserNotFoundException {
 
