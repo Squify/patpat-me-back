@@ -42,7 +42,7 @@ public class AnimalEntity {
     @JoinColumn(name = "fk_id_breed", nullable = true)
     private BreedEntity breed;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "animal_temper",
             joinColumns = @JoinColumn(name = "fk_id_animal", referencedColumnName = "id", nullable = true),

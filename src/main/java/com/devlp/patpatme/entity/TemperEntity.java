@@ -4,11 +4,13 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
+
 @Entity
 @Table(name = "temper")
 @Data
 @Accessors(chain = true)
 public class TemperEntity {
+
     @Id
     @SequenceGenerator(name = "temper_generator", sequenceName = "temper_sequence", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "temper_generator")

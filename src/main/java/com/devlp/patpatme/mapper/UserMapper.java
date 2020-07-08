@@ -2,6 +2,7 @@ package com.devlp.patpatme.mapper;
 
 import com.devlp.patpatme.dto.user.AccountCreateDTO;
 import com.devlp.patpatme.dto.user.MetUserDTO;
+import com.devlp.patpatme.dto.user.MinimalistFriendDTO;
 import com.devlp.patpatme.dto.user.UserDTO;
 import com.devlp.patpatme.entity.UserEntity;
 import com.devlp.patpatme.mapper.util.ModelMapperUtil;
@@ -17,6 +18,17 @@ public class UserMapper {
 
     public static UserDTO toDTO(UserEntity user) {
         return ModelMapperUtil.createModelMapper(UserEntity.class, UserDTO.class, user);
+    }
+
+    public static MinimalistFriendDTO toMiniFriendDTO(UserEntity user) {
+
+        MinimalistFriendDTO minimalistFriendDTO = ModelMapperUtil.createModelMapper(UserEntity.class, MinimalistFriendDTO.class, user, MinimalistFriendDTO::setFriends);
+
+        for (UserEntity friend : user.getFriends()) {
+            minimalistFriendDTO.getFriends().add(friend.getId());
+        }
+
+        return minimalistFriendDTO;
     }
 
     public static MetUserDTO toMetUserDTO(UserEntity user) {

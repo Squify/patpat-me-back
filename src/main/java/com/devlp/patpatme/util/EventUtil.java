@@ -15,7 +15,7 @@ public class EventUtil {
     public static boolean checkCreateEventInputsAreValid(EventCreateDTO eventCreateDto) {
         final String name = eventCreateDto.getName();
         final String description = eventCreateDto.getDescription();
-        final String localisation = eventCreateDto.getLocalisation();
+        final String localisation = eventCreateDto.getLocation();
         final String date = eventCreateDto.getDate();
         final String type = eventCreateDto.getType();
 
@@ -33,7 +33,7 @@ public class EventUtil {
 
     public static boolean checkEditEventInputsAreValid(EventEditDTO eventEditDTO) {
         final String description = eventEditDTO.getDescription();
-        final String localisation = eventEditDTO.getLocalisation();
+        final String localisation = eventEditDTO.getLocation();
         final String date = eventEditDTO.getDate();
 
 

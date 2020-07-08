@@ -7,10 +7,11 @@ import java.time.format.DateTimeParseException;
 
 public class DateUtil {
 
-    private DateUtil(){}
+    private DateUtil() {
+    }
 
     public static String convertTimestamp(Timestamp timestamp) {
-        if(timestamp == null){
+        if (timestamp == null) {
             return null;
         }
 

@@ -7,7 +7,8 @@ import java.util.regex.Pattern;
 
 public class RegexUtil {
 
-    private RegexUtil(){}
+    private RegexUtil() {
+    }
 
     private static final Pattern specialCharacters = Pattern.compile("[!@#%^$&*()/\\\\_+\\-=\\[\\]{}'~\"|,.;:<>?éèàêôûç°£µ]+");
     private static final Pattern emailCharacters = Pattern.compile("^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$");

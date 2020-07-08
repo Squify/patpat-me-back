@@ -1,7 +1,7 @@
 package com.devlp.patpatme.mapper;
 
-import com.devlp.patpatme.dto.animal.AnimalDto;
 import com.devlp.patpatme.dto.animal.AnimalCreateDTO;
+import com.devlp.patpatme.dto.animal.AnimalDto;
 import com.devlp.patpatme.dto.animal.AnimalEditDTO;
 import com.devlp.patpatme.entity.AnimalEntity;
 import com.devlp.patpatme.mapper.util.ModelMapperUtil;

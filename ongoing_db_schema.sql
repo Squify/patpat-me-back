@@ -3,15 +3,6 @@ CREATE SCHEMA public;
 
 create extension if not exists unaccent;
 
---create or replace function remove_accents(field varchar)
---	returns text
---as
---$BODY$
---	select unaccent(field);
---$BODY$
---language sql
---immutable;
-
 CREATE TABLE user_gender
 (
     id integer PRIMARY KEY NOT NULL,
@@ -162,12 +153,12 @@ VALUES
 
 INSERT INTO event_type(id, name)
 VALUES
-(1, 'Promenade'),
-(2, 'Randonnée'),
-(3, 'Rencontre pour jouer'),
-(4, 'Concours amical'),
-(5, 'Pique nique'),
-(6, 'Sortie en mer')
+(1, 'WALK'),
+(2, 'RAMBLE'),
+(3, 'PLAY'),
+(4, 'COMPETITION'),
+(5, 'PICNIC'),
+(6, 'SEA')
 ;
 
 INSERT INTO temper(id, name)
@@ -483,7 +474,7 @@ CREATE TABLE language
 INSERT INTO language(id, name)
 VALUES
 (1, 'FR'),
-(2, 'EN'),
+(2, 'EN')
 ;
 
 ALTER TABLE users
